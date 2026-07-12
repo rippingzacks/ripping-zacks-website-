@@ -327,6 +327,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .card-price{font-family:var(--mono); font-size:1.02rem; color:var(--ink);}
 .card-link{font-size:0.82rem; color:var(--cobalt); font-weight:600;}
 
+.inv-row{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:12px; padding:6px 0; border-top:1px solid var(--line-soft);
+  font-size:0.88rem;
+}
+.inv-row:first-of-type{border-top:none;}
+.inv-label{color:var(--ink-faint); font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.03em;}
+.inv-value{color:var(--ink); text-align:right;}
+
 /* ============================================================
    STEPS / HOW IT WORKS
    ============================================================ */

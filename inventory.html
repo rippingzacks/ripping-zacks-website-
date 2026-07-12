@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy — Ripping Zacks</title>
-<meta name="description" content="Privacy policy for Ripping Zacks.">
+<title>Inventory — Ripping Zacks</title>
+<meta name="description" content="Current card inventory at Ripping Zacks, updated live.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -17,7 +17,7 @@
     <nav class="nav-links">
       <a href="index.html">Home</a>
       <a href="portfolio.html">Portfolio</a>
-      <a href="inventory.html">Inventory</a>
+      <a href="inventory.html" class="active">Inventory</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
@@ -28,20 +28,22 @@
 
 <section class="page-head">
   <div class="wrap">
-    <span class="eyebrow">Legal</span>
-    <h1>Privacy Policy</h1>
-    <p>Last updated: [add date]. This is placeholder text — replace with your actual privacy practices before publishing.</p>
+    <span class="eyebrow">Live inventory</span>
+    <h1>Inventory</h1>
+    <p>Pulled live from our inventory sheet — updates automatically whenever it changes.</p>
   </div>
 </section>
 
 <section class="section">
-  <div class="wrap about-copy" style="max-width:70ch;">
-    <p><strong>Information we collect.</strong> If you use the contact form or email us directly, we collect the name, email address, and message content you provide.</p>
-    <p><strong>How we use it.</strong> We use this information solely to respond to your inquiry — about buying, valuing, or asking questions about cards. We don't sell or share your information with third parties for marketing purposes.</p>
-    <p><strong>Third-party services.</strong> Our inventory is displayed via Collectr, a third-party showcase tool. Collectr's own privacy policy governs any data collected through that embedded service.</p>
-    <p><strong>Cookies.</strong> This site does not currently use tracking cookies or analytics. If that changes, this policy will be updated.</p>
-    <p><strong>Contact.</strong> Questions about this policy can be sent to <a href="mailto:matthew@matthewsutika.com" style="color:var(--cobalt);">matthew@matthewsutika.com</a>.</p>
-    <p style="color:var(--ink-faint); font-size:0.85rem; margin-top:32px;">This is a general-purpose starting point, not legal advice. Consider having an attorney review this before it goes live, especially once the contact form or Collectr integration is actually collecting data.</p>
+  <div class="wrap">
+    <div class="shop-toolbar">
+      <span class="result-count" id="inventory-count">Loading inventory…</span>
+      <button class="btn btn-ghost" id="inventory-refresh" type="button">↻ Refresh</button>
+    </div>
+
+    <div id="inventory-status" style="display:none; padding:24px; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); color:var(--ink-dim); font-size:0.95rem;"></div>
+
+    <div id="inventory-grid" class="card-grid"></div>
   </div>
 </section>
 
@@ -81,6 +83,8 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="script.js"></script>
+<script src="inventory.js"></script>
 </body>
 </html>
