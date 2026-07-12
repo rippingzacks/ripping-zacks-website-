@@ -12,12 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
       links.style.display = open ? 'none' : 'flex';
       links.style.flexDirection = 'column';
       links.style.position = 'absolute';
-      links.style.top = '76px';
+      links.style.top = '116px';
       links.style.left = '0';
       links.style.right = '0';
-      links.style.background = '#18151a';
+      links.style.background = '#13214a';
       links.style.padding = '20px 28px';
-      links.style.borderBottom = '1px solid rgba(244,239,230,0.10)';
+      links.style.borderBottom = '1px solid rgba(246,231,201,0.14)';
       links.style.gap = '18px';
       toggle.setAttribute('aria-expanded', String(!open));
     });

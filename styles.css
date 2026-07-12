@@ -1,20 +1,20 @@
 /* ============================================================
-   RIPPING ZACKS — design tokens (clean / modern)
+   RIPPING ZACKS — design tokens (matched to logo palette)
    ============================================================ */
 :root{
-  --paper:      #f2f3f1;
-  --paper-soft: #ffffff;
-  --panel:      #ffffff;
-  --line:       rgba(18,19,26,0.11);
-  --line-soft:  rgba(18,19,26,0.07);
-  --ink:        #14151b;
-  --ink-dim:    rgba(20,21,27,0.62);
-  --ink-faint:  rgba(20,21,27,0.40);
+  --paper:      #0d1730;
+  --paper-soft: #13214a;
+  --panel:      #14224c;
+  --line:       rgba(246,231,201,0.14);
+  --line-soft:  rgba(246,231,201,0.09);
+  --ink:        #f5f1e6;
+  --ink-dim:    rgba(245,241,230,0.68);
+  --ink-faint:  rgba(245,241,230,0.42);
 
-  --cobalt:     #1e45d6;
-  --cobalt-dim: #16339e;
-  --citrus:     #c97c1a;
-  --mint:       #1f7a5c;
+  --cobalt:     #f6b93b;
+  --cobalt-dim: #e0891f;
+  --citrus:     #e6432c;
+  --mint:       #4caf58;
 
   --display: "Space Grotesk", "Inter", -apple-system, sans-serif;
   --body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -62,13 +62,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    ============================================================ */
 .site-header{
   position:sticky; top:0; z-index:50;
-  background:rgba(255,255,255,0.92);
+  background:rgba(13,23,48,0.92);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
 }
 .site-header .wrap{
   display:flex; align-items:center; justify-content:space-between;
-  height:76px;
+  height:116px;
 }
 .logo{
   font-family:var(--display);
@@ -78,18 +78,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   display:flex; align-items:center; gap:10px;
   color:var(--ink);
 }
-.logo .mark{
-  width:26px;height:26px;
-  border-radius:50%;
-  background:var(--cobalt);
-  display:inline-flex; align-items:center; justify-content:center;
-  position:relative;
-}
-.logo .mark::after{
-  content:"";
-  width:9px;height:9px;
-  border-radius:50%;
-  background:var(--paper-soft);
+.logo-mark{
+  width:96px; height:96px;
+  border-radius:0;
+  object-fit:contain;
+  flex-shrink:0;
 }
 .nav-links{
   display:flex; gap:36px;
@@ -109,15 +102,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .nav-cta{
   display:inline-flex; align-items:center; gap:8px;
-  background:var(--cobalt);
-  color:#fff;
+  background:linear-gradient(135deg, var(--cobalt), var(--cobalt-dim));
+  color:var(--paper);
   padding:11px 20px;
   border-radius:8px;
   font-size:0.88rem;
-  font-weight:600;
-  transition:background .2s ease, transform .2s ease;
+  font-weight:700;
+  transition:filter .2s ease, transform .2s ease;
 }
-.nav-cta:hover{background:var(--cobalt-dim); transform:translateY(-1px);}
+.nav-cta:hover{filter:brightness(1.08); transform:translateY(-1px);}
 
 .nav-toggle{display:none;}
 
@@ -137,12 +130,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   padding:14px 26px;
   border-radius:8px;
   font-size:0.94rem;
-  font-weight:600;
+  font-weight:700;
   border:1px solid transparent;
-  transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  transition:transform .2s ease, filter .2s ease, background .2s ease, border-color .2s ease;
 }
-.btn-primary{background:var(--cobalt); color:#fff;}
-.btn-primary:hover{background:var(--cobalt-dim); transform:translateY(-2px);}
+.btn-primary{background:linear-gradient(135deg, var(--cobalt), var(--cobalt-dim)); color:var(--paper);}
+.btn-primary:hover{filter:brightness(1.08); transform:translateY(-2px);}
 .btn-ghost{border-color:var(--line); color:var(--ink); background:var(--paper-soft);}
 .btn-ghost:hover{border-color:var(--ink-faint); transform:translateY(-2px);}
 
@@ -205,7 +198,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   margin-top:4px;
 }
 
-/* ---- hero catalog grid + certification stamp (signature) ---- */
+/* ---- hero catalog grid (unused placeholder styles, kept for future use) ---- */
 .hero-stage{
   position:relative;
 }
@@ -225,7 +218,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .catalog-tile:hover{
   transform:translateY(-4px);
-  box-shadow:0 16px 32px -18px rgba(20,21,27,0.22);
+  box-shadow:0 16px 32px -18px rgba(0,0,0,0.4);
 }
 .catalog-tile .tile-tag{
   font-family:var(--mono); font-size:0.62rem; letter-spacing:0.06em;
@@ -234,7 +227,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .catalog-tile .tile-photo{
   flex:1;
   border-radius:6px;
-  background:repeating-linear-gradient(135deg, #eceae4, #eceae4 8px, #f5f4f0 8px, #f5f4f0 16px);
+  background:repeating-linear-gradient(135deg, #182a5e, #182a5e 8px, #101c40 8px, #101c40 16px);
   display:flex; align-items:center; justify-content:center;
 }
 .catalog-tile .tile-photo img{
@@ -244,7 +237,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr; gap:56px;}
-  .stamp{width:96px;height:96px;right:0;bottom:-14px;}
 }
 
 /* ============================================================
@@ -274,7 +266,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 /* ============================================================
-   CARD GRID (featured + shop)
+   CARD GRID (unused placeholder styles, kept for future use)
    ============================================================ */
 .card-grid{
   display:grid;
@@ -294,7 +286,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .card-slab:hover{
   transform:translateY(-5px);
-  box-shadow:0 20px 40px -22px rgba(20,21,27,0.25);
+  box-shadow:0 20px 40px -22px rgba(0,0,0,0.5);
 }
 .card-slab-label{
   display:flex; align-items:center; justify-content:space-between;
@@ -305,20 +297,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   text-transform:uppercase;
   color:var(--citrus);
   border-bottom:1px solid var(--line-soft);
-  background:#fbfaf7;
+  background:#101c40;
 }
 .card-slab-grade{color:var(--ink-faint);}
 .card-art{
   height:190px;
   position:relative;
   display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(160deg,#f5f4f0,#eceae4);
+  background:linear-gradient(160deg,#182a5e,#0e1a3c);
   overflow:hidden;
 }
 .card-glyph{
   font-family:var(--display);
   font-size:2.4rem;
-  color:rgba(20,21,27,0.16);
+  color:rgba(245,241,230,0.16);
 }
 .card-body{padding:16px 16px 20px;}
 .card-tags{
@@ -368,19 +360,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    CTA BAND
    ============================================================ */
 .cta-band{
-  background:var(--ink);
+  background:linear-gradient(135deg, #1a2c62, #0d1730);
   padding:76px 0;
 }
 .cta-inner{
   display:flex; align-items:center; justify-content:space-between;
   gap:32px; flex-wrap:wrap;
 }
-.cta-inner h2{font-size:clamp(1.5rem,3vw,2.1rem); max-width:20ch; color:#fff;}
+.cta-inner h2{font-size:clamp(1.5rem,3vw,2.1rem); max-width:20ch; color:var(--ink);}
 .cta-actions{display:flex; gap:16px; flex-wrap:wrap;}
-.cta-band .btn-ghost{background:transparent; border-color:rgba(255,255,255,0.25); color:#fff;}
-.cta-band .btn-ghost:hover{border-color:rgba(255,255,255,0.5);}
-.cta-band .btn-primary{background:#fff; color:var(--ink);}
-.cta-band .btn-primary:hover{background:#e9e9e6;}
+.cta-band .btn-ghost{background:transparent; border-color:rgba(245,241,230,0.25); color:var(--ink);}
+.cta-band .btn-ghost:hover{border-color:rgba(245,241,230,0.5);}
 
 /* ============================================================
    FOOTER
@@ -422,7 +412,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .page-head p{color:var(--ink-dim); max-width:52ch; margin-top:16px;}
 
 /* ============================================================
-   SHOP PAGE — filters
+   SHOP / PORTFOLIO PAGE — toolbar
    ============================================================ */
 .shop-toolbar{
   display:flex; align-items:center; justify-content:space-between;
@@ -442,7 +432,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   transition:all .2s ease;
 }
 .filter-chip:hover{border-color:var(--ink-faint); color:var(--ink);}
-.filter-chip.active{background:var(--cobalt); border-color:var(--cobalt); color:#fff;}
+.filter-chip.active{background:var(--cobalt); border-color:var(--cobalt); color:var(--paper);}
 .result-count{font-family:var(--mono); font-size:0.78rem; color:var(--ink-faint);}
 
 /* ============================================================
