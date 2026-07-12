@@ -19,13 +19,22 @@ function loadInventory() {
     header: true,
     skipEmptyLines: true,
     complete: function (results) {
+      const allFields = results.meta.fields || [];
       const ALLOWED_COLUMNS = ['product name', 'quantity'];
-      const headers = (results.meta.fields || []).filter(
+      const headers = allFields.filter(
         h => h && ALLOWED_COLUMNS.includes(h.trim().toLowerCase())
       );
-      const rows = (results.data || []).filter(row =>
-        Object.values(row).some(v => v && String(v).trim())
-      );
+
+      const soldKey = allFields.find(h => h && h.trim().toLowerCase() === 'sold');
+
+      const rows = (results.data || []).filter(row => {
+        const hasData = Object.values(row).some(v => v && String(v).trim());
+        if (!hasData) return false;
+        if (soldKey && String(row[soldKey] || '').trim().toLowerCase().includes('sold')) {
+          return false;
+        }
+        return true;
+      });
 
       if (!headers.length || !rows.length) {
         count.textContent = '0 items';
