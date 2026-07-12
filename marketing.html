@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — Ripping Zacks</title>
-<meta name="description" content="Browse the full Ripping Zacks Pokemon card collection, live on Collectr.">
+<title>Marketing — Ripping Zacks</title>
+<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -16,7 +16,7 @@
     <a href="index.html" class="logo"><img src="assets/logo.jpg" alt="Ripping Zacks" class="logo-mark">Ripping Zacks</a>
     <nav class="nav-links">
       <a href="index.html">Home</a>
-      <a href="portfolio.html" class="active">Portfolio</a>
+      <a href="portfolio.html">Portfolio</a>
       <a href="inventory.html">Inventory</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
@@ -28,37 +28,27 @@
 
 <section class="page-head">
   <div class="wrap">
-    <span class="eyebrow">Live inventory</span>
-    <h1>The Portfolio</h1>
-    <p>Our full portfolio — updated live via Collectr.</p>
+    <span class="eyebrow">Internal — not linked in main nav</span>
+    <h1>Pikachu Tracker</h1>
+    <p>Costumed and promo Pikachu variants I'm hunting or already own — pulled live from a Google Sheet.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
     <div class="shop-toolbar">
-      <div class="filter-group">
-        <button class="btn btn-ghost" id="collectr-refresh" type="button">↻ Refresh</button>
+      <span class="result-count" id="tracker-count">Loading…</span>
+      <div class="filter-group" id="tracker-filters">
+        <button class="filter-chip active" data-status="all">All</button>
+        <button class="filter-chip" data-status="Still looking">Still looking</button>
+        <button class="filter-chip" data-status="Own">Own</button>
       </div>
-      <a href="https://app.getcollectr.com/showcase/profile/@rippingzacks2026" target="_blank" rel="noopener" class="btn btn-primary">Open in Collectr</a>
+      <button class="btn btn-ghost" id="tracker-refresh" type="button">↻ Refresh</button>
     </div>
 
-    <div style="border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--panel);">
-      <iframe
-        id="collectr-frame"
-        src="https://app.getcollectr.com/showcase/profile/@rippingzacks2026"
-        title="Ripping Zacks live inventory on Collectr"
-        width="100%"
-        height="900"
-        style="display:block; border:0;"
-        loading="lazy">
-      </iframe>
-    </div>
-    <p class="form-note" style="margin-top:14px;">
-      Inventory shown above is pulled live from our
-      <a href="https://app.getcollectr.com/showcase/profile/@rippingzacks2026" target="_blank" rel="noopener" style="color:var(--cobalt);">Collectr showcase</a>.
-      If it doesn't load, use the "Open in Collectr" button above.
-    </p>
+    <div id="tracker-status" style="display:none; padding:24px; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); color:var(--ink-dim); font-size:0.95rem;"></div>
+
+    <div id="tracker-grid" class="card-grid"></div>
   </div>
 </section>
 
@@ -99,6 +89,8 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="script.js"></script>
+<script src="marketing.js"></script>
 </body>
 </html>
