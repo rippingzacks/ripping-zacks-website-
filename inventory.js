@@ -19,7 +19,10 @@ function loadInventory() {
     header: true,
     skipEmptyLines: true,
     complete: function (results) {
-      const headers = results.meta.fields || [];
+      const ALLOWED_COLUMNS = ['product name', 'quantity'];
+      const headers = (results.meta.fields || []).filter(
+        h => h && ALLOWED_COLUMNS.includes(h.trim().toLowerCase())
+      );
       const rows = (results.data || []).filter(row =>
         Object.values(row).some(v => v && String(v).trim())
       );
@@ -31,7 +34,8 @@ function loadInventory() {
         return;
       }
 
-      const titleKey = headers[0];
+      const titleKey = headers.find(h => h.trim().toLowerCase() === 'product name') || headers[0];
+      const bodyKeys = headers.filter(h => h !== titleKey);
       count.textContent = rows.length + (rows.length === 1 ? ' item' : ' items');
 
       rows.forEach(row => {
@@ -46,7 +50,7 @@ function loadInventory() {
         h3.style.marginBottom = '12px';
         body.appendChild(h3);
 
-        headers.slice(1).forEach(key => {
+        bodyKeys.forEach(key => {
           const val = row[key];
           if (!val || !String(val).trim()) return;
           const rowDiv = document.createElement('div');
