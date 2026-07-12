@@ -2,7 +2,7 @@
 // RIPPING ZACKS — Inventory page (Google Sheet live feed)
 // ============================================================
 
-const INVENTORY_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScXQeC6Df0_euwbe5L8ebV5-KD1HUr4E41OcBLF0qc4802LUCJXPaU-ITjXMhu8UJCE1mPi69GVhrb/pub?gid=0&single=true&output=csv';
+const INVENTORY_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtICBFDdqlmg0kPEA_cj-jIRPCvNsw77P8JPGfKrMRuZZxeyPrHK8omN9vqufo8Lo7qoR098GHo1yE/pub?gid=1746690319&single=true&output=csv';
 
 function loadInventory() {
   const grid = document.getElementById('inventory-grid');
