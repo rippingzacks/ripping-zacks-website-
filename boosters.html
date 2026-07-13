@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy — Ripping Zacks</title>
-<meta name="description" content="Privacy policy for Ripping Zacks.">
+<title>Boosters — Ripping Zacks</title>
+<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -28,20 +28,22 @@
 
 <section class="page-head">
   <div class="wrap">
-    <span class="eyebrow">Legal</span>
-    <h1>Privacy Policy</h1>
-    <p>Last updated: [add date]. This is placeholder text — replace with your actual privacy practices before publishing.</p>
+    <span class="eyebrow">Internal — not linked in main nav</span>
+    <h1>Boosters</h1>
+    <p>Set name and release year sync live from a Google Sheet — booster box price and photos are editable right here.</p>
   </div>
 </section>
 
 <section class="section">
-  <div class="wrap about-copy" style="max-width:70ch;">
-    <p><strong>Information we collect.</strong> If you use the contact form or email us directly, we collect the name, email address, and message content you provide.</p>
-    <p><strong>How we use it.</strong> We use this information solely to respond to your inquiry — about buying, valuing, or asking questions about cards. We don't sell or share your information with third parties for marketing purposes.</p>
-    <p><strong>Third-party services.</strong> Our inventory is displayed via Collectr, a third-party showcase tool. Collectr's own privacy policy governs any data collected through that embedded service.</p>
-    <p><strong>Cookies.</strong> This site does not currently use tracking cookies or analytics. If that changes, this policy will be updated.</p>
-    <p><strong>Contact.</strong> Questions about this policy can be sent to <a href="mailto:matthew@matthewsutika.com" style="color:var(--cobalt);">matthew@matthewsutika.com</a>.</p>
-    <p style="color:var(--ink-faint); font-size:0.85rem; margin-top:32px;">This is a general-purpose starting point, not legal advice. Consider having an attorney review this before it goes live, especially once the contact form or Collectr integration is actually collecting data.</p>
+  <div class="wrap">
+    <div class="shop-toolbar">
+      <span class="result-count" id="boosters-count">Loading…</span>
+      <button class="btn btn-ghost" id="boosters-refresh" type="button">↻ Refresh</button>
+    </div>
+
+    <div id="boosters-status" style="display:none; padding:24px; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); color:var(--ink-dim); font-size:0.95rem;"></div>
+
+    <div id="boosters-grid" class="card-grid"></div>
   </div>
 </section>
 
@@ -83,6 +85,8 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="script.js"></script>
+<script src="boosters.js"></script>
 </body>
 </html>
