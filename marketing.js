@@ -1,9 +1,14 @@
 // ============================================================
 // RIPPING ZACKS — Pikachu Tracker (marketing.html)
-// Pulled live from a Google Sheet, same pattern as Inventory.
+// Name / price / status pulled live from a Google Sheet.
+// Photos are uploaded directly on this page and saved in this
+// browser's local storage, keyed by card name (not synced
+// across devices — that's the tradeoff for skipping photo
+// hosting entirely).
 // ============================================================
 
 const TRACKER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtICBFDdqlmg0kPEA_cj-jIRPCvNsw77P8JPGfKrMRuZZxeyPrHK8omN9vqufo8Lo7qoR098GHo1yE/pub?gid=952828787&single=true&output=csv';
+const TRACKER_PHOTOS_KEY = 'rz_pikachu_tracker_photos';
 
 const TRACKER_COLS = {
   name: 'product name',
@@ -19,10 +24,46 @@ function findCol(fields, targetLower) {
   return fields.find(f => f && f.trim().toLowerCase() === targetLower);
 }
 
+function photoKeyFor(name) {
+  return (name || '').trim().toLowerCase();
+}
+
+function getLocalPhotos() {
+  try {
+    const raw = localStorage.getItem(TRACKER_PHOTOS_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveLocalPhoto(name, dataUrl) {
+  try {
+    const photos = getLocalPhotos();
+    photos[photoKeyFor(name)] = dataUrl;
+    localStorage.setItem(TRACKER_PHOTOS_KEY, JSON.stringify(photos));
+    return true;
+  } catch (e) {
+    alert('Could not save that photo — your browser storage may be full.');
+    return false;
+  }
+}
+
+function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 function renderTrackerGrid() {
   const grid = document.getElementById('tracker-grid');
   const count = document.getElementById('tracker-count');
   if (!grid || !count) return;
+
+  const localPhotos = getLocalPhotos();
 
   const visible = trackerFilter === 'all'
     ? trackerItems
@@ -40,6 +81,10 @@ function renderTrackerGrid() {
   }
 
   visible.forEach(item => {
+    const key = photoKeyFor(item.name);
+    const localPhoto = localPhotos[key];
+    const photoSrc = localPhoto || item.image;
+
     const card = document.createElement('article');
     card.className = 'card-slab';
 
@@ -53,18 +98,21 @@ function renderTrackerGrid() {
 
     const art = document.createElement('div');
     art.className = 'card-art';
-    if (item.image) {
+    art.style.position = 'relative';
+
+    function showPlaceholder() {
+      art.innerHTML = '<span class="card-glyph">?</span>';
+    }
+
+    if (photoSrc) {
       const img = document.createElement('img');
-      img.src = item.image;
+      img.src = photoSrc;
       img.alt = item.name || '';
       img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
-      img.onerror = () => { art.innerHTML = '<span class="card-glyph">?</span>'; };
+      img.onerror = showPlaceholder;
       art.appendChild(img);
     } else {
-      const glyph = document.createElement('span');
-      glyph.className = 'card-glyph';
-      glyph.textContent = '?';
-      art.appendChild(glyph);
+      showPlaceholder();
     }
     card.appendChild(art);
 
@@ -82,8 +130,32 @@ function renderTrackerGrid() {
       footer.appendChild(price);
       body.appendChild(footer);
     }
-    card.appendChild(body);
 
+    // Upload photo control — saved locally, keyed by card name
+    const uploadWrap = document.createElement('label');
+    uploadWrap.className = 'btn btn-ghost';
+    uploadWrap.style.cssText = 'margin-top:12px; width:100%; justify-content:center; cursor:pointer; font-size:0.8rem; padding:9px 16px;';
+    uploadWrap.textContent = localPhoto ? '↻ Replace photo' : '+ Upload photo';
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      try {
+        const dataUrl = await fileToDataUrl(file);
+        if (saveLocalPhoto(item.name, dataUrl)) {
+          renderTrackerGrid();
+        }
+      } catch (e) {
+        alert('Could not read that photo file.');
+      }
+    });
+    uploadWrap.appendChild(fileInput);
+    body.appendChild(uploadWrap);
+
+    card.appendChild(body);
     grid.appendChild(card);
   });
 }
@@ -116,7 +188,7 @@ function loadTracker() {
       if (!nameKey || !rows.length) {
         count.textContent = '0 cards';
         status.style.display = 'block';
-        status.textContent = 'No cards found yet. Make sure the sheet has "Product name", "Image URL", "Target Price", and "Status" columns in row 1.';
+        status.textContent = 'No cards found yet. Make sure the sheet has "Product name", "Target Price", and "Status" columns in row 1.';
         trackerItems = [];
         renderTrackerGrid();
         return;
