@@ -8,7 +8,6 @@
 
 const BOOSTERS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtICBFDdqlmg0kPEA_cj-jIRPCvNsw77P8JPGfKrMRuZZxeyPrHK8omN9vqufo8Lo7qoR098GHo1yE/pub?gid=1034956444&single=true&output=csv';
 const BOOSTERS_PRICES_KEY = 'rz_boosters_prices';
-const BOOSTERS_PHOTOS_KEY = 'rz_boosters_photos';
 
 const BOOSTERS_COLS = {
   name: 'set name',
@@ -48,43 +47,12 @@ function saveLocalPrice(name, price) {
   }
 }
 
-function getLocalPhotos() {
-  try {
-    const raw = localStorage.getItem(BOOSTERS_PHOTOS_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch (e) {
-    return {};
-  }
-}
-
-function saveLocalPhoto(name, dataUrl) {
-  try {
-    const photos = getLocalPhotos();
-    photos[itemKeyFor(name)] = dataUrl;
-    localStorage.setItem(BOOSTERS_PHOTOS_KEY, JSON.stringify(photos));
-    return true;
-  } catch (e) {
-    alert('Could not save that photo — your browser storage may be full.');
-    return false;
-  }
-}
-
-function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
 function renderBoostersGrid() {
   const grid = document.getElementById('boosters-grid');
   const count = document.getElementById('boosters-count');
   if (!grid || !count) return;
 
   const localPrices = getLocalPrices();
-  const localPhotos = getLocalPhotos();
 
   const term = boostersSearchTerm.trim().toLowerCase();
   const visible = term
@@ -105,7 +73,6 @@ function renderBoostersGrid() {
   visible.forEach(item => {
     const key = itemKeyFor(item.name);
     const currentPrice = localPrices[key] !== undefined ? localPrices[key] : (item.price || '');
-    const localPhoto = localPhotos[key];
 
     const card = document.createElement('article');
     card.className = 'card-slab';
@@ -116,26 +83,6 @@ function renderBoostersGrid() {
     yearSpan.textContent = item.year || '';
     label.appendChild(yearSpan);
     card.appendChild(label);
-
-    const art = document.createElement('div');
-    art.className = 'card-art';
-    art.style.position = 'relative';
-
-    function showPlaceholder() {
-      art.innerHTML = '<span class="card-glyph">?</span>';
-    }
-
-    if (localPhoto) {
-      const img = document.createElement('img');
-      img.src = localPhoto;
-      img.alt = item.name || '';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
-      img.onerror = showPlaceholder;
-      art.appendChild(img);
-    } else {
-      showPlaceholder();
-    }
-    card.appendChild(art);
 
     const body = document.createElement('div');
     body.className = 'card-body';
@@ -157,30 +104,6 @@ function renderBoostersGrid() {
     });
     priceRow.appendChild(priceInput);
     body.appendChild(priceRow);
-
-    // Upload photo control — saved locally, keyed by set name
-    const uploadWrap = document.createElement('label');
-    uploadWrap.className = 'btn btn-ghost';
-    uploadWrap.style.cssText = 'margin-top:12px; width:100%; justify-content:center; cursor:pointer; font-size:0.8rem; padding:9px 16px;';
-    uploadWrap.textContent = localPhoto ? '↻ Replace photo' : '+ Upload photo';
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.style.display = 'none';
-    fileInput.addEventListener('change', async () => {
-      const file = fileInput.files[0];
-      if (!file) return;
-      try {
-        const dataUrl = await fileToDataUrl(file);
-        if (saveLocalPhoto(item.name, dataUrl)) {
-          renderBoostersGrid();
-        }
-      } catch (e) {
-        alert('Could not read that photo file.');
-      }
-    });
-    uploadWrap.appendChild(fileInput);
-    body.appendChild(uploadWrap);
 
     card.appendChild(body);
     grid.appendChild(card);
