@@ -17,6 +17,7 @@ const BOOSTERS_COLS = {
 };
 
 let boosterItems = [];
+let boostersSearchTerm = '';
 
 function findCol(fields, targetLower) {
   return fields.find(f => f && f.trim().toLowerCase() === targetLower);
@@ -85,18 +86,23 @@ function renderBoostersGrid() {
   const localPrices = getLocalPrices();
   const localPhotos = getLocalPhotos();
 
-  count.textContent = boosterItems.length + (boosterItems.length === 1 ? ' set' : ' sets');
+  const term = boostersSearchTerm.trim().toLowerCase();
+  const visible = term
+    ? boosterItems.filter(i => (i.name || '').toLowerCase().includes(term))
+    : boosterItems;
+
+  count.textContent = visible.length + (visible.length === 1 ? ' set' : ' sets');
   grid.innerHTML = '';
 
-  if (!boosterItems.length) {
+  if (!visible.length) {
     const empty = document.createElement('p');
     empty.style.color = 'var(--ink-faint)';
-    empty.textContent = 'No sets found in the sheet yet.';
+    empty.textContent = boosterItems.length ? 'No sets match your search.' : 'No sets found in the sheet yet.';
     grid.appendChild(empty);
     return;
   }
 
-  boosterItems.forEach(item => {
+  visible.forEach(item => {
     const key = itemKeyFor(item.name);
     const currentPrice = localPrices[key] !== undefined ? localPrices[key] : (item.price || '');
     const localPhoto = localPhotos[key];
@@ -234,4 +240,12 @@ document.addEventListener('DOMContentLoaded', () => {
   loadBoosters();
   const refreshBtn = document.getElementById('boosters-refresh');
   if (refreshBtn) refreshBtn.addEventListener('click', loadBoosters);
+
+  const search = document.getElementById('boosters-search');
+  if (search) {
+    search.addEventListener('input', () => {
+      boostersSearchTerm = search.value;
+      renderBoostersGrid();
+    });
+  }
 });

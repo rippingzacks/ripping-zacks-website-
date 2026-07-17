@@ -430,6 +430,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   padding-bottom:22px;
   border-bottom:1px solid var(--line);
 }
+.search-input{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:10px 14px;
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:0.9rem;
+  min-width:220px;
+  flex:1;
+  max-width:320px;
+}
+.search-input:focus{
+  border-color:var(--cobalt);
+  outline:none;
+}
+.search-input::placeholder{color:var(--ink-faint);}
 .filter-group{display:flex; gap:10px; flex-wrap:wrap;}
 .filter-chip{
   padding:8px 16px;

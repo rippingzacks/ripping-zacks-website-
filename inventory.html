@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inventory — Ripping Zacks</title>
-<meta name="description" content="Current card inventory at Ripping Zacks, updated live.">
+<meta name="description" content="Browse the full Ripping Zacks Pokemon card collection, live on Collectr.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -16,12 +16,11 @@
     <a href="index.html" class="logo"><img src="assets/logo.jpg" alt="Ripping Zacks" class="logo-mark">Ripping Zacks</a>
     <nav class="nav-links">
       <a href="index.html">Home</a>
-      <a href="portfolio.html">Portfolio</a>
       <a href="inventory.html" class="active">Inventory</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <a href="portfolio.html" class="nav-cta">View Portfolio</a>
+    <a href="inventory.html" class="nav-cta">View Inventory</a>
     <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">Menu</button>
   </div>
 </header>
@@ -30,20 +29,37 @@
   <div class="wrap">
     <span class="eyebrow">Live inventory</span>
     <h1>Inventory</h1>
-    <p>Pulled live from our inventory sheet — updates automatically whenever it changes.</p>
+    <p>Our full portfolio — updated live via Collectr.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
     <div class="shop-toolbar">
-      <span class="result-count" id="inventory-count">Loading inventory…</span>
-      <button class="btn btn-ghost" id="inventory-refresh" type="button">↻ Refresh</button>
+      <div class="filter-group">
+        <button class="btn btn-ghost" id="collectr-refresh" type="button">↻ Refresh</button>
+      </div>
+      <a href="https://app.getcollectr.com/showcase/profile/@rippingzacks2026" target="_blank" rel="noopener" class="btn btn-primary">Open in Collectr</a>
     </div>
 
-    <div id="inventory-status" style="display:none; padding:24px; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); color:var(--ink-dim); font-size:0.95rem;"></div>
-
-    <div id="inventory-grid" class="card-grid"></div>
+    <div id="collectr-frame-wrap" style="border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--panel); min-height:900px; position:relative;">
+      <iframe
+        id="collectr-frame"
+        src="https://app.getcollectr.com/showcase/profile/@rippingzacks2026"
+        title="Ripping Zacks live inventory on Collectr"
+        width="100%"
+        height="900"
+        style="display:block; border:0;"
+        loading="eager"
+        referrerpolicy="no-referrer"
+        allow="fullscreen">
+      </iframe>
+    </div>
+    <p class="form-note" style="margin-top:14px;">
+      Inventory shown above is pulled live from our
+      <a href="https://app.getcollectr.com/showcase/profile/@rippingzacks2026" target="_blank" rel="noopener" style="color:var(--cobalt);">Collectr showcase</a>.
+      If it doesn't load, use the "Open in Collectr" button above.
+    </p>
   </div>
 </section>
 
@@ -60,7 +76,6 @@
       <div class="footer-col">
         <h4>Explore</h4>
         <ul>
-          <li><a href="portfolio.html">Portfolio</a></li>
           <li><a href="inventory.html">Inventory</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Get in Touch</a></li>
@@ -85,8 +100,6 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="script.js"></script>
-<script src="inventory.js"></script>
 </body>
 </html>

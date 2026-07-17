@@ -26,6 +26,7 @@ const STATUS_OPTIONS = ['Still looking', 'Own'];
 
 let trackerItems = [];
 let trackerFilter = 'all';
+let trackerSearchTerm = '';
 
 function findCol(fields, targetLower) {
   return fields.find(f => f && f.trim().toLowerCase() === targetLower.replace(/\.$/, ''));
@@ -99,9 +100,12 @@ function renderTrackerGrid() {
     return (localStatuses[key] !== undefined ? localStatuses[key] : item.status) || '';
   };
 
-  const visible = trackerFilter === 'all'
-    ? trackerItems
-    : trackerItems.filter(i => effectiveStatus(i).trim().toLowerCase() === trackerFilter.toLowerCase());
+  const term = trackerSearchTerm.trim().toLowerCase();
+  const visible = trackerItems.filter(i => {
+    const matchesStatus = trackerFilter === 'all' || effectiveStatus(i).trim().toLowerCase() === trackerFilter.toLowerCase();
+    const matchesSearch = !term || (i.name || '').toLowerCase().includes(term);
+    return matchesStatus && matchesSearch;
+  });
 
   count.textContent = visible.length + (visible.length === 1 ? ' card' : ' cards');
   grid.innerHTML = '';
@@ -290,4 +294,12 @@ document.addEventListener('DOMContentLoaded', () => {
       renderTrackerGrid();
     });
   });
+
+  const search = document.getElementById('tracker-search');
+  if (search) {
+    search.addEventListener('input', () => {
+      trackerSearchTerm = search.value;
+      renderTrackerGrid();
+    });
+  }
 });
