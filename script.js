@@ -72,4 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
       collectrFrame.src = base + '?t=' + Date.now();
     });
   }
+
+  const storeRefreshBtn = document.getElementById('store-refresh');
+  const storeFrame = document.getElementById('store-frame');
+  if (storeRefreshBtn && storeFrame) {
+    storeRefreshBtn.addEventListener('click', () => {
+      const base = storeFrame.src.split('?')[0];
+      storeFrame.src = base + '?t=' + Date.now();
+    });
+  }
 });
