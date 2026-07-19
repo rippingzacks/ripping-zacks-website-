@@ -17,9 +17,9 @@
     <nav class="nav-links">
       <a href="index.html">Home</a>
       <a href="inventory.html">Inventory</a>
+      <a href="our-store.html" class="active">Our Store</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <a href="our-store.html" class="active">Our Store</a>
     </nav>
     <a href="inventory.html" class="nav-cta">View Inventory</a>
     <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">Menu</button>
@@ -37,29 +37,22 @@
 <section class="section">
   <div class="wrap">
     <div class="shop-toolbar">
-      <div class="filter-group">
-        <button class="btn btn-ghost" id="store-refresh" type="button">↻ Refresh</button>
-      </div>
+      <span class="result-count">Descent Into Gaming — Bradenton, FL</span>
       <a href="https://descentintogaming.com/" target="_blank" rel="noopener" class="btn btn-primary">Open in New Tab</a>
     </div>
-
-    <div id="store-frame-wrap" style="border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--panel); min-height:900px; position:relative;">
+    <div style="border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--panel);">
       <iframe
-        id="store-frame"
-        src="https://descentintogaming.com/"
+        id="descent-embed-frame"
         title="Descent Into Gaming"
         width="100%"
-        height="900"
+        height="1600"
         style="display:block; border:0;"
-        loading="eager"
-        referrerpolicy="origin"
-        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-        allow="fullscreen">
+        loading="lazy">
       </iframe>
     </div>
     <p class="form-note" style="margin-top:14px;">
-      This shows our storefront, <a href="https://descentintogaming.com/" target="_blank" rel="noopener" style="color:var(--cobalt);">Descent Into Gaming</a>, right here on the site.
-      If it doesn't load, use the "Open in New Tab" button above.
+      This is our storefront's homepage, built right into this page — not a live embed of their site, so it always loads reliably.
+      For events, singles, and more, use "Open in New Tab" above.
     </p>
   </div>
 </section>
@@ -102,5 +95,14 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="descent-embed-data.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const frame = document.getElementById('descent-embed-frame');
+    if (frame && typeof DESCENT_EMBED_HTML !== 'undefined') {
+      frame.srcdoc = DESCENT_EMBED_HTML;
+    }
+  });
+</script>
 </body>
 </html>
