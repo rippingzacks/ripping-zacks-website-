@@ -8,6 +8,7 @@
 
 const BOOSTERS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtICBFDdqlmg0kPEA_cj-jIRPCvNsw77P8JPGfKrMRuZZxeyPrHK8omN9vqufo8Lo7qoR098GHo1yE/pub?gid=1034956444&single=true&output=csv';
 const BOOSTERS_PRICES_KEY = 'rz_boosters_prices';
+const BOOSTERS_QUANTITIES_KEY = 'rz_boosters_quantities';
 
 const BOOSTERS_COLS = {
   name: 'set name',
@@ -47,12 +48,34 @@ function saveLocalPrice(name, price) {
   }
 }
 
+function getLocalQuantities() {
+  try {
+    const raw = localStorage.getItem(BOOSTERS_QUANTITIES_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveLocalQuantity(name, qty) {
+  try {
+    const quantities = getLocalQuantities();
+    quantities[itemKeyFor(name)] = qty;
+    localStorage.setItem(BOOSTERS_QUANTITIES_KEY, JSON.stringify(quantities));
+    return true;
+  } catch (e) {
+    alert('Could not save — your browser storage may be full.');
+    return false;
+  }
+}
+
 function renderBoostersGrid() {
   const grid = document.getElementById('boosters-grid');
   const count = document.getElementById('boosters-count');
   if (!grid || !count) return;
 
   const localPrices = getLocalPrices();
+  const localQuantities = getLocalQuantities();
 
   const term = boostersSearchTerm.trim().toLowerCase();
   const visible = term
@@ -73,9 +96,11 @@ function renderBoostersGrid() {
   visible.forEach(item => {
     const key = itemKeyFor(item.name);
     const currentPrice = localPrices[key] !== undefined ? localPrices[key] : (item.price || '');
+    const currentQty = localQuantities[key] !== undefined ? localQuantities[key] : 0;
 
     const card = document.createElement('article');
     card.className = 'card-slab';
+    if (currentQty > 0) card.classList.add('in-stock');
 
     const label = document.createElement('div');
     label.className = 'card-slab-label';
@@ -90,6 +115,29 @@ function renderBoostersGrid() {
     const h3 = document.createElement('h3');
     h3.textContent = item.name || 'Untitled';
     body.appendChild(h3);
+
+    const qtyRow = document.createElement('div');
+    qtyRow.style.cssText = 'display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px;';
+    const qtyLabel = document.createElement('span');
+    qtyLabel.textContent = 'Boxes owned';
+    qtyLabel.style.cssText = 'font-family:var(--mono); font-size:0.72rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.03em;';
+    const qtySelect = document.createElement('select');
+    qtySelect.style.cssText = 'background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:6px 10px; color:var(--ink); font-family:var(--mono);';
+    for (let i = 0; i <= 10; i++) {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = i;
+      if (i === Number(currentQty)) opt.selected = true;
+      qtySelect.appendChild(opt);
+    }
+    qtySelect.addEventListener('change', () => {
+      if (saveLocalQuantity(item.name, Number(qtySelect.value))) {
+        renderBoostersGrid();
+      }
+    });
+    qtyRow.appendChild(qtyLabel);
+    qtyRow.appendChild(qtySelect);
+    body.appendChild(qtyRow);
 
     const priceRow = document.createElement('div');
     priceRow.className = 'card-footer';
