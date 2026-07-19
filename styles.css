@@ -282,7 +282,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   border-radius:var(--radius);
   overflow:hidden;
   position:relative;
-  transition:transform .25s ease, box-shadow .25s ease;
+  transition:transform .25s ease, box-shadow .25s ease, background .2s ease, border-color .2s ease;
+}
+.card-slab.in-stock{
+  background:rgba(76,175,88,0.10);
+  border-color:var(--mint);
 }
 .card-slab:hover{
   transform:translateY(-5px);
