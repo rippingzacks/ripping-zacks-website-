@@ -1,0 +1,53 @@
+/* ============================================================
+   SEALED VAULT — industrial steel/teal theme
+   Distinct from Illumineer's Vault (violet) and Slab Vault
+   (amber) — leans into a secure-storage-room feel: deep
+   graphite background, cyan-teal glow, cool white text.
+   ============================================================ */
+
+.sealed-vault-body{
+  --vault-ink:      #0d1b1f;
+  --vault-panel:    #16282e;
+  --vault-panel-2:  #1c333b;
+  --vault-gold:     #4fd1c5;
+  --vault-gold-br:  #7ce8dc;
+  --vault-glimmer:  #8ee9ff;
+  --vault-parch:    #eaf6f7;
+  --vault-faint:    rgba(234,246,247,0.52);
+  --vault-line:     rgba(79,209,197,0.28);
+  --vault-display:  'Cinzel', serif;
+  background:var(--vault-ink);
+}
+
+.sealed-vault-body .vault-hero{
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(142,233,255,0.18), transparent 60%),
+    var(--vault-ink);
+}
+
+.sealed-vault-body .vault-plaque:hover{
+  box-shadow:0 22px 40px -24px rgba(0,0,0,0.7);
+}
+
+/* Sealed Vault cards don't have card art — give the plaque a bit
+   more breathing room around the text-only content. */
+.sealed-vault-plaque-body{ padding:6px 2px; }
+.sealed-vault-plaque-qty{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:8px;
+  font-family:var(--mono);
+  font-size:0.78rem;
+}
+.sealed-vault-plaque-qty span:first-child{
+  color:var(--vault-faint);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  font-size:0.7rem;
+}
+.sealed-vault-plaque-qty span:last-child{
+  color:var(--vault-gold-br);
+  font-weight:700;
+}

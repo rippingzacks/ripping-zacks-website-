@@ -49,7 +49,7 @@
   letter-spacing:0.01em;
   margin:0 0 18px;
   position:relative;
-  display:inline-block;
+  display:block;
 }
 .vault-title::after{
   content:'';

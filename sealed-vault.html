@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Ripping Zacks</title>
-<meta name="description" content="Get in touch with Ripping Zacks for card inquiries, valuations, or general questions.">
+<title>Sealed Vault — Ripping Zacks</title>
+<meta name="description" content="A living showcase of the sealed booster boxes, cases, and Pokemon Center ETBs owned in the Ripping Zacks collection.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="collection.css">
+<link rel="stylesheet" href="sealed-vault.css">
 </head>
-<body>
+<body class="vault-body sealed-vault-body">
 
 <header class="site-header">
   <div class="wrap">
@@ -20,66 +22,41 @@
       <a href="our-store.html">Our Store</a>
       <a href="collection.html">Illumineer's Vault</a>
       <a href="slab-vault.html">Slab Vault</a>
-      <a href="sealed-vault.html">Sealed Vault</a>
+      <a href="sealed-vault.html" class="active">Sealed Vault</a>
       <a href="about.html">About</a>
-      <a href="contact.html" class="active">Contact</a>
+      <a href="contact.html">Contact</a>
     </nav>
     <a href="inventory.html" class="nav-cta">View Inventory</a>
     <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">Menu</button>
   </div>
 </header>
 
-<section class="page-head">
-  <div class="wrap">
-    <span class="eyebrow">Contact</span>
-    <h1>Get in touch</h1>
-    <p>Questions about a card? Looking for something specific? We'd love to hear from you.</p>
+<section class="vault-hero">
+  <div class="wrap vault-hero-inner">
+    <span class="vault-eyebrow">The Sealed Product Archive</span>
+    <h1 class="vault-title">Sealed Vault</h1>
+    <p class="vault-sub">Every booster box, case, and Pokemon Center ETB that's actually made it into storage — sealed, stacked, and accounted for.</p>
+
+    <div class="vault-stats" id="vault-stats">
+      <div class="vault-stat">
+        <span class="vault-stat-num" id="stat-boxes">0</span>
+        <span class="vault-stat-label">booster boxes</span>
+      </div>
+      <div class="vault-stat">
+        <span class="vault-stat-num" id="stat-cases">0</span>
+        <span class="vault-stat-label">sealed cases</span>
+      </div>
+      <div class="vault-stat">
+        <span class="vault-stat-num" id="stat-etbs">0</span>
+        <span class="vault-stat-label">Pokemon Center ETBs</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap contact-grid">
-    <div>
-      <div class="contact-info-item">
-        <h4>Other ways to reach us</h4>
-        <p>We typically respond within 24–48 hours.</p>
-      </div>
-      <div class="contact-info-item">
-        <h4>Email</h4>
-        <p><a href="mailto:sales@rippingzacks.com">sales@rippingzacks.com</a></p>
-      </div>
-      <div class="contact-info-item">
-        <h4>Instagram</h4>
-        <p><a href="https://instagram.com" target="_blank" rel="noopener">@rippingzacks</a></p>
-      </div>
-    </div>
-
-    <form class="form-panel contact-form">
-      <div class="form-row">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-row">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-row">
-        <label for="reason">Subject</label>
-        <select id="reason" name="reason">
-          <option>General Inquiry</option>
-          <option>Card Valuation</option>
-          <option>Purchase Inquiry</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Send Message</button>
-      <p class="form-status"></p>
-      <p class="form-note">This form isn't wired to send email yet — until it is, messages sent here won't reach anyone. Use the email link to the left in the meantime.</p>
-    </form>
+<section class="section vault-body-section">
+  <div class="wrap">
+    <div id="vault-content"></div>
   </div>
 </section>
 
@@ -122,5 +99,7 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="boosters.js"></script>
+<script src="sealed-vault.js"></script>
 </body>
 </html>
