@@ -47,6 +47,27 @@ function buildSlabVaultPlaque(item) {
   h3.textContent = item.name || 'Untitled';
   plaque.appendChild(h3);
 
+  if (item.grade || item.note) {
+    const badgeRow = document.createElement('div');
+    badgeRow.className = 'vault-plaque-badges';
+
+    if (item.note) {
+      const note = document.createElement('span');
+      note.className = 'vault-plaque-note';
+      note.textContent = item.note;
+      badgeRow.appendChild(note);
+    }
+
+    if (item.grade) {
+      const grade = document.createElement('span');
+      grade.className = 'vault-plaque-grade';
+      grade.textContent = item.grade;
+      badgeRow.appendChild(grade);
+    }
+
+    plaque.appendChild(badgeRow);
+  }
+
   return plaque;
 }
 

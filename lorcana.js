@@ -16,7 +16,7 @@ const LORCANA_SET_INVENTORY = {
   "azurite sea": { boosterBoxes: 0, cases: 0 },
   "archazia's island": { boosterBoxes: 0, cases: 0 },
   "reign of jafar": { boosterBoxes: 0, cases: 0 },
-  "fabled": { boosterBoxes: 4, cases: 0 },
+  "fabled": { boosterBoxes: 4, cases: 1 },
   "whispers in the well": { boosterBoxes: 0, cases: 1 },
   "winterspell": { boosterBoxes: 0, cases: 1 },
   "wilds unknown": { boosterBoxes: 0, cases: 1 },

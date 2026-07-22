@@ -28,3 +28,40 @@
 .slab-vault-body .vault-plaque:hover{
   box-shadow:0 22px 40px -24px rgba(0,0,0,0.7);
 }
+
+.slab-vault-body .vault-plaque{
+  padding-bottom:40px;
+}
+
+.slab-vault-body .vault-plaque-badges{
+  position:absolute;
+  bottom:14px;
+  right:16px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.slab-vault-body .vault-plaque-grade,
+.slab-vault-body .vault-plaque-note{
+  font-family:var(--mono);
+  font-size:0.62rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  padding:3px 7px;
+  border-radius:4px;
+  line-height:1.2;
+  white-space:nowrap;
+}
+
+.slab-vault-body .vault-plaque-grade{
+  color:var(--vault-ink);
+  background:var(--vault-gold-br);
+}
+
+.slab-vault-body .vault-plaque-note{
+  color:var(--vault-gold-br);
+  background:transparent;
+  border:1px solid var(--vault-line);
+}

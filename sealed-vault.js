@@ -53,6 +53,7 @@ function buildSealedVaultPlaque(item, inventory) {
   body.appendChild(buildQtyLine('Booster Boxes', inventory.boosterBoxes));
   body.appendChild(buildQtyLine('Cases', inventory.cases));
   body.appendChild(buildQtyLine('Pokemon Center ETBs', inventory.etbs));
+  body.appendChild(buildQtyLine('Ultra Premium Collections', inventory.upc));
 
   plaque.appendChild(body);
   return plaque;
@@ -67,15 +68,17 @@ function renderSealedVault() {
   let totalBoxes = 0;
   let totalCases = 0;
   let totalEtbs = 0;
+  let totalUpc = 0;
   const ownedSets = [];
 
   BOOSTERS_ITEMS.forEach(item => {
     const key = itemKeyFor(item.name);
-    const inventory = BOOSTERS_INVENTORY[key] || { boosterBoxes: 0, cases: 0, etbs: 0 };
+    const inventory = BOOSTERS_INVENTORY[key] || { boosterBoxes: 0, cases: 0, etbs: 0, upc: 0 };
     totalBoxes += inventory.boosterBoxes || 0;
     totalCases += inventory.cases || 0;
     totalEtbs += inventory.etbs || 0;
-    if (inventory.boosterBoxes > 0 || inventory.cases > 0 || inventory.etbs > 0) {
+    totalUpc += inventory.upc || 0;
+    if (inventory.boosterBoxes > 0 || inventory.cases > 0 || inventory.etbs > 0 || inventory.upc > 0) {
       ownedSets.push({ item, inventory });
     }
   });
@@ -83,9 +86,11 @@ function renderSealedVault() {
   const boxesEl = document.getElementById('stat-boxes');
   const casesEl = document.getElementById('stat-cases');
   const etbsEl = document.getElementById('stat-etbs');
+  const upcEl = document.getElementById('stat-upc');
   if (boxesEl) boxesEl.textContent = totalBoxes;
   if (casesEl) casesEl.textContent = totalCases;
   if (etbsEl) etbsEl.textContent = totalEtbs;
+  if (upcEl) upcEl.textContent = totalUpc;
 
   if (ownedSets.length === 0) {
     renderSealedVaultEmpty(content);
