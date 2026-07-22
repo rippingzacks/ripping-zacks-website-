@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Store — Ripping Zacks</title>
-<meta name="description" content="Visit our storefront, Descent Into Gaming.">
+<title>My Collection — Ripping Zacks</title>
+<meta name="description" content="A living showcase of the Disney Lorcana chase cards and sealed product in the Ripping Zacks collection.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="collection.css">
 </head>
-<body>
+<body class="vault-body">
 
 <header class="site-header">
   <div class="wrap">
@@ -17,8 +18,8 @@
     <nav class="nav-links">
       <a href="index.html">Home</a>
       <a href="inventory.html">Inventory</a>
-      <a href="our-store.html" class="active">Our Store</a>
-      <a href="collection.html">Illumineer's Vault</a>
+      <a href="our-store.html">Our Store</a>
+      <a href="collection.html" class="active">Illumineer's Vault</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
@@ -27,34 +28,32 @@
   </div>
 </header>
 
-<section class="page-head">
-  <div class="wrap">
-    <span class="eyebrow">Our storefront</span>
-    <h1>Our Store</h1>
-    <p>Descent Into Gaming — our physical shop in Bradenton, FL.</p>
+<section class="vault-hero">
+  <div class="wrap vault-hero-inner">
+    <span class="vault-eyebrow">The Illumineer's Vault</span>
+    <h1 class="vault-title">My Collection</h1>
+    <p class="vault-sub">Every card and box below has been drawn from the inkwell and set aside — a running record of what's actually been found, not just chased.</p>
+
+    <div class="vault-stats" id="vault-stats">
+      <div class="vault-stat">
+        <span class="vault-stat-num" id="stat-cards">0</span>
+        <span class="vault-stat-label">of <span id="stat-cards-total">0</span> chase cards</span>
+      </div>
+      <div class="vault-stat">
+        <span class="vault-stat-num" id="stat-boxes">0</span>
+        <span class="vault-stat-label">booster boxes</span>
+      </div>
+      <div class="vault-stat">
+        <span class="vault-stat-num" id="stat-cases">0</span>
+        <span class="vault-stat-label">sealed cases</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section vault-body-section">
   <div class="wrap">
-    <div class="shop-toolbar">
-      <span class="result-count">Descent Into Gaming — Bradenton, FL</span>
-      <a href="https://descentintogaming.com/" target="_blank" rel="noopener" class="btn btn-primary">Open in New Tab</a>
-    </div>
-    <div style="border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--panel);">
-      <iframe
-        id="descent-embed-frame"
-        title="Descent Into Gaming"
-        width="100%"
-        height="1600"
-        style="display:block; border:0;"
-        loading="lazy">
-      </iframe>
-    </div>
-    <p class="form-note" style="margin-top:14px;">
-      This is our storefront's homepage, built right into this page — not a live embed of their site, so it always loads reliably.
-      For events, singles, and more, use "Open in New Tab" above.
-    </p>
+    <div id="vault-content"></div>
   </div>
 </section>
 
@@ -97,14 +96,7 @@
 </footer>
 
 <script src="script.js"></script>
-<script src="descent-embed-data.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const frame = document.getElementById('descent-embed-frame');
-    if (frame && typeof DESCENT_EMBED_HTML !== 'undefined') {
-      frame.srcdoc = DESCENT_EMBED_HTML;
-    }
-  });
-</script>
+<script src="lorcana.js"></script>
+<script src="collection.js"></script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Store — Ripping Zacks</title>
-<meta name="description" content="Visit our storefront, Descent Into Gaming.">
+<title>Lorcana Chase Cards — Ripping Zacks</title>
+<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -17,7 +17,7 @@
     <nav class="nav-links">
       <a href="index.html">Home</a>
       <a href="inventory.html">Inventory</a>
-      <a href="our-store.html" class="active">Our Store</a>
+      <a href="our-store.html">Our Store</a>
       <a href="collection.html">Illumineer's Vault</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
@@ -29,32 +29,21 @@
 
 <section class="page-head">
   <div class="wrap">
-    <span class="eyebrow">Our storefront</span>
-    <h1>Our Store</h1>
-    <p>Descent Into Gaming — our physical shop in Bradenton, FL.</p>
+    <span class="eyebrow">Internal — not linked in main nav</span>
+    <h1>Lorcana Chase Cards</h1>
+    <p>Top chase cards by set — market price is editable right here and saved to this browser only.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
     <div class="shop-toolbar">
-      <span class="result-count">Descent Into Gaming — Bradenton, FL</span>
-      <a href="https://descentintogaming.com/" target="_blank" rel="noopener" class="btn btn-primary">Open in New Tab</a>
+      <span class="result-count" id="lorcana-count">Loading…</span>
+      <input type="text" id="lorcana-search" class="search-input" placeholder="Search cards or sets...">
+      <span style="font-family:var(--mono); font-size:0.72rem; color:var(--ink-faint);">Snapshot: July 2026 — prices move daily</span>
     </div>
-    <div style="border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--panel);">
-      <iframe
-        id="descent-embed-frame"
-        title="Descent Into Gaming"
-        width="100%"
-        height="1600"
-        style="display:block; border:0;"
-        loading="lazy">
-      </iframe>
-    </div>
-    <p class="form-note" style="margin-top:14px;">
-      This is our storefront's homepage, built right into this page — not a live embed of their site, so it always loads reliably.
-      For events, singles, and more, use "Open in New Tab" above.
-    </p>
+
+    <div id="lorcana-grid" class="card-grid"></div>
   </div>
 </section>
 
@@ -97,14 +86,6 @@
 </footer>
 
 <script src="script.js"></script>
-<script src="descent-embed-data.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const frame = document.getElementById('descent-embed-frame');
-    if (frame && typeof DESCENT_EMBED_HTML !== 'undefined') {
-      frame.srcdoc = DESCENT_EMBED_HTML;
-    }
-  });
-</script>
+<script src="lorcana.js"></script>
 </body>
 </html>
