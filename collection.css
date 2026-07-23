@@ -80,6 +80,18 @@
   gap:52px;
   flex-wrap:wrap;
 }
+.vault-stats-rows{
+  flex-direction:column;
+  align-items:center;
+  gap:24px;
+}
+.vault-stats-row{
+  display:flex;
+  justify-content:center;
+  gap:52px;
+  flex-wrap:wrap;
+}
+
 .vault-stat{ display:flex; flex-direction:column; align-items:center; }
 .vault-stat-num{
   font-family:var(--vault-display);

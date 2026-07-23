@@ -29,6 +29,44 @@
   box-shadow:0 22px 40px -24px rgba(0,0,0,0.7);
 }
 
+.sealed-vault-plaque-art{
+  width:100%;
+  aspect-ratio:4/3;
+  border-radius:4px;
+  overflow:hidden;
+  margin-bottom:12px;
+  background:var(--vault-panel-2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.sealed-vault-plaque-art img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.vault-packs-section{
+  padding-top:0;
+  border-top:1px solid var(--vault-line);
+}
+.vault-section-heading{
+  text-align:center;
+  max-width:560px;
+  margin:0 auto 40px;
+}
+.vault-section-heading h2{
+  font-family:var(--vault-display);
+  font-size:1.8rem;
+  color:var(--vault-parch);
+  margin-bottom:8px;
+}
+.vault-section-heading p{
+  color:var(--vault-faint);
+  font-size:0.95rem;
+  line-height:1.5;
+}
+
 /* Sealed Vault cards don't have card art — give the plaque a bit
    more breathing room around the text-only content. */
 .sealed-vault-plaque-body{ padding:6px 2px; }

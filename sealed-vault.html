@@ -36,22 +36,30 @@
     <h1 class="vault-title">Sealed Vault</h1>
     <p class="vault-sub">Every booster box, case, and Pokemon Center ETB that's actually made it into storage — sealed, stacked, and accounted for.</p>
 
-    <div class="vault-stats" id="vault-stats">
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-boxes">0</span>
-        <span class="vault-stat-label">booster boxes</span>
+    <div class="vault-stats vault-stats-rows" id="vault-stats">
+      <div class="vault-stats-row">
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="stat-boxes">0</span>
+          <span class="vault-stat-label">booster boxes</span>
+        </div>
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="stat-cases">0</span>
+          <span class="vault-stat-label">sealed cases</span>
+        </div>
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="stat-etbs">0</span>
+          <span class="vault-stat-label">Pokemon Center ETBs</span>
+        </div>
       </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-cases">0</span>
-        <span class="vault-stat-label">sealed cases</span>
-      </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-etbs">0</span>
-        <span class="vault-stat-label">Pokemon Center ETBs</span>
-      </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-upc">0</span>
-        <span class="vault-stat-label">Ultra Premium Collections</span>
+      <div class="vault-stats-row">
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="stat-upc">0</span>
+          <span class="vault-stat-label">UPC's</span>
+        </div>
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="stat-packs">0</span>
+          <span class="vault-stat-label">booster packs</span>
+        </div>
       </div>
     </div>
   </div>
@@ -60,6 +68,16 @@
 <section class="section vault-body-section">
   <div class="wrap">
     <div id="vault-content"></div>
+  </div>
+</section>
+
+<section class="section vault-body-section vault-packs-section">
+  <div class="wrap">
+    <div class="vault-section-heading">
+      <h2>Individual Packs</h2>
+      <p>Loose booster packs — vintage rips and singles that don't belong to a full box.</p>
+    </div>
+    <div id="vault-packs-content"></div>
   </div>
 </section>
 
