@@ -172,6 +172,25 @@
   padding:14px;
   transition:transform .25s ease, box-shadow .25s ease;
 }
+.collection-body .vault-plaque{
+  padding-bottom:40px;
+}
+.collection-body .vault-plaque-grade{
+  position:absolute;
+  bottom:14px;
+  right:16px;
+  font-family:var(--mono);
+  font-size:0.62rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  color:var(--vault-ink);
+  background:var(--vault-gold-br);
+  padding:3px 7px;
+  border-radius:4px;
+  line-height:1.2;
+  white-space:nowrap;
+}
 .vault-plaque:hover{
   transform:translateY(-4px);
   box-shadow:0 22px 40px -24px rgba(0,0,0,0.65);

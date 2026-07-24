@@ -408,7 +408,7 @@ const LORCANA_ITEMS = [
   { name: 'Rapunzel, High Climber', set: 'Reign of Jafar', rarity: 'Enchanted', price: 0, owned: false },
   { name: 'It Means No Worries (song)', set: 'Reign of Jafar', rarity: 'Enchanted', price: 0, owned: false },
   { name: 'Into the Unknown (song)', set: 'Reign of Jafar', rarity: 'Enchanted', price: 0, owned: false },
-  { name: 'Mickey Mouse, Brave Little Prince', set: 'Fabled', rarity: 'Iconic', price: 0, owned: false },
+  { name: 'Mickey Mouse, Brave Little Prince', set: 'Fabled', rarity: 'Iconic', price: 13200, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Minnie Mouse, Sweetheart Princess', set: 'Fabled', rarity: 'Iconic', price: 0, owned: false },
   { name: 'Winnie the Pooh, Hunny Wizard', set: 'Fabled', rarity: 'Enchanted', price: 0, owned: false },
   { name: 'Circle of Life (song)', set: 'Fabled', rarity: 'Enchanted', price: 0, owned: false },

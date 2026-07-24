@@ -43,7 +43,18 @@ function buildVaultPlaque(item) {
   const rarity = document.createElement('span');
   rarity.className = 'vault-plaque-rarity';
   rarity.textContent = item.rarity || '';
+  if (item.rarity === 'Iconic') {
+    rarity.style.color = 'var(--vault-gold-br)';
+    rarity.style.fontWeight = '700';
+  }
   plaque.appendChild(rarity);
+
+  if (item.grade) {
+    const grade = document.createElement('span');
+    grade.className = 'vault-plaque-grade';
+    grade.textContent = item.grade;
+    plaque.appendChild(grade);
+  }
 
   const h3 = document.createElement('h3');
   h3.textContent = item.name || 'Untitled';
@@ -112,6 +123,8 @@ function renderVault() {
   content.innerHTML = '';
 
   const ownedItems = LORCANA_ITEMS.filter(i => i.owned);
+  const ownedIconic = ownedItems.filter(i => i.rarity === 'Iconic').length;
+  const ownedEnchanted = ownedItems.filter(i => i.rarity !== 'Iconic').length;
   let totalBoxes = 0;
   let totalCases = 0;
   Object.values(LORCANA_SET_INVENTORY).forEach(inv => {
@@ -119,12 +132,12 @@ function renderVault() {
     totalCases += inv.cases || 0;
   });
 
-  const cardsEl = document.getElementById('stat-cards');
-  const cardsTotalEl = document.getElementById('stat-cards-total');
+  const cardsIconicEl = document.getElementById('stat-cards-iconic');
+  const cardsEnchantedEl = document.getElementById('stat-cards-enchanted');
   const boxesEl = document.getElementById('stat-boxes');
   const casesEl = document.getElementById('stat-cases');
-  if (cardsEl) cardsEl.textContent = ownedItems.length;
-  if (cardsTotalEl) cardsTotalEl.textContent = LORCANA_ITEMS.length;
+  if (cardsIconicEl) cardsIconicEl.textContent = ownedIconic;
+  if (cardsEnchantedEl) cardsEnchantedEl.textContent = ownedEnchanted;
   if (boxesEl) boxesEl.textContent = totalBoxes;
   if (casesEl) casesEl.textContent = totalCases;
 
