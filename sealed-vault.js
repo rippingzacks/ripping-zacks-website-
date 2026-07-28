@@ -191,5 +191,35 @@ function renderPacksSection() {
   content.appendChild(grid);
 }
 
+function renderOtherSection() {
+  const content = document.getElementById('vault-other-content');
+  if (!content) return;
+
+  content.innerHTML = '';
+
+  const items = (typeof BOOSTERS_OTHER !== 'undefined') ? BOOSTERS_OTHER.filter(p => p.qty > 0) : [];
+
+  const totalOther = items.reduce((sum, p) => sum + (p.qty || 0), 0);
+  const otherEl = document.getElementById('stat-other');
+  if (otherEl) otherEl.textContent = totalOther;
+
+  if (items.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'vault-empty';
+    empty.innerHTML = `
+      <h3>No other sealed items yet</h3>
+      <p>Tins, deck displays, and other oddball sealed product will show up here once they arrive.</p>
+    `;
+    content.appendChild(empty);
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'vault-grid';
+  items.forEach(item => grid.appendChild(buildPackPlaque(item)));
+  content.appendChild(grid);
+}
+
 document.addEventListener('DOMContentLoaded', renderSealedVault);
 document.addEventListener('DOMContentLoaded', renderPacksSection);
+document.addEventListener('DOMContentLoaded', renderOtherSection);

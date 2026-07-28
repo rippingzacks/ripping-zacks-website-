@@ -46,6 +46,9 @@ function buildVaultPlaque(item) {
   if (item.rarity === 'Iconic') {
     rarity.style.color = 'var(--vault-gold-br)';
     rarity.style.fontWeight = '700';
+  } else if (item.rarity === 'Epic') {
+    rarity.style.color = '#ff8c1a';
+    rarity.style.fontWeight = '700';
   }
   plaque.appendChild(rarity);
 
@@ -71,9 +74,11 @@ function buildVaultPlaque(item) {
 function buildVaultSet(setName, ownedCards, inventory) {
   const key = setName.trim().toLowerCase();
   const photoSrc = LORCANA_SET_PHOTOS[key];
+  const hasStock = inventory.boosterBoxes > 0 || inventory.cases > 0 || inventory.promoSets > 0;
+  const isEmpty = ownedCards.length === 0 && !hasStock;
 
   const section = document.createElement('div');
-  section.className = 'vault-set';
+  section.className = isEmpty ? 'vault-set vault-set-empty' : 'vault-set';
 
   const header = document.createElement('div');
   header.className = 'vault-set-header';
@@ -86,25 +91,40 @@ function buildVaultSet(setName, ownedCards, inventory) {
   }
 
   const h2 = document.createElement('h2');
-  h2.textContent = setName;
+  const setNum = LORCANA_SET_NUMBERS[key];
+  h2.textContent = setNum ? `${setName} - Set ${setNum}` : setName;
   header.appendChild(h2);
 
-  if (inventory.boosterBoxes > 0 || inventory.cases > 0) {
+  if (setNum) {
+    header.appendChild(buildLorcanaRarityBadges(setName));
+  }
+
+  if (hasStock) {
     const sealed = document.createElement('span');
     sealed.className = 'vault-set-sealed';
     const parts = [];
     if (inventory.boosterBoxes > 0) parts.push(`<strong>${inventory.boosterBoxes}</strong> booster box${inventory.boosterBoxes === 1 ? '' : 'es'}`);
     if (inventory.cases > 0) parts.push(`<strong>${inventory.cases}</strong> case${inventory.cases === 1 ? '' : 's'}`);
+    if (inventory.promoSets > 0) parts.push(`<strong>${inventory.promoSets}</strong> Sealed Promo Set${inventory.promoSets === 1 ? '' : 's'}`);
     sealed.innerHTML = parts.join(' &nbsp;•&nbsp; ');
     header.appendChild(sealed);
   }
 
   section.appendChild(header);
 
+  if (isEmpty) {
+    // Compact: just the header row, no grid or placeholder paragraph.
+    return section;
+  }
+
   if (ownedCards.length > 0) {
     const grid = document.createElement('div');
     grid.className = 'vault-grid';
-    ownedCards.forEach(item => grid.appendChild(buildVaultPlaque(item)));
+    const sortedCards = [
+      ...ownedCards.filter(c => c.rarity !== 'Epic'),
+      ...ownedCards.filter(c => c.rarity === 'Epic'),
+    ];
+    sortedCards.forEach(item => grid.appendChild(buildVaultPlaque(item)));
     section.appendChild(grid);
   } else {
     const note = document.createElement('p');
@@ -127,42 +147,69 @@ function renderVault() {
   const ownedEnchanted = ownedItems.filter(i => i.rarity !== 'Iconic').length;
   let totalBoxes = 0;
   let totalCases = 0;
+  let totalPromoSets = 0;
   Object.values(LORCANA_SET_INVENTORY).forEach(inv => {
     totalBoxes += inv.boosterBoxes || 0;
     totalCases += inv.cases || 0;
+    totalPromoSets += inv.promoSets || 0;
   });
 
   const cardsIconicEl = document.getElementById('stat-cards-iconic');
   const cardsEnchantedEl = document.getElementById('stat-cards-enchanted');
   const boxesEl = document.getElementById('stat-boxes');
   const casesEl = document.getElementById('stat-cases');
+  const promoSetsEl = document.getElementById('stat-promo-sets');
   if (cardsIconicEl) cardsIconicEl.textContent = ownedIconic;
   if (cardsEnchantedEl) cardsEnchantedEl.textContent = ownedEnchanted;
   if (boxesEl) boxesEl.textContent = totalBoxes;
   if (casesEl) casesEl.textContent = totalCases;
+  if (promoSetsEl) promoSetsEl.textContent = totalPromoSets;
 
-  if (ownedItems.length === 0 && totalBoxes === 0 && totalCases === 0) {
-    renderVaultEmpty(content);
-    return;
-  }
-
-  // Walk sets in the order they first appear in LORCANA_ITEMS
+  // Walk sets in the order they first appear in LORCANA_ITEMS, then append
+  // any sealed-only sets (inventory entries with no individual cards yet),
+  // then make sure all 13 numbered mainline sets are always represented.
   const seenSets = [];
   LORCANA_ITEMS.forEach(item => {
     if (!seenSets.includes(item.set)) seenSets.push(item.set);
   });
+  Object.keys(LORCANA_SET_INVENTORY).forEach(key => {
+    const inv = LORCANA_SET_INVENTORY[key];
+    const hasStock = (inv.boosterBoxes || 0) > 0 || (inv.cases || 0) > 0 || (inv.promoSets || 0) > 0;
+    if (!hasStock) return;
+    const alreadySeen = seenSets.some(s => s.trim().toLowerCase() === key);
+    if (!alreadySeen) {
+      // Recover the properly-cased display name from LORCANA_SET_PHOTOS/ITEMS if
+      // possible; otherwise title-case the key as a reasonable fallback.
+      const display = LORCANA_SET_DISPLAY_NAMES[key] || key;
+      seenSets.push(display);
+    }
+  });
+  Object.entries(LORCANA_SET_NUMBERS)
+    .sort((a, b) => a[1] - b[1])
+    .forEach(([key]) => {
+      const alreadySeen = seenSets.some(s => s.trim().toLowerCase() === key);
+      if (!alreadySeen) {
+        const display = LORCANA_SET_DISPLAY_NAMES[key] || key;
+        seenSets.push(display);
+      }
+    });
 
   seenSets.forEach(setName => {
     const key = setName.trim().toLowerCase();
     const inventory = LORCANA_SET_INVENTORY[key] || { boosterBoxes: 0, cases: 0 };
     const ownedCards = LORCANA_ITEMS.filter(i => i.set === setName && i.owned);
+    const isNumberedSet = !!LORCANA_SET_NUMBERS[key];
 
-    if (ownedCards.length === 0 && inventory.boosterBoxes === 0 && inventory.cases === 0) {
-      return; // nothing to show for this set
+    const hasAnything = ownedCards.length > 0 || inventory.boosterBoxes > 0 || inventory.cases > 0 || inventory.promoSets > 0;
+    if (!hasAnything && !isNumberedSet) {
+      return; // nothing to show, and not one of the 13 mainline sets
     }
 
     content.appendChild(buildVaultSet(setName, ownedCards, inventory));
   });
 }
 
-document.addEventListener('DOMContentLoaded', renderVault);
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof renderLorcanaRarityLegend === 'function') renderLorcanaRarityLegend();
+  renderVault();
+});

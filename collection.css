@@ -124,6 +124,8 @@
 }
 
 .vault-set{ margin-bottom:64px; }
+.vault-set-empty{ margin-bottom:64px; }
+.vault-set-empty .vault-set-header{ margin-bottom:0; }
 .vault-set-header{
   display:flex;
   align-items:center;
