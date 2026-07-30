@@ -38,14 +38,29 @@ function buildSlabVaultPlaque(item) {
     plaque.appendChild(art);
   }
 
-  const no = document.createElement('span');
-  no.className = 'vault-plaque-rarity';
-  no.textContent = item.no || '';
-  plaque.appendChild(no);
-
   const h3 = document.createElement('h3');
   h3.textContent = item.name || 'Untitled';
   plaque.appendChild(h3);
+
+  if (item.set) {
+    const setLine = document.createElement('a');
+    setLine.className = 'vault-plaque-set';
+    setLine.href = '#';
+    setLine.onclick = (e) => e.preventDefault();
+    setLine.textContent = item.set;
+    plaque.appendChild(setLine);
+  }
+
+  const no = document.createElement('span');
+  no.className = 'vault-plaque-rarity';
+  if (item.rarity && item.no) {
+    no.textContent = `${item.rarity} \u2022 ${item.no}`;
+  } else if (item.rarity) {
+    no.textContent = item.rarity;
+  } else {
+    no.textContent = item.no || '';
+  }
+  plaque.appendChild(no);
 
   if (item.grade || item.note) {
     const badgeRow = document.createElement('div');
@@ -71,6 +86,36 @@ function buildSlabVaultPlaque(item) {
   return plaque;
 }
 
+function buildSlabSeriesBanner(seriesName, cards) {
+  const banner = document.createElement('div');
+  banner.className = 'slab-series-banner';
+
+  const corner1 = document.createElement('span'); corner1.className = 'slab-series-corner slab-series-corner-tl';
+  const corner2 = document.createElement('span'); corner2.className = 'slab-series-corner slab-series-corner-br';
+  banner.appendChild(corner1);
+  banner.appendChild(corner2);
+
+  const titleRow = document.createElement('div');
+  titleRow.className = 'slab-series-title-row';
+
+  const h2 = document.createElement('h2');
+  h2.className = 'slab-series-title';
+  h2.textContent = seriesName;
+  titleRow.appendChild(h2);
+
+  const stats = document.createElement('div');
+  stats.className = 'slab-series-stats';
+  stats.innerHTML = `<span><strong>${cards.length}</strong> slab${cards.length === 1 ? '' : 's'}</span>`;
+  titleRow.appendChild(stats);
+
+  banner.appendChild(titleRow);
+  const rule = document.createElement('div');
+  rule.className = 'slab-series-rule';
+  banner.appendChild(rule);
+
+  return banner;
+}
+
 function renderSlabVault() {
   const content = document.getElementById('vault-content');
   if (!content) return;
@@ -84,10 +129,42 @@ function renderSlabVault() {
     return;
   }
 
-  const grid = document.createElement('div');
-  grid.className = 'vault-grid';
-  ownedItems.forEach(item => grid.appendChild(buildSlabVaultPlaque(item)));
-  content.appendChild(grid);
+  const seriesPriority = [
+    'Scarlet & Violet: Black Bolt & White Flare',
+    'Vending Series 3 (Green)',
+    "Poncho Pikachu's",
+    'Other Slabs',
+  ];
+  const seriesOrder = [];
+  ownedItems.forEach(item => {
+    const key = item.series || null;
+    if (key && !seriesOrder.includes(key)) seriesOrder.push(key);
+  });
+  seriesOrder.sort((a, b) => {
+    const ai = seriesPriority.indexOf(a);
+    const bi = seriesPriority.indexOf(b);
+    if (ai === -1 && bi === -1) return 0;
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+
+  const unSeriesed = ownedItems.filter(i => !i.series);
+  if (unSeriesed.length > 0) {
+    const grid = document.createElement('div');
+    grid.className = 'vault-grid';
+    unSeriesed.forEach(item => grid.appendChild(buildSlabVaultPlaque(item)));
+    content.appendChild(grid);
+  }
+
+  seriesOrder.forEach(seriesName => {
+    const cards = ownedItems.filter(i => i.series === seriesName);
+    content.appendChild(buildSlabSeriesBanner(seriesName, cards));
+    const grid = document.createElement('div');
+    grid.className = 'vault-grid';
+    cards.forEach(item => grid.appendChild(buildSlabVaultPlaque(item)));
+    content.appendChild(grid);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', renderSlabVault);

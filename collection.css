@@ -242,4 +242,10 @@
   font-family:var(--mono);
   font-size:0.7rem;
   color:var(--vault-faint);
+  display:block;
+  text-decoration:underline;
+  text-decoration-color:var(--vault-line);
+  text-underline-offset:2px;
+  margin-bottom:4px;
+  cursor:default;
 }
