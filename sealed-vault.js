@@ -16,7 +16,7 @@ function renderSealedVaultEmpty(container) {
   container.appendChild(empty);
 }
 
-function buildSealedVaultPlaque(item, inventory, key) {
+function buildSealedVaultPlaque(item, inventory, key, mode) {
   const plaque = document.createElement('article');
   plaque.className = 'vault-plaque';
 
@@ -25,7 +25,19 @@ function buildSealedVaultPlaque(item, inventory, key) {
   plaque.appendChild(corner1);
   plaque.appendChild(corner2);
 
-  const photoSrc = (typeof BOOSTERS_SET_PHOTOS !== 'undefined') ? BOOSTERS_SET_PHOTOS[key] : null;
+  let photoSrc = null;
+  if (mode === 'etb') {
+    photoSrc = (typeof BOOSTERS_SET_PHOTOS_ETB !== 'undefined') ? BOOSTERS_SET_PHOTOS_ETB[key] : null;
+    // deliberately no fallback to the box photo here -- showing the same
+    // booster box image on both the box and ETB entries for a set looked
+    // like a duplicate/mistake. Better to show no photo than the wrong one.
+  } else if (mode === 'upc') {
+    photoSrc = (typeof BOOSTERS_SET_PHOTOS_UPC !== 'undefined') ? BOOSTERS_SET_PHOTOS_UPC[key] : null;
+    // same principle as ETB -- UPC gets its own dedicated photo, never
+    // borrowed from the box/case photo for this set.
+  } else {
+    photoSrc = (typeof BOOSTERS_SET_PHOTOS !== 'undefined') ? BOOSTERS_SET_PHOTOS[key] : null;
+  }
   if (photoSrc) {
     const art = document.createElement('div');
     art.className = 'sealed-vault-plaque-art';
@@ -62,26 +74,34 @@ function buildSealedVaultPlaque(item, inventory, key) {
     return row;
   }
 
-  body.appendChild(buildQtyLine('Booster Boxes', inventory.boosterBoxes));
-  body.appendChild(buildQtyLine('Cases', inventory.cases));
-  body.appendChild(buildQtyLine('Pokemon Center ETBs', inventory.etbs));
-  body.appendChild(buildQtyLine('Ultra Premium Collections', inventory.upc));
+  if (mode === 'etb') {
+    body.appendChild(buildQtyLine('Pokemon Center ETBs', inventory.etbs));
+  } else if (mode === 'upc') {
+    body.appendChild(buildQtyLine('Ultra Premium Collections', inventory.upc));
+  } else {
+    body.appendChild(buildQtyLine('Booster Boxes', inventory.boosterBoxes));
+    body.appendChild(buildQtyLine('Cases', inventory.cases));
+  }
 
   plaque.appendChild(body);
   return plaque;
 }
 
 function renderSealedVault() {
-  const content = document.getElementById('vault-content');
-  if (!content) return;
+  const boxesContent = document.getElementById('vault-content');
+  const etbContent = document.getElementById('vault-etb-content');
+  if (!boxesContent && !etbContent) return;
 
-  content.innerHTML = '';
+  if (boxesContent) boxesContent.innerHTML = '';
+  if (etbContent) etbContent.innerHTML = '';
 
   let totalBoxes = 0;
   let totalCases = 0;
   let totalEtbs = 0;
   let totalUpc = 0;
-  const ownedSets = [];
+  const boxSets = [];
+  const etbSets = [];
+  const upcSets = [];
 
   BOOSTERS_ITEMS.forEach(item => {
     const key = itemKeyFor(item.name);
@@ -90,8 +110,14 @@ function renderSealedVault() {
     totalCases += inventory.cases || 0;
     totalEtbs += inventory.etbs || 0;
     totalUpc += inventory.upc || 0;
-    if (inventory.boosterBoxes > 0 || inventory.cases > 0 || inventory.etbs > 0 || inventory.upc > 0) {
-      ownedSets.push({ item, inventory, key });
+    if (inventory.boosterBoxes > 0 || inventory.cases > 0) {
+      boxSets.push({ item, inventory, key });
+    }
+    if (inventory.etbs > 0) {
+      etbSets.push({ item, inventory, key });
+    }
+    if (inventory.upc > 0) {
+      upcSets.push({ item, inventory, key });
     }
   });
 
@@ -104,15 +130,36 @@ function renderSealedVault() {
   if (etbsEl) etbsEl.textContent = totalEtbs;
   if (upcEl) upcEl.textContent = totalUpc;
 
-  if (ownedSets.length === 0) {
-    renderSealedVaultEmpty(content);
-    return;
+  if (boxesContent) {
+    if (boxSets.length === 0) {
+      renderSealedVaultEmpty(boxesContent);
+    } else {
+      const grid = document.createElement('div');
+      grid.className = 'vault-grid';
+      boxSets.forEach(({ item, inventory, key }) => grid.appendChild(buildSealedVaultPlaque(item, inventory, key, 'box')));
+      boxesContent.appendChild(grid);
+    }
   }
 
-  const grid = document.createElement('div');
-  grid.className = 'vault-grid';
-  ownedSets.forEach(({ item, inventory, key }) => grid.appendChild(buildSealedVaultPlaque(item, inventory, key)));
-  content.appendChild(grid);
+  if (etbContent) {
+    if (etbSets.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'vault-empty';
+      empty.innerHTML = `
+        <h3>No ETBs yet</h3>
+        <p>Nothing sealed in this category has made it into storage yet — check back once the first one arrives.</p>
+      `;
+      etbContent.appendChild(empty);
+    } else {
+      const grid = document.createElement('div');
+      grid.className = 'vault-grid';
+      etbSets.forEach(({ item, inventory, key }) => grid.appendChild(buildSealedVaultPlaque(item, inventory, key, 'etb')));
+      etbContent.appendChild(grid);
+    }
+  }
+
+  // stash for renderOtherSection to pick up alongside BOOSTERS_OTHER
+  window.__sealedVaultUpcSets = upcSets;
 }
 
 function buildPackPlaque(pack) {
@@ -198,17 +245,19 @@ function renderOtherSection() {
   content.innerHTML = '';
 
   const items = (typeof BOOSTERS_OTHER !== 'undefined') ? BOOSTERS_OTHER.filter(p => p.qty > 0) : [];
+  const upcSets = window.__sealedVaultUpcSets || [];
 
-  const totalOther = items.reduce((sum, p) => sum + (p.qty || 0), 0);
+  const totalOther = items.reduce((sum, p) => sum + (p.qty || 0), 0)
+    + upcSets.reduce((sum, s) => sum + (s.inventory.upc || 0), 0);
   const otherEl = document.getElementById('stat-other');
   if (otherEl) otherEl.textContent = totalOther;
 
-  if (items.length === 0) {
+  if (items.length === 0 && upcSets.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'vault-empty';
     empty.innerHTML = `
       <h3>No other sealed items yet</h3>
-      <p>Tins, deck displays, and other oddball sealed product will show up here once they arrive.</p>
+      <p>Tins, deck displays, Ultra Premium Collections, and other oddball sealed product will show up here once they arrive.</p>
     `;
     content.appendChild(empty);
     return;
@@ -216,6 +265,7 @@ function renderOtherSection() {
 
   const grid = document.createElement('div');
   grid.className = 'vault-grid';
+  upcSets.forEach(({ item, inventory, key }) => grid.appendChild(buildSealedVaultPlaque(item, inventory, key, 'upc')));
   items.forEach(item => grid.appendChild(buildPackPlaque(item)));
   content.appendChild(grid);
 }
