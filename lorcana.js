@@ -409,7 +409,7 @@ const LORCANA_ITEMS = [
   { name: 'Snow White, Well Wisher', set: 'Rise of the Floodborn', rarity: 'Enchanted', price: 0, owned: false },
   { name: 'Beast, Relentless', set: 'Rise of the Floodborn', rarity: 'Enchanted', price: 0, owned: false },
   { name: 'Hercules, Divine Hero', set: 'Rise of the Floodborn', rarity: 'Enchanted', price: 0, owned: false },
-  { name: 'Shere Khan, Menacing Predator', set: 'Rise of the Floodborn', rarity: 'Enchanted', price: 0, owned: false },
+  { name: 'Shere Khan, Menacing Predator', set: 'Rise of the Floodborn', rarity: 'Enchanted', price: 165, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: "Arthur, Wizard's Apprentice", set: 'Rise of the Floodborn', rarity: 'Enchanted', price: 0, owned: false },
   { name: 'Lady Tremaine, Imperious Queen', set: 'Rise of the Floodborn', rarity: 'Enchanted', price: 0, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Sisu, Divine Water Dragon', set: 'Rise of the Floodborn', rarity: 'Enchanted', price: 0, owned: false },

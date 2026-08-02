@@ -80,40 +80,57 @@ function buildVaultSet(setName, ownedCards, inventory) {
   const section = document.createElement('div');
   section.className = isEmpty ? 'vault-set vault-set-empty' : 'vault-set';
 
-  const header = document.createElement('div');
-  header.className = 'vault-set-header';
+  const banner = document.createElement('div');
+  banner.className = 'vault-series-banner';
 
+  const corner1 = document.createElement('span'); corner1.className = 'vault-series-corner vault-series-corner-tl';
+  const corner2 = document.createElement('span'); corner2.className = 'vault-series-corner vault-series-corner-br';
+  banner.appendChild(corner1);
+  banner.appendChild(corner2);
+
+  const titleRow = document.createElement('div');
+  titleRow.className = 'vault-series-title-row';
+
+  const titleGroup = document.createElement('div');
+  titleGroup.className = 'vault-series-title-group';
   if (photoSrc) {
     const img = document.createElement('img');
     img.src = photoSrc;
     img.alt = setName;
-    header.appendChild(img);
+    titleGroup.appendChild(img);
   }
-
   const h2 = document.createElement('h2');
+  h2.className = 'vault-series-title';
   const setNum = LORCANA_SET_NUMBERS[key];
   h2.textContent = setNum ? `${setName} - Set ${setNum}` : setName;
-  header.appendChild(h2);
+  titleGroup.appendChild(h2);
+  titleRow.appendChild(titleGroup);
 
+  const stats = document.createElement('div');
+  stats.className = 'vault-series-stats';
   if (setNum) {
-    header.appendChild(buildLorcanaRarityBadges(setName));
+    stats.appendChild(buildLorcanaRarityBadges(setName));
   }
-
   if (hasStock) {
     const sealed = document.createElement('span');
-    sealed.className = 'vault-set-sealed';
     const parts = [];
     if (inventory.boosterBoxes > 0) parts.push(`<strong>${inventory.boosterBoxes}</strong> booster box${inventory.boosterBoxes === 1 ? '' : 'es'}`);
     if (inventory.cases > 0) parts.push(`<strong>${inventory.cases}</strong> case${inventory.cases === 1 ? '' : 's'}`);
     if (inventory.promoSets > 0) parts.push(`<strong>${inventory.promoSets}</strong> Sealed Promo Set${inventory.promoSets === 1 ? '' : 's'}`);
-    sealed.innerHTML = parts.join(' &nbsp;•&nbsp; ');
-    header.appendChild(sealed);
+    sealed.innerHTML = parts.join(' <span class="vault-series-stats-divider">&nbsp;•&nbsp;</span> ');
+    stats.appendChild(sealed);
   }
+  titleRow.appendChild(stats);
 
-  section.appendChild(header);
+  banner.appendChild(titleRow);
+  const rule = document.createElement('div');
+  rule.className = 'vault-series-rule';
+  banner.appendChild(rule);
+
+  section.appendChild(banner);
 
   if (isEmpty) {
-    // Compact: just the header row, no grid or placeholder paragraph.
+    // Compact: just the banner row, no grid or placeholder paragraph.
     return section;
   }
 

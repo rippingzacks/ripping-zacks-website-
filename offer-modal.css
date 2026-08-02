@@ -1,0 +1,182 @@
+/* ============================================================
+   MAKE AN OFFER — shared across Lorcana Vault, Slab Vault, and
+   Sealed Vault. Themed entirely through each page's existing
+   --vault-* custom properties, so it automatically matches
+   whichever vault it's dropped into. No page-specific colors
+   defined here.
+   ============================================================ */
+
+/* ---- Clickable-card hover cue ---- */
+.vault-plaque{ cursor:pointer; }
+.vault-plaque-art,
+.sealed-vault-plaque-art{ position:relative; }
+.vault-plaque-art img,
+.sealed-vault-plaque-art img{ transition:transform .35s ease; }
+.vault-plaque:hover .vault-plaque-art img,
+.vault-plaque:hover .sealed-vault-plaque-art img{ transform:scale(1.06); }
+
+.vault-plaque-art::after,
+.sealed-vault-plaque-art::after{
+  content:'Make an Offer';
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding-bottom:14px;
+  background:linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.74) 100%);
+  color:#fff;
+  font-family:var(--mono);
+  font-size:0.72rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  opacity:0;
+  transition:opacity .25s ease;
+  pointer-events:none;
+}
+.vault-plaque:hover .vault-plaque-art::after,
+.vault-plaque:hover .sealed-vault-plaque-art::after{
+  opacity:1;
+}
+
+/* Cards with no photo don't get the image scrim, but should still
+   read as clickable — a soft glow on the card border does the job. */
+.vault-plaque:hover{
+  outline:1px solid var(--vault-gold-br);
+  outline-offset:-1px;
+}
+
+/* ---- Modal overlay ---- */
+.offer-modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(0,0,0,0.68);
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.offer-modal-overlay.is-open{ display:flex; }
+
+.offer-modal{
+  position:relative;
+  width:100%;
+  max-width:440px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:linear-gradient(180deg, var(--vault-panel-2), var(--vault-panel));
+  border:1px solid var(--vault-line);
+  border-radius:16px;
+  padding:32px 28px 28px;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
+}
+
+.offer-modal-close{
+  position:absolute;
+  top:14px;
+  right:16px;
+  background:none;
+  border:none;
+  color:var(--vault-faint);
+  font-size:1.6rem;
+  line-height:1;
+  cursor:pointer;
+  padding:4px;
+}
+.offer-modal-close:hover{ color:var(--vault-parch); }
+
+.offer-modal-title{
+  font-family:var(--vault-display);
+  font-size:1.4rem;
+  color:var(--vault-parch);
+  margin:0 0 6px;
+}
+.offer-modal-item{
+  font-family:var(--mono);
+  font-size:0.82rem;
+  color:var(--vault-gold-br);
+  margin:0 0 22px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--vault-line);
+}
+
+.offer-hidden-field{
+  position:absolute;
+  left:-9999px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+.offer-field{
+  display:block;
+  margin-bottom:16px;
+}
+.offer-field span{
+  display:block;
+  font-family:var(--mono);
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--vault-faint);
+  margin-bottom:6px;
+}
+.offer-field input,
+.offer-field textarea{
+  width:100%;
+  background:var(--vault-ink);
+  border:1px solid var(--vault-line);
+  border-radius:8px;
+  padding:10px 12px;
+  color:var(--vault-parch);
+  font-family:var(--body);
+  font-size:0.92rem;
+  box-sizing:border-box;
+}
+.offer-field input:focus,
+.offer-field textarea:focus{
+  outline:none;
+  border-color:var(--vault-gold-br);
+}
+.offer-field textarea{ resize:vertical; }
+
+.offer-submit-btn{
+  width:100%;
+  padding:12px 18px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(90deg, var(--vault-glimmer), var(--vault-gold-br) 60%, var(--vault-gold));
+  color:var(--vault-ink);
+  font-family:var(--mono);
+  font-weight:700;
+  font-size:0.86rem;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  margin-top:4px;
+}
+.offer-submit-btn:hover{ filter:brightness(1.06); }
+
+.offer-form-note{
+  font-size:0.76rem;
+  line-height:1.5;
+  color:var(--vault-faint);
+  margin:14px 0 0;
+  text-align:center;
+}
+
+.offer-success h4{
+  font-family:var(--vault-display);
+  color:var(--vault-gold-br);
+  font-size:1.2rem;
+  margin:0 0 8px;
+}
+.offer-success p,
+.offer-error p{
+  color:var(--vault-faint);
+  font-size:0.92rem;
+  line-height:1.5;
+  margin:0;
+}

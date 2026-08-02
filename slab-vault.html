@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="collection.css">
+<link rel="stylesheet" href="offer-modal.css">
 <link rel="stylesheet" href="slab-vault.css">
 </head>
 <body class="vault-body slab-vault-body">
@@ -85,5 +86,47 @@
 <script src="script.js"></script>
 <script src="marketing.js"></script>
 <script src="slab-vault.js"></script>
+<div class="offer-modal-overlay" id="offer-modal-overlay">
+  <div class="offer-modal" role="dialog" aria-modal="true" aria-labelledby="offer-modal-title">
+    <button type="button" class="offer-modal-close" id="offer-modal-close" aria-label="Close">&times;</button>
+    <h3 id="offer-modal-title" class="offer-modal-title">Make an Offer</h3>
+    <p class="offer-modal-item" id="offer-modal-item-name">Item Name</p>
+
+    <form name="card-offer" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="offer-form" class="offer-form">
+      <input type="hidden" name="form-name" value="card-offer">
+      <p class="offer-hidden-field"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+      <input type="hidden" name="item" id="offer-item-input">
+
+      <label class="offer-field">
+        <span>Your Offer ($)</span>
+        <input type="number" name="offer" min="1" step="1" required>
+      </label>
+      <label class="offer-field">
+        <span>Your Name</span>
+        <input type="text" name="name" required>
+      </label>
+      <label class="offer-field">
+        <span>Email or Phone</span>
+        <input type="text" name="contact" required>
+      </label>
+      <label class="offer-field">
+        <span>Message (optional)</span>
+        <textarea name="message" rows="3"></textarea>
+      </label>
+
+      <button type="submit" class="offer-submit-btn">Send Offer</button>
+      <p class="offer-form-note">Offers are reviewed manually. If accepted, payment is handled directly via Venmo or Zelle.</p>
+    </form>
+
+    <div class="offer-success" id="offer-success" hidden>
+      <h4>Offer sent!</h4>
+      <p>Thanks — we'll review it and reach out using the contact info you provided.</p>
+    </div>
+    <div class="offer-error" id="offer-error" hidden>
+      <p>Something went wrong sending your offer. Please try again, or reach out directly via the Contact page.</p>
+    </div>
+  </div>
+</div>
+<script src="offer-modal.js"></script>
 </body>
 </html>

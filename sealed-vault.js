@@ -130,6 +130,11 @@ function renderSealedVault() {
   if (etbsEl) etbsEl.textContent = totalEtbs;
   if (upcEl) upcEl.textContent = totalUpc;
 
+  const sectionBoxesEl = document.getElementById('section-stat-boxes');
+  const sectionEtbsEl = document.getElementById('section-stat-etbs');
+  if (sectionBoxesEl) sectionBoxesEl.textContent = boxSets.length;
+  if (sectionEtbsEl) sectionEtbsEl.textContent = etbSets.length;
+
   if (boxesContent) {
     if (boxSets.length === 0) {
       renderSealedVaultEmpty(boxesContent);
@@ -220,6 +225,8 @@ function renderPacksSection() {
   const totalPacks = packs.reduce((sum, p) => sum + (p.qty || 0), 0);
   const packsEl = document.getElementById('stat-packs');
   if (packsEl) packsEl.textContent = totalPacks;
+  const sectionPacksEl = document.getElementById('section-stat-packs');
+  if (sectionPacksEl) sectionPacksEl.textContent = totalPacks;
 
   if (packs.length === 0) {
     const empty = document.createElement('div');
@@ -251,6 +258,8 @@ function renderOtherSection() {
     + upcSets.reduce((sum, s) => sum + (s.inventory.upc || 0), 0);
   const otherEl = document.getElementById('stat-other');
   if (otherEl) otherEl.textContent = totalOther;
+  const sectionOtherEl = document.getElementById('section-stat-other');
+  if (sectionOtherEl) sectionOtherEl.textContent = totalOther;
 
   if (items.length === 0 && upcSets.length === 0) {
     const empty = document.createElement('div');
@@ -270,6 +279,92 @@ function renderOtherSection() {
   content.appendChild(grid);
 }
 
+// ------------------------------------------------------------
+// MAGIC: THE GATHERING — TEENAGE MUTANT NINJA TURTLES
+// Reads MAGIC_TMNT_ITEMS / MAGIC_TMNT_PHOTOS from magic-tmnt.js.
+// Rendered as its own highlighted section, styled via the
+// .tmnt-highlight color overrides in sealed-vault.css.
+// ------------------------------------------------------------
+function buildTmntPlaque(item) {
+  const plaque = document.createElement('article');
+  plaque.className = 'vault-plaque';
+
+  const corner1 = document.createElement('span'); corner1.className = 'corner-bl';
+  const corner2 = document.createElement('span'); corner2.className = 'corner-br';
+  plaque.appendChild(corner1);
+  plaque.appendChild(corner2);
+
+  const key = item.name.trim().toLowerCase();
+  const photoSrc = (typeof MAGIC_TMNT_PHOTOS !== 'undefined') ? MAGIC_TMNT_PHOTOS[key] : null;
+  if (photoSrc) {
+    const art = document.createElement('div');
+    art.className = 'sealed-vault-plaque-art';
+    const img = document.createElement('img');
+    img.src = photoSrc;
+    img.alt = item.name || 'Sealed product';
+    img.loading = 'lazy';
+    art.appendChild(img);
+    plaque.appendChild(art);
+  }
+
+  const body = document.createElement('div');
+  body.className = 'sealed-vault-plaque-body';
+
+  const tag = document.createElement('span');
+  tag.className = 'vault-plaque-rarity';
+  tag.textContent = 'Magic: The Gathering';
+  body.appendChild(tag);
+
+  const h3 = document.createElement('h3');
+  h3.textContent = item.short || item.name || 'Untitled';
+  body.appendChild(h3);
+
+  const qtyRow = document.createElement('div');
+  qtyRow.className = 'sealed-vault-plaque-qty';
+  const qtyLbl = document.createElement('span');
+  qtyLbl.textContent = 'Units';
+  const qtyVal = document.createElement('span');
+  qtyVal.textContent = String(item.qty || 0);
+  qtyRow.appendChild(qtyLbl);
+  qtyRow.appendChild(qtyVal);
+  body.appendChild(qtyRow);
+
+  plaque.appendChild(body);
+  return plaque;
+}
+
+function renderTmntSection() {
+  const content = document.getElementById('vault-tmnt-content');
+  if (!content) return;
+
+  content.innerHTML = '';
+
+  const items = (typeof MAGIC_TMNT_ITEMS !== 'undefined') ? MAGIC_TMNT_ITEMS : [];
+  const totalItems = items.reduce((sum, i) => sum + (i.qty || 0), 0);
+
+  const statEl = document.getElementById('section-stat-tmnt');
+  if (statEl) statEl.textContent = totalItems;
+  const heroStatEl = document.getElementById('stat-tmnt');
+  if (heroStatEl) heroStatEl.textContent = totalItems;
+
+  if (items.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'vault-empty';
+    empty.innerHTML = `
+      <h3>No TMNT sealed product yet</h3>
+      <p>Cowabunga's on hold — check back once the first turtle box shows up.</p>
+    `;
+    content.appendChild(empty);
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'vault-grid';
+  items.forEach(item => grid.appendChild(buildTmntPlaque(item)));
+  content.appendChild(grid);
+}
+
 document.addEventListener('DOMContentLoaded', renderSealedVault);
 document.addEventListener('DOMContentLoaded', renderPacksSection);
 document.addEventListener('DOMContentLoaded', renderOtherSection);
+document.addEventListener('DOMContentLoaded', renderTmntSection);

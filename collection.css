@@ -125,38 +125,7 @@
 
 .vault-set{ margin-bottom:64px; }
 .vault-set-empty{ margin-bottom:64px; }
-.vault-set-empty .vault-set-header{ margin-bottom:0; }
-.vault-set-header{
-  display:flex;
-  align-items:center;
-  gap:18px;
-  flex-wrap:wrap;
-  margin-bottom:26px;
-  padding-bottom:16px;
-  border-bottom:1px solid var(--vault-line);
-}
-.vault-set-header img{
-  width:56px;
-  height:56px;
-  object-fit:contain;
-  border-radius:8px;
-  border:1px solid var(--vault-line);
-  background:var(--vault-panel);
-}
-.vault-set-header h2{
-  font-family:var(--vault-display);
-  font-size:1.4rem;
-  color:var(--vault-parch);
-  margin:0;
-  margin-right:auto;
-}
-.vault-set-sealed{
-  font-family:var(--mono);
-  font-size:0.78rem;
-  color:var(--vault-gold);
-  letter-spacing:0.03em;
-}
-.vault-set-sealed strong{ color:var(--vault-gold-br); }
+.vault-set-empty .vault-series-banner{ margin-bottom:0; }
 
 .vault-grid{
   display:grid;
@@ -248,4 +217,108 @@
   text-underline-offset:2px;
   margin-bottom:4px;
   cursor:default;
+}
+
+/* ============================================================
+   SHARED "DISTINCT SECTION" BANNER
+   Generic version of the Slab Vault series-banner treatment —
+   gradient panel, corner brackets, gradient title text, a stats
+   readout, and an underline rule. Built entirely from each
+   page's own --vault-* theme tokens, so it automatically renders
+   in violet/gold on Lorcana, teal/cyan on Sealed, amber on Slab,
+   with zero page-specific color rules needed here.
+   ============================================================ */
+.vault-series-banner{
+  position:relative;
+  margin:56px 0 28px;
+  padding:22px 28px;
+  border-radius:16px;
+  background:
+    radial-gradient(ellipse at 15% 0%, color-mix(in srgb, var(--vault-glimmer) 16%, transparent), transparent 55%),
+    linear-gradient(135deg, var(--vault-panel-2), var(--vault-panel));
+  border:1px solid var(--vault-line);
+  box-shadow:0 18px 36px -26px rgba(0,0,0,0.65), inset 0 1px 0 color-mix(in srgb, var(--vault-glimmer) 8%, transparent);
+}
+.vault-grid + .vault-series-banner,
+.vault-series-banner:first-child{
+  margin-top:0;
+}
+.vault-series-corner{
+  position:absolute;
+  width:22px;
+  height:22px;
+  border-color:var(--vault-gold-br);
+  border-style:solid;
+  opacity:0.85;
+}
+.vault-series-corner-tl{
+  top:8px; left:8px;
+  border-width:2px 0 0 2px;
+  border-top-left-radius:6px;
+}
+.vault-series-corner-br{
+  bottom:8px; right:8px;
+  border-width:0 2px 2px 0;
+  border-bottom-right-radius:6px;
+}
+.vault-series-title-row{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px 20px;
+}
+.vault-series-title-row img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+  border-radius:8px;
+  border:1px solid var(--vault-line);
+  background:var(--vault-panel);
+  margin-right:14px;
+  vertical-align:middle;
+}
+.vault-series-title-group{
+  display:flex;
+  align-items:center;
+}
+.vault-series-title{
+  font-family:var(--vault-display);
+  font-size:1.5rem;
+  font-weight:700;
+  letter-spacing:0.02em;
+  margin:0;
+  background:linear-gradient(90deg, var(--vault-glimmer), var(--vault-gold-br) 60%, var(--vault-gold));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.vault-series-stats{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--mono);
+  font-size:0.78rem;
+  color:var(--vault-faint);
+  white-space:nowrap;
+  flex-wrap:wrap;
+}
+.vault-series-stats strong{
+  color:var(--vault-gold-br);
+  font-weight:700;
+}
+.vault-series-stats-divider{
+  color:var(--vault-line);
+}
+.vault-series-rule{
+  margin-top:14px;
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg, var(--vault-gold-br), transparent 85%);
+}
+.vault-series-desc{
+  margin:14px 0 0;
+  color:var(--vault-faint);
+  font-size:0.92rem;
+  line-height:1.5;
 }

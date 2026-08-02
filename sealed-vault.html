@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="collection.css">
+<link rel="stylesheet" href="offer-modal.css">
 <link rel="stylesheet" href="sealed-vault.css">
 </head>
 <body class="vault-body sealed-vault-body">
@@ -60,6 +61,10 @@
           <span class="vault-stat-num" id="stat-other">0</span>
           <span class="vault-stat-label">other sealed items</span>
         </div>
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="stat-tmnt">0</span>
+          <span class="vault-stat-label">TMNT sealed items</span>
+        </div>
       </div>
     </div>
   </div>
@@ -67,9 +72,19 @@
 
 <section class="section vault-body-section">
   <div class="wrap">
-    <div class="vault-section-heading">
-      <h2>Booster Boxes &amp; Cases</h2>
-      <p>Full boxes and sealed cases, organized by set.</p>
+    <div class="vault-series-banner">
+      <span class="vault-series-corner vault-series-corner-tl"></span>
+      <span class="vault-series-corner vault-series-corner-br"></span>
+      <div class="vault-series-title-row">
+        <div class="vault-series-title-group">
+          <h2 class="vault-series-title">Booster Boxes &amp; Cases</h2>
+        </div>
+        <div class="vault-series-stats">
+          <span><strong id="section-stat-boxes">0</strong> sets with boxes/cases</span>
+        </div>
+      </div>
+      <div class="vault-series-rule"></div>
+      <p class="vault-series-desc">Full boxes and sealed cases, organized by set.</p>
     </div>
     <div id="vault-content"></div>
   </div>
@@ -77,9 +92,19 @@
 
 <section class="section vault-body-section">
   <div class="wrap">
-    <div class="vault-section-heading">
-      <h2>Pokemon Center ETBs</h2>
-      <p>Elite Trainer Boxes, organized by set.</p>
+    <div class="vault-series-banner">
+      <span class="vault-series-corner vault-series-corner-tl"></span>
+      <span class="vault-series-corner vault-series-corner-br"></span>
+      <div class="vault-series-title-row">
+        <div class="vault-series-title-group">
+          <h2 class="vault-series-title">Pokemon Center ETBs</h2>
+        </div>
+        <div class="vault-series-stats">
+          <span><strong id="section-stat-etbs">0</strong> ETBs</span>
+        </div>
+      </div>
+      <div class="vault-series-rule"></div>
+      <p class="vault-series-desc">Elite Trainer Boxes, organized by set.</p>
     </div>
     <div id="vault-etb-content"></div>
   </div>
@@ -87,9 +112,19 @@
 
 <section class="section vault-body-section vault-packs-section">
   <div class="wrap">
-    <div class="vault-section-heading">
-      <h2>Individual Packs</h2>
-      <p>Loose booster packs — vintage rips and singles that don't belong to a full box.</p>
+    <div class="vault-series-banner">
+      <span class="vault-series-corner vault-series-corner-tl"></span>
+      <span class="vault-series-corner vault-series-corner-br"></span>
+      <div class="vault-series-title-row">
+        <div class="vault-series-title-group">
+          <h2 class="vault-series-title">Individual Packs</h2>
+        </div>
+        <div class="vault-series-stats">
+          <span><strong id="section-stat-packs">0</strong> packs</span>
+        </div>
+      </div>
+      <div class="vault-series-rule"></div>
+      <p class="vault-series-desc">Loose booster packs — vintage rips and singles that don't belong to a full box.</p>
     </div>
     <div id="vault-packs-content"></div>
   </div>
@@ -97,11 +132,42 @@
 
 <section class="section vault-body-section vault-other-section">
   <div class="wrap">
-    <div class="vault-section-heading">
-      <h2>Other Sealed Items</h2>
-      <p>Ultra Premium Collections, tins, deck displays, and other sealed product that isn't a booster box, case, or pack.</p>
+    <div class="vault-series-banner">
+      <span class="vault-series-corner vault-series-corner-tl"></span>
+      <span class="vault-series-corner vault-series-corner-br"></span>
+      <div class="vault-series-title-row">
+        <div class="vault-series-title-group">
+          <h2 class="vault-series-title">Other Sealed Items</h2>
+        </div>
+        <div class="vault-series-stats">
+          <span><strong id="section-stat-other">0</strong> items</span>
+        </div>
+      </div>
+      <div class="vault-series-rule"></div>
+      <p class="vault-series-desc">Ultra Premium Collections, tins, deck displays, and other sealed product that isn't a booster box, case, or pack.</p>
     </div>
     <div id="vault-other-content"></div>
+  </div>
+</section>
+
+<section class="section vault-body-section tmnt-highlight">
+  <div class="wrap">
+    <div class="vault-series-banner tmnt-highlight-banner">
+      <span class="vault-series-corner vault-series-corner-tl"></span>
+      <span class="vault-series-corner vault-series-corner-br"></span>
+      <div class="vault-series-title-row">
+        <div class="vault-series-title-group">
+          <span class="tmnt-badge">Shell-Shocked Spotlight</span>
+          <h2 class="vault-series-title">Magic: The Gathering — Teenage Mutant Ninja Turtles</h2>
+        </div>
+        <div class="vault-series-stats">
+          <span><strong id="section-stat-tmnt">0</strong> items owned</span>
+        </div>
+      </div>
+      <div class="vault-series-rule"></div>
+      <p class="vault-series-desc">Cowabunga — the full turtle lineup from Magic's TMNT crossover set, sealed and stacked in the vault.</p>
+    </div>
+    <div id="vault-tmnt-content"></div>
   </div>
 </section>
 
@@ -145,6 +211,49 @@
 
 <script src="script.js"></script>
 <script src="boosters.js"></script>
+<script src="magic-tmnt.js"></script>
 <script src="sealed-vault.js"></script>
+<div class="offer-modal-overlay" id="offer-modal-overlay">
+  <div class="offer-modal" role="dialog" aria-modal="true" aria-labelledby="offer-modal-title">
+    <button type="button" class="offer-modal-close" id="offer-modal-close" aria-label="Close">&times;</button>
+    <h3 id="offer-modal-title" class="offer-modal-title">Make an Offer</h3>
+    <p class="offer-modal-item" id="offer-modal-item-name">Item Name</p>
+
+    <form name="card-offer" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="offer-form" class="offer-form">
+      <input type="hidden" name="form-name" value="card-offer">
+      <p class="offer-hidden-field"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+      <input type="hidden" name="item" id="offer-item-input">
+
+      <label class="offer-field">
+        <span>Your Offer ($)</span>
+        <input type="number" name="offer" min="1" step="1" required>
+      </label>
+      <label class="offer-field">
+        <span>Your Name</span>
+        <input type="text" name="name" required>
+      </label>
+      <label class="offer-field">
+        <span>Email or Phone</span>
+        <input type="text" name="contact" required>
+      </label>
+      <label class="offer-field">
+        <span>Message (optional)</span>
+        <textarea name="message" rows="3"></textarea>
+      </label>
+
+      <button type="submit" class="offer-submit-btn">Send Offer</button>
+      <p class="offer-form-note">Offers are reviewed manually. If accepted, payment is handled directly via Venmo or Zelle.</p>
+    </form>
+
+    <div class="offer-success" id="offer-success" hidden>
+      <h4>Offer sent!</h4>
+      <p>Thanks — we'll review it and reach out using the contact info you provided.</p>
+    </div>
+    <div class="offer-error" id="offer-error" hidden>
+      <p>Something went wrong sending your offer. Please try again, or reach out directly via the Contact page.</p>
+    </div>
+  </div>
+</div>
+<script src="offer-modal.js"></script>
 </body>
 </html>
