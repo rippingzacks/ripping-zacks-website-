@@ -549,7 +549,7 @@ const LORCANA_ITEMS = [
   { name: 'Beast, Gracious Prince', set: 'Fabled', rarity: 'Enchanted', targetPrice: null, purchasePrice: 942, marketPrice: 916.11, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Ariel, Adventurous Collector', set: 'Fabled', rarity: 'Enchanted', targetPrice: null, purchasePrice: 4000, marketPrice: 3534.58, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Ariel, Ethereal Voice', set: 'Whispers in the Well', rarity: 'Iconic', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
-  { name: 'Hades, Looking for a Deal', set: 'Whispers in the Well', rarity: 'Iconic', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Hades, Looking for a Deal', set: 'Whispers in the Well', rarity: 'Iconic', targetPrice: null, purchasePrice: 2735, marketPrice: null, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Spooky Sight (song)', set: 'Whispers in the Well', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Demona, Scourge of the Wyvern Clan', set: 'Whispers in the Well', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Simba, King in the Making', set: 'Whispers in the Well', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
