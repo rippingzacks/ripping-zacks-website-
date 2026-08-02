@@ -161,7 +161,10 @@ function renderVault() {
 
   const ownedItems = LORCANA_ITEMS.filter(i => i.owned);
   const ownedIconic = ownedItems.filter(i => i.rarity === 'Iconic').length;
-  const ownedEnchanted = ownedItems.filter(i => i.rarity !== 'Iconic').length;
+  const ownedEnchanted = ownedItems.filter(i => i.rarity === 'Enchanted').length;
+  const ownedOther = ownedItems.filter(i => i.rarity !== 'Iconic' && i.rarity !== 'Enchanted').length;
+  const totalIconic = Object.values(LORCANA_ICONIC_TOTALS).reduce((sum, n) => sum + n, 0);
+  const totalEnchanted = Object.values(LORCANA_ENCHANTED_TOTALS).reduce((sum, n) => sum + n, 0);
   let totalBoxes = 0;
   let totalCases = 0;
   let totalPromoSets = 0;
@@ -173,14 +176,27 @@ function renderVault() {
 
   const cardsIconicEl = document.getElementById('stat-cards-iconic');
   const cardsEnchantedEl = document.getElementById('stat-cards-enchanted');
+  const cardsOtherEl = document.getElementById('stat-cards-other');
   const boxesEl = document.getElementById('stat-boxes');
   const casesEl = document.getElementById('stat-cases');
   const promoSetsEl = document.getElementById('stat-promo-sets');
   if (cardsIconicEl) cardsIconicEl.textContent = ownedIconic;
   if (cardsEnchantedEl) cardsEnchantedEl.textContent = ownedEnchanted;
+  if (cardsOtherEl) cardsOtherEl.textContent = ownedOther;
   if (boxesEl) boxesEl.textContent = totalBoxes;
   if (casesEl) casesEl.textContent = totalCases;
   if (promoSetsEl) promoSetsEl.textContent = totalPromoSets;
+
+  const iconicProgressLabel = document.getElementById('stat-iconic-progress-label');
+  const iconicProgressFill = document.getElementById('stat-iconic-progress-fill');
+  if (iconicProgressLabel) iconicProgressLabel.textContent = `${ownedIconic} of ${totalIconic} collected`;
+  if (iconicProgressFill) iconicProgressFill.style.width = `${totalIconic ? Math.min(100, (ownedIconic / totalIconic) * 100) : 0}%`;
+
+  const enchantedProgressLabel = document.getElementById('stat-enchanted-progress-label');
+  const enchantedProgressFill = document.getElementById('stat-enchanted-progress-fill');
+  if (enchantedProgressLabel) enchantedProgressLabel.textContent = `${ownedEnchanted} of ${totalEnchanted} collected`;
+  if (enchantedProgressFill) enchantedProgressFill.style.width = `${totalEnchanted ? Math.min(100, (ownedEnchanted / totalEnchanted) * 100) : 0}%`;
+
 
   // Walk sets in the order they first appear in LORCANA_ITEMS, then append
   // any sealed-only sets (inventory entries with no individual cards yet),

@@ -1,113 +1,114 @@
 // ============================================================
 // RIPPING ZACKS — Boosters (boosters.html)
-// Fully hardcoded — set name, release year, booster box price,
-// and sealed-product counts (booster boxes / cases / Pokemon
-// Center ETBs) are all maintained directly in this file.
-// Update this data only when told to (e.g. "bought 1 booster
-// box of Evolving Skies" or "set Base Set Unlimited to $12000").
+// Fully hardcoded — set name, release year, and pricing
+// (targetPrice / purchasePrice / marketPrice) are all maintained
+// directly in this file. All three price fields are optional —
+// null means "not shown" on the page. Update this data only when
+// told to (e.g. "bought 1 booster box of Evolving Skies" or
+// "set target price on Base Set Unlimited to $12000").
 // ============================================================
 
 // Hardcoded set list — updated by request only.
 const BOOSTERS_ITEMS = [
-  { name: 'Base Set (Unlimited)', year: '1999', price: 0 },
-  { name: 'Base Set (Shadowless)', year: '1999', price: 0 },
-  { name: 'Jungle (1st Edition)', year: '1999', price: 0 },
-  { name: 'Jungle (Unlimited)', year: '1999', price: 0 },
-  { name: 'Fossil (1st Edition)', year: '1999', price: 0 },
-  { name: 'Fossil (Unlimited)', year: '1999', price: 0 },
-  { name: 'Base Set 2', year: '2000', price: 0 },
-  { name: 'Team Rocket (1st Edition)', year: '2000', price: 0 },
-  { name: 'Gym Heroes (1st Edition)', year: '2000', price: 0 },
-  { name: 'Gym Heroes (Unlimited)', year: '2000', price: 0 },
-  { name: 'Gym Challenge (1st Edition)', year: '2000', price: 0 },
-  { name: 'Gym Challenge (Unlimited)', year: '2000', price: 0 },
-  { name: 'Neo Genesis (1st Edition)', year: '2000', price: 0 },
-  { name: 'Ruby & Sapphire', year: '2003', price: 0 },
-  { name: 'Hidden Legends', year: '2004', price: 0 },
-  { name: 'FireRed & LeafGreen', year: '2004', price: 0 },
-  { name: 'Crystal Guardians', year: '2006', price: 0 },
-  { name: 'Power Keepers', year: '2007', price: 0 },
-  { name: 'Diamond and Pearl', year: '2007', price: 0 },
-  { name: 'Mysterious Treasures', year: '2007', price: 0 },
-  { name: 'Great Encounters', year: '2008', price: 0 },
-  { name: 'Stormfront', year: '2008', price: 0 },
-  { name: 'Supreme Victors', year: '2009', price: 0 },
-  { name: 'Arceus', year: '2009', price: 0 },
-  { name: 'Unleashed', year: '2009', price: 0 },
-  { name: 'Undaunted', year: '2010', price: 0 },
-  { name: 'Triumphant', year: '2010', price: 0 },
-  { name: 'Call of Legends', year: '2011', price: 0 },
-  { name: 'Black and White', year: '2011', price: 0 },
-  { name: 'Emerging Powers', year: '2011', price: 0 },
-  { name: 'Noble Victories', year: '2011', price: 0 },
-  { name: 'Next Destinies', year: '2012', price: 0 },
-  { name: 'Dark Explorers', year: '2012', price: 0 },
-  { name: 'Dragons Exalted', year: '2012', price: 0 },
-  { name: 'Boundaries Crossed', year: '2012', price: 0 },
-  { name: 'Plasma Storm', year: '2013', price: 0 },
-  { name: 'Plasma Freeze', year: '2013', price: 0 },
-  { name: 'Plasma Blast', year: '2013', price: 0 },
-  { name: 'Legendary Treasures', year: '2013', price: 0 },
-  { name: 'XY Base Set', year: '2014', price: 0 },
-  { name: 'Flashfire', year: '2014', price: 0 },
-  { name: 'Furious Fists', year: '2014', price: 0 },
-  { name: 'Phantom Forces', year: '2014', price: 0 },
-  { name: 'Primal Clash', year: '2015', price: 0 },
-  { name: 'Roaring Skies', year: '2015', price: 0 },
-  { name: 'Ancient Origins', year: '2015', price: 0 },
-  { name: 'BREAKthrough', year: '2015', price: 0 },
-  { name: 'BREAKpoint', year: '2016', price: 0 },
-  { name: 'Fates Collide', year: '2016', price: 0 },
-  { name: 'Steam Siege', year: '2016', price: 0 },
-  { name: 'Evolutions', year: '2016', price: 0 },
-  { name: 'Sun & Moon Base Set', year: '2017', price: 0 },
-  { name: 'Guardians Rising', year: '2017', price: 0 },
-  { name: 'Burning Shadows', year: '2017', price: 0 },
-  { name: 'Crimson Invasion', year: '2017', price: 0 },
-  { name: 'Ultra Prism', year: '2018', price: 0 },
-  { name: 'Forbidden Light', year: '2018', price: 0 },
-  { name: 'Celestial Storm', year: '2018', price: 0 },
-  { name: 'Lost Thunder', year: '2018', price: 0 },
-  { name: 'Team Up', year: '2019', price: 0 },
-  { name: 'Unbroken Bonds', year: '2019', price: 0 },
-  { name: 'Unified Minds', year: '2019', price: 0 },
-  { name: 'Cosmic Eclipse', year: '2019', price: 0 },
-  { name: 'Sword & Shield Base Set', year: '2020', price: 0 },
-  { name: 'Rebel Clash', year: '2020', price: 0 },
-  { name: 'Darkness Ablaze', year: '2020', price: 0 },
-  { name: 'Vivid Voltage', year: '2020', price: 0 },
-  { name: 'Battle Styles', year: '2021', price: 0 },
-  { name: 'Chilling Reign', year: '2021', price: 0 },
-  { name: 'Evolving Skies', year: '2021', price: 0 },
-  { name: 'Celebrations', year: '2021', price: 0 },
-  { name: 'Fusion Strike', year: '2021', price: 0 },
-  { name: 'Brilliant Stars', year: '2022', price: 0 },
-  { name: 'Astral Radiance', year: '2022', price: 0 },
-  { name: 'Lost Origin', year: '2022', price: 0 },
-  { name: 'Silver Tempest', year: '2022', price: 0 },
-  { name: 'Scarlet & Violet Base Set', year: '2023', price: 0 },
-  { name: 'Paldea Evolved', year: '2023', price: 0 },
-  { name: 'Obsidian Flames', year: '2023', price: 0 },
-  { name: 'Pokemon 151', year: '2023', price: 0 },
-  { name: 'Paradox Rift', year: '2023', price: 0 },
-  { name: 'Temporal Forces', year: '2024', price: 0 },
-  { name: 'Twilight Masquerade', year: '2024', price: 0 },
-  { name: 'Shrouded Fable', year: '2024', price: 0 },
-  { name: 'Stellar Crown', year: '2024', price: 0 },
-  { name: 'Surging Sparks', year: '2024', price: 0 },
-  { name: 'Journey Together', year: '2025', price: 0 },
-  { name: 'Destined Rivals', year: '2025', price: 0 },
-  { name: 'Black Bolt', year: '2025', price: 0 },
-  { name: 'Mega Evolution Base Set', year: '2026', price: 0 },
-  { name: 'Phantasmal Flames', year: '2026', price: 0 },
-  { name: 'Perfect Order', year: '2026', price: 0 },
-  { name: 'Chaos Rising', year: '2026', price: 0 },
-  { name: 'Pitch Black', year: '2026', price: 0 },
-  { name: 'Ascended Heroes', year: '2026', price: 0 },
-  { name: 'Paldean Fates', year: '2024', price: 0 },
-  { name: 'Pokemon Go', year: '2022', price: 0 },
-  { name: 'Prismatic Evolutions', year: '2025', price: 0 },
-  { name: 'SV: 151', year: '2023', price: 0 },
+  { name: 'Base Set (Unlimited)', year: '1999', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Base Set (Shadowless)', year: '1999', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Jungle (1st Edition)', year: '1999', targetPrice: null, purchasePrice: 420, marketPrice: 629.7 },
+  { name: 'Jungle (Unlimited)', year: '1999', targetPrice: null, purchasePrice: 600, marketPrice: 287.44 },
+  { name: 'Fossil (1st Edition)', year: '1999', targetPrice: null, purchasePrice: 500, marketPrice: 629.76 },
+  { name: 'Fossil (Unlimited)', year: '1999', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Base Set 2', year: '2000', targetPrice: null, purchasePrice: 450, marketPrice: 371.75 },
+  { name: 'Team Rocket (1st Edition)', year: '2000', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Gym Heroes (1st Edition)', year: '2000', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Gym Heroes (Unlimited)', year: '2000', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Gym Challenge (1st Edition)', year: '2000', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Gym Challenge (Unlimited)', year: '2000', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Neo Genesis (1st Edition)', year: '2000', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Ruby & Sapphire', year: '2003', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Hidden Legends', year: '2004', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'FireRed & LeafGreen', year: '2004', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Crystal Guardians', year: '2006', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Power Keepers', year: '2007', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Diamond and Pearl', year: '2007', targetPrice: null, purchasePrice: 21000, marketPrice: 8888 },
+  { name: 'Mysterious Treasures', year: '2007', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Great Encounters', year: '2008', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Stormfront', year: '2008', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Supreme Victors', year: '2009', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Arceus', year: '2009', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Unleashed', year: '2009', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Undaunted', year: '2010', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Triumphant', year: '2010', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Call of Legends', year: '2011', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Black and White', year: '2011', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Emerging Powers', year: '2011', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Noble Victories', year: '2011', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Next Destinies', year: '2012', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Dark Explorers', year: '2012', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Dragons Exalted', year: '2012', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Boundaries Crossed', year: '2012', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Plasma Storm', year: '2013', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Plasma Freeze', year: '2013', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Plasma Blast', year: '2013', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Legendary Treasures', year: '2013', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'XY Base Set', year: '2014', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Flashfire', year: '2014', targetPrice: null, purchasePrice: 180, marketPrice: 184.14 },
+  { name: 'Furious Fists', year: '2014', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Phantom Forces', year: '2014', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Primal Clash', year: '2015', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Roaring Skies', year: '2015', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Ancient Origins', year: '2015', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'BREAKthrough', year: '2015', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'BREAKpoint', year: '2016', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Fates Collide', year: '2016', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Steam Siege', year: '2016', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Evolutions', year: '2016', targetPrice: null, purchasePrice: 2400, marketPrice: 2501.13 },
+  { name: 'Sun & Moon Base Set', year: '2017', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Guardians Rising', year: '2017', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Burning Shadows', year: '2017', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Crimson Invasion', year: '2017', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Ultra Prism', year: '2018', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Forbidden Light', year: '2018', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Celestial Storm', year: '2018', targetPrice: null, purchasePrice: 2300, marketPrice: 2463.87 },
+  { name: 'Lost Thunder', year: '2018', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Team Up', year: '2019', targetPrice: null, purchasePrice: 11500, marketPrice: 11333.47 },
+  { name: 'Unbroken Bonds', year: '2019', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Unified Minds', year: '2019', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Cosmic Eclipse', year: '2019', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Sword & Shield Base Set', year: '2020', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Rebel Clash', year: '2020', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Darkness Ablaze', year: '2020', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Vivid Voltage', year: '2020', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Battle Styles', year: '2021', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Chilling Reign', year: '2021', targetPrice: null, purchasePrice: 500, marketPrice: 500.15 },
+  { name: 'Evolving Skies', year: '2021', targetPrice: null, purchasePrice: 2250, marketPrice: 2510.64 },
+  { name: 'Celebrations', year: '2021', targetPrice: null, purchasePrice: 480, marketPrice: 573.23 },
+  { name: 'Fusion Strike', year: '2021', targetPrice: null, purchasePrice: 500, marketPrice: 507.36 },
+  { name: 'Brilliant Stars', year: '2022', targetPrice: null, purchasePrice: 255, marketPrice: 263.92 },
+  { name: 'Astral Radiance', year: '2022', targetPrice: null, purchasePrice: 220, marketPrice: 238.91 },
+  { name: 'Lost Origin', year: '2022', targetPrice: null, purchasePrice: 700, marketPrice: 733.43 },
+  { name: 'Silver Tempest', year: '2022', targetPrice: null, purchasePrice: 500, marketPrice: 526.77 },
+  { name: 'Scarlet & Violet Base Set', year: '2023', targetPrice: null, purchasePrice: 290, marketPrice: 292.61 },
+  { name: 'Paldea Evolved', year: '2023', targetPrice: null, purchasePrice: 460, marketPrice: 492.6 },
+  { name: 'Obsidian Flames', year: '2023', targetPrice: null, purchasePrice: 360, marketPrice: 379.99 },
+  { name: 'Pokemon 151', year: '2023', targetPrice: null, purchasePrice: 300, marketPrice: 318.71 },
+  { name: 'Paradox Rift', year: '2023', targetPrice: null, purchasePrice: 192, marketPrice: 213.83 },
+  { name: 'Temporal Forces', year: '2024', targetPrice: null, purchasePrice: 175, marketPrice: 194.64 },
+  { name: 'Twilight Masquerade', year: '2024', targetPrice: null, purchasePrice: 174, marketPrice: 187.74 },
+  { name: 'Shrouded Fable', year: '2024', targetPrice: null, purchasePrice: 158, marketPrice: 167.94 },
+  { name: 'Stellar Crown', year: '2024', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Surging Sparks', year: '2024', targetPrice: null, purchasePrice: null, marketPrice: null },
+  { name: 'Journey Together', year: '2025', targetPrice: null, purchasePrice: 194.5, marketPrice: 204.63 },
+  { name: 'Destined Rivals', year: '2025', targetPrice: null, purchasePrice: 500, marketPrice: 528.44 },
+  { name: 'Black Bolt', year: '2025', targetPrice: null, purchasePrice: 277.5, marketPrice: 293.29 },
+  { name: 'Mega Evolution Base Set', year: '2026', targetPrice: null, purchasePrice: 275, marketPrice: 319.78 },
+  { name: 'Phantasmal Flames', year: '2026', targetPrice: null, purchasePrice: 430, marketPrice: 420.41 },
+  { name: 'Perfect Order', year: '2026', targetPrice: null, purchasePrice: 115, marketPrice: 119.79 },
+  { name: 'Chaos Rising', year: '2026', targetPrice: null, purchasePrice: 150, marketPrice: 146.74 },
+  { name: 'Pitch Black', year: '2026', targetPrice: null, purchasePrice: 187, marketPrice: 188.24 },
+  { name: 'Ascended Heroes', year: '2026', targetPrice: null, purchasePrice: 405, marketPrice: 431.72 },
+  { name: 'Paldean Fates', year: '2024', targetPrice: null, purchasePrice: 610, marketPrice: 614.3 },
+  { name: 'Pokemon Go', year: '2022', targetPrice: null, purchasePrice: 215, marketPrice: 252.26 },
+  { name: 'Prismatic Evolutions', year: '2025', targetPrice: null, purchasePrice: 435, marketPrice: 476.42 },
+  { name: 'SV: 151', year: '2023', targetPrice: null, purchasePrice: 1250, marketPrice: 1371.63 },
 ];
 
 // Hardcoded sealed-product inventory per set — updated by
@@ -359,13 +360,28 @@ function buildBoosterCard(item) {
   body.appendChild(qtyBlock);
 
   const priceRow = document.createElement('div');
-  priceRow.className = 'card-footer';
-  const priceDisplay = document.createElement('div');
-  priceDisplay.className = 'card-price';
-  const priceNum = parseFloat(item.price) || 0;
-  priceDisplay.textContent = '$' + priceNum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  priceDisplay.style.cssText = 'background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:6px 10px; width:100%; font-family:var(--mono); color:var(--ink); text-align:center; font-weight:700;';
-  priceRow.appendChild(priceDisplay);
+  priceRow.style.cssText = 'display:flex; align-items:stretch; margin-top:14px; background:var(--paper); border:1px solid var(--line); border-radius:6px; overflow:hidden;';
+
+  function formatPrice(v) {
+    return (v === null || v === undefined) ? '—' : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function buildPriceCol(labelText, value, isLast) {
+    const col = document.createElement('div');
+    col.style.cssText = `flex:1; min-width:0; text-align:center; padding:6px 4px;${isLast ? '' : ' border-right:1px solid var(--line);'}`;
+    const lbl = document.createElement('div');
+    lbl.textContent = labelText;
+    lbl.style.cssText = 'font-family:var(--mono); font-size:0.56rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-faint); margin-bottom:3px;';
+    const val = document.createElement('div');
+    val.textContent = formatPrice(value);
+    val.style.cssText = `font-family:var(--mono); font-size:0.68rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:${value === null || value === undefined ? 'var(--ink-faint)' : 'var(--ink)'};`;
+    col.appendChild(lbl);
+    col.appendChild(val);
+    return col;
+  }
+
+  priceRow.appendChild(buildPriceCol('Target', item.targetPrice, false));
+  priceRow.appendChild(buildPriceCol('Purchase', item.purchasePrice, false));
+  priceRow.appendChild(buildPriceCol('Market', item.marketPrice, true));
   body.appendChild(priceRow);
 
   card.appendChild(body);

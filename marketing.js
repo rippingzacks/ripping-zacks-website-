@@ -1,9 +1,11 @@
 // ============================================================
 // RIPPING ZACKS — Pikachu Tracker (marketing.html)
-// Fully hardcoded — name, card number, target price, and
-// ownership status are all maintained directly in this file.
-// Update this data only when told to (e.g. "bought the Mario
-// Pikachu Promo card" or "set Rayquaza Green to $500").
+// Fully hardcoded — name, card number, and pricing (targetPrice /
+// purchasePrice / marketPrice) and ownership status are all
+// maintained directly in this file. All three price fields are
+// optional — null means "not shown" on the page. Update this
+// data only when told to (e.g. "bought the Mario Pikachu Promo
+// card" or "set target price on Rayquaza Green to $500").
 //
 // IMPORTANT: TRACKER_PERMANENT_PHOTOS and its data structure
 // must never change — that's where already-uploaded photos live.
@@ -51,38 +53,38 @@ const TRACKER_PERMANENT_PHOTOS = {
 
 // Hardcoded card list — updated by request only.
 const TRACKER_ITEMS = [
-  { name: 'Pretend Team Skull Pikachu Promo', no: '013/SM-P', price: 0, owned: false },
-  { name: 'Pretend Magikarp Pikachu Promo', no: '150/XY-P', price: 0, owned: false },
-  { name: 'Pretend Gyarados Pikachu Promo', no: '151/XY-P', price: 0, owned: false },
-  { name: 'Poncho-wearing Pikachu Promo - Mega Charizard X', no: '207/XY-P', price: 0, owned: false },
-  { name: 'Poncho-wearing Pikachu Promo - Mega Charizard Y', no: '208/XY-P', price: 0, owned: false },
-  { name: 'Poncho-wearing Pikachu Promo - Rayquaza Green', no: '230/XY-P', price: 0, owned: false },
-  { name: 'Poncho-wearing Pikachu Promo - Rayquaza Black', no: '231/XY-P', price: 0, owned: false },
-  { name: 'Mario Pikachu Promo', no: '293/XY-P', price: 0, owned: false },
-  { name: 'Mario Pikachu Promo - Full Art', no: '294/XY-P', price: 0, owned: false },
-  { name: 'Luigi Pikachu Promo', set: 'XY Promos (JP)', no: '295/XY-P', price: 6976.25, owned: true, grade: 'PSA 10.0 GEM - MT', series: "Poncho Pikachu's", rarity: 'Rare' },
-  { name: 'Luigi Pikachu Promo - Full Art', no: '296/XY-P', price: 0, owned: false },
-  { name: 'Seismitoad', set: 'Black Bolt', no: '105/086', price: 2813.72, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Scarlet & Violet: Black Bolt & White Flare', rarity: 'Illustration Rare' },
-  { name: 'Zekrom ex', set: 'Black Bolt', no: '172/086', price: 1569.31, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Scarlet & Violet: Black Bolt & White Flare', rarity: 'Black White Rare' },
-  { name: 'Ditto', set: 'EX Delta Species', no: '61', price: 3733.33, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Other Slabs', rarity: 'Common' },
-  { name: 'Pikachu (McDonald\'s Promo)', set: 'McDonald\'s Promo (2025)', no: '020/M-P', price: 95.12, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Other Slabs', rarity: 'Common' },
-  { name: 'Suicune', set: 'Nintendo Promos', no: '30', price: 12000.00, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Other Slabs', rarity: 'Holo Rare' },
-  { name: 'Ooyama\'s Pikachu (JP)', set: 'Vending Series 3 (Green)', no: '025', price: 7256.47, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
-  { name: 'Reshiram ex', set: 'White Flare', no: '173/086', price: 1289.88, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Scarlet & Violet: Black Bolt & White Flare', rarity: 'Black White Rare' },
-  { name: 'Pikachu ex', set: 'Ascended Heroes', no: '277/217', price: 1107.55, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Other Slabs', rarity: 'Special Illustration Rare' },
-  { name: 'Victini', set: 'Black Bolt', no: '171/086', price: 1530.61, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Scarlet & Violet: Black Bolt & White Flare', rarity: 'Black White Rare' },
-  { name: '3 Deck Battle (JP)', set: 'Vending Series 3 (Green)', no: '03', price: 182.50, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
-  { name: 'Deck Exchange (JP)', set: 'Vending Series 3 (Green)', no: '05', price: 246.30, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
-  { name: 'Imakuni\'s Corner (JP)', set: 'Vending Series 3 (Green)', no: '', price: 1100.00, owned: true, grade: 'PSA 10.0 GEM - MT', note: 'Qty: 2', series: 'Vending Series 3 (Green)' },
-  { name: 'Imakuni\'s PC (JP)', set: 'Vending Series 3 (Green)', no: '', price: 283.01, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)' },
-  { name: 'Kadabra (JP)', set: 'Vending Series 3 (Green)', no: '064', price: 1136.65, owned: true, grade: 'PSA 10.0 GEM - MT', note: 'Qty: 2', series: 'Vending Series 3 (Green)', rarity: 'Uncommon' },
-  { name: 'Kingler (JP)', set: 'Vending Series 3 (Green)', no: '099', price: 242.50, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
-  { name: 'Lose? (JP)', set: 'Vending Series 3 (Green)', no: '', price: 631.04, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)' },
-  { name: 'Mewtwo (JP)', set: 'Vending Series 3 (Green)', no: '150', price: 2948.41, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
-  { name: 'Ponyta (JP)', set: 'Vending Series 3 (Green)', no: '077', price: 238.19, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Common' },
-  { name: 'Scyther (JP)', set: 'Vending Series 3 (Green)', no: '123', price: 450.00, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
-  { name: 'Tauros (JP)', set: 'Vending Series 3 (Green)', no: '128', price: 327.75, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
-  { name: 'Weezing (JP)', set: 'Vending Series 3 (Green)', no: '110', price: 212.51, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
+  { name: 'Pretend Team Skull Pikachu Promo', no: '013/SM-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Pretend Magikarp Pikachu Promo', no: '150/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Pretend Gyarados Pikachu Promo', no: '151/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Poncho-wearing Pikachu Promo - Mega Charizard X', no: '207/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Poncho-wearing Pikachu Promo - Mega Charizard Y', no: '208/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Poncho-wearing Pikachu Promo - Rayquaza Green', no: '230/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Poncho-wearing Pikachu Promo - Rayquaza Black', no: '231/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Mario Pikachu Promo', no: '293/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Mario Pikachu Promo - Full Art', no: '294/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Luigi Pikachu Promo', set: 'XY Promos (JP)', no: '295/XY-P', targetPrice: 6976.25, purchasePrice: 7000, marketPrice: 6677.29, owned: true, grade: 'PSA 10.0 GEM - MT', series: "Poncho Pikachu's", rarity: 'Rare' },
+  { name: 'Luigi Pikachu Promo - Full Art', no: '296/XY-P', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Seismitoad', set: 'Black Bolt', no: '105/086', targetPrice: 2813.72, purchasePrice: 2450, marketPrice: 2444.96, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Scarlet & Violet: Black Bolt & White Flare', rarity: 'Illustration Rare' },
+  { name: 'Zekrom ex', set: 'Black Bolt', no: '172/086', targetPrice: 1569.31, purchasePrice: 1525, marketPrice: 1532.52, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Scarlet & Violet: Black Bolt & White Flare', rarity: 'Black White Rare' },
+  { name: 'Ditto', set: 'EX Delta Species', no: '61', targetPrice: 3733.33, purchasePrice: 2200, marketPrice: 2947.6, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Other Slabs', rarity: 'Common' },
+  { name: 'Pikachu (McDonald\'s Promo)', set: 'McDonald\'s Promo (2025)', no: '020/M-P', targetPrice: 95.12, purchasePrice: 115, marketPrice: 97.48, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Other Slabs', rarity: 'Common' },
+  { name: 'Suicune', set: 'Nintendo Promos', no: '30', targetPrice: 12000, purchasePrice: 7000, marketPrice: 275.69, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Other Slabs', rarity: 'Holo Rare' },
+  { name: 'Ooyama\'s Pikachu (JP)', set: 'Vending Series 3 (Green)', no: '025', targetPrice: 7256.47, purchasePrice: 7600, marketPrice: 7310.64, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
+  { name: 'Reshiram ex', set: 'White Flare', no: '173/086', targetPrice: 1289.88, purchasePrice: 1200, marketPrice: 1303.54, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Scarlet & Violet: Black Bolt & White Flare', rarity: 'Black White Rare' },
+  { name: 'Pikachu ex', set: 'Ascended Heroes', no: '277/217', targetPrice: 1107.55, purchasePrice: 1000, marketPrice: 1129.58, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Other Slabs', rarity: 'Special Illustration Rare' },
+  { name: 'Victini', set: 'Black Bolt', no: '171/086', targetPrice: 1530.61, purchasePrice: 1350, marketPrice: 1538.69, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Scarlet & Violet: Black Bolt & White Flare', rarity: 'Black White Rare' },
+  { name: '3 Deck Battle (JP)', set: 'Vending Series 3 (Green)', no: '03', targetPrice: 182.5, purchasePrice: 200, marketPrice: 182.5, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
+  { name: 'Deck Exchange (JP)', set: 'Vending Series 3 (Green)', no: '05', targetPrice: 246.3, purchasePrice: 300, marketPrice: 249.53, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
+  { name: 'Imakuni\'s Corner (JP)', set: 'Vending Series 3 (Green)', no: '', targetPrice: 1100, purchasePrice: 550, marketPrice: 313.43, owned: true, grade: 'PSA 10.0 GEM - MT', note: 'Qty: 2', series: 'Vending Series 3 (Green)' },
+  { name: 'Imakuni\'s PC (JP)', set: 'Vending Series 3 (Green)', no: '', targetPrice: 283.01, purchasePrice: 400, marketPrice: 328.05, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)' },
+  { name: 'Kadabra (JP)', set: 'Vending Series 3 (Green)', no: '064', targetPrice: 1136.65, purchasePrice: 1000, marketPrice: 1136.65, owned: true, grade: 'PSA 10.0 GEM - MT', note: 'Qty: 2', series: 'Vending Series 3 (Green)', rarity: 'Uncommon' },
+  { name: 'Kingler (JP)', set: 'Vending Series 3 (Green)', no: '099', targetPrice: 242.5, purchasePrice: 200, marketPrice: 242.5, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
+  { name: 'Lose? (JP)', set: 'Vending Series 3 (Green)', no: '', targetPrice: 631.04, purchasePrice: 800, marketPrice: 568.52, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)' },
+  { name: 'Mewtwo (JP)', set: 'Vending Series 3 (Green)', no: '150', targetPrice: 2948.41, purchasePrice: 2800, marketPrice: 2948.41, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
+  { name: 'Ponyta (JP)', set: 'Vending Series 3 (Green)', no: '077', targetPrice: 238.19, purchasePrice: 300, marketPrice: 238.19, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Common' },
+  { name: 'Scyther (JP)', set: 'Vending Series 3 (Green)', no: '123', targetPrice: 450, purchasePrice: 400, marketPrice: 450, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
+  { name: 'Tauros (JP)', set: 'Vending Series 3 (Green)', no: '128', targetPrice: 327.75, purchasePrice: 400, marketPrice: 327.75, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
+  { name: 'Weezing (JP)', set: 'Vending Series 3 (Green)', no: '110', targetPrice: 212.51, purchasePrice: 230, marketPrice: 212.51, owned: true, grade: 'PSA 10.0 GEM - MT', series: 'Vending Series 3 (Green)', rarity: 'Rare' },
 ];
 
 function itemKeyFor(name) {
@@ -165,15 +167,30 @@ function renderTrackerGrid() {
     h3.textContent = item.name || 'Untitled';
     body.appendChild(h3);
 
-    // Static price display
+    // Target / Purchase / Market price stack
     const priceRow = document.createElement('div');
-    priceRow.className = 'card-footer';
-    const priceDisplay = document.createElement('div');
-    priceDisplay.className = 'card-price';
-    const priceNum = parseFloat(item.price) || 0;
-    priceDisplay.textContent = '$' + priceNum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    priceDisplay.style.cssText = 'background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:6px 10px; width:100%; font-family:var(--mono); color:var(--ink); text-align:center; font-weight:700;';
-    priceRow.appendChild(priceDisplay);
+    priceRow.style.cssText = 'display:flex; align-items:stretch; margin-top:14px; background:var(--paper); border:1px solid var(--line); border-radius:6px; overflow:hidden;';
+
+    function formatPrice(v) {
+      return (v === null || v === undefined) ? '—' : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function buildPriceCol(labelText, value, isLast) {
+      const col = document.createElement('div');
+      col.style.cssText = `flex:1; min-width:0; text-align:center; padding:6px 4px;${isLast ? '' : ' border-right:1px solid var(--line);'}`;
+      const lbl = document.createElement('div');
+      lbl.textContent = labelText;
+      lbl.style.cssText = 'font-family:var(--mono); font-size:0.56rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-faint); margin-bottom:3px;';
+      const val = document.createElement('div');
+      val.textContent = formatPrice(value);
+      val.style.cssText = `font-family:var(--mono); font-size:0.68rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:${value === null || value === undefined ? 'var(--ink-faint)' : 'var(--ink)'};`;
+      col.appendChild(lbl);
+      col.appendChild(val);
+      return col;
+    }
+
+    priceRow.appendChild(buildPriceCol('Target', item.targetPrice, false));
+    priceRow.appendChild(buildPriceCol('Purchase', item.purchasePrice, false));
+    priceRow.appendChild(buildPriceCol('Market', item.marketPrice, true));
     body.appendChild(priceRow);
 
     card.appendChild(body);

@@ -108,6 +108,26 @@
   color:var(--vault-faint);
   margin-top:8px;
 }
+.vault-stat-progress-label{
+  font-family:var(--mono);
+  font-size:0.66rem;
+  color:var(--vault-faint);
+  margin-top:6px;
+}
+.vault-stat-progress-bar{
+  width:72px;
+  height:4px;
+  border-radius:2px;
+  background:var(--vault-line);
+  margin-top:5px;
+  overflow:hidden;
+}
+.vault-stat-progress-fill{
+  height:100%;
+  border-radius:2px;
+  background:linear-gradient(90deg, var(--vault-glimmer), var(--vault-gold-br));
+  transition:width .4s ease;
+}
 
 .vault-body-section{ padding:60px 0 100px; }
 
