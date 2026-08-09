@@ -74,8 +74,7 @@ function buildVaultPlaque(item) {
 function buildVaultSet(setName, ownedCards, inventory) {
   const key = setName.trim().toLowerCase();
   const photoSrc = LORCANA_SET_PHOTOS[key];
-  const hasStock = inventory.boosterBoxes > 0 || inventory.cases > 0 || inventory.promoSets > 0;
-  const isEmpty = ownedCards.length === 0 && !hasStock;
+  const isEmpty = ownedCards.length === 0;
 
   const section = document.createElement('div');
   section.className = isEmpty ? 'vault-set vault-set-empty' : 'vault-set';
@@ -111,15 +110,6 @@ function buildVaultSet(setName, ownedCards, inventory) {
   if (setNum) {
     stats.appendChild(buildLorcanaRarityBadges(setName));
   }
-  if (hasStock) {
-    const sealed = document.createElement('span');
-    const parts = [];
-    if (inventory.boosterBoxes > 0) parts.push(`<strong>${inventory.boosterBoxes}</strong> booster box${inventory.boosterBoxes === 1 ? '' : 'es'}`);
-    if (inventory.cases > 0) parts.push(`<strong>${inventory.cases}</strong> case${inventory.cases === 1 ? '' : 's'}`);
-    if (inventory.promoSets > 0) parts.push(`<strong>${inventory.promoSets}</strong> Sealed Promo Set${inventory.promoSets === 1 ? '' : 's'}`);
-    sealed.innerHTML = parts.join(' <span class="vault-series-stats-divider">&nbsp;•&nbsp;</span> ');
-    stats.appendChild(sealed);
-  }
   titleRow.appendChild(stats);
 
   banner.appendChild(titleRow);
@@ -153,6 +143,145 @@ function buildVaultSet(setName, ownedCards, inventory) {
   return section;
 }
 
+function buildIconicShowcase(ownedIconicCards, totalIconic) {
+  const section = document.createElement('div');
+  section.className = 'vault-set vault-iconic-showcase-section';
+
+  const banner = document.createElement('div');
+  banner.className = 'vault-series-banner vault-iconic-showcase-banner';
+
+  const corner1 = document.createElement('span'); corner1.className = 'vault-series-corner vault-series-corner-tl';
+  const corner2 = document.createElement('span'); corner2.className = 'vault-series-corner vault-series-corner-br';
+  banner.appendChild(corner1);
+  banner.appendChild(corner2);
+
+  const titleRow = document.createElement('div');
+  titleRow.className = 'vault-series-title-row';
+
+  const titleGroup = document.createElement('div');
+  titleGroup.className = 'vault-series-title-group';
+  const h2 = document.createElement('h2');
+  h2.className = 'vault-series-title';
+  h2.textContent = 'The Iconics';
+  titleGroup.appendChild(h2);
+  titleRow.appendChild(titleGroup);
+
+  const stats = document.createElement('div');
+  stats.className = 'vault-series-stats';
+  stats.innerHTML = `<span><strong>${ownedIconicCards.length}</strong> of <strong>${totalIconic}</strong> collected</span>`;
+  titleRow.appendChild(stats);
+
+  banner.appendChild(titleRow);
+  const rule = document.createElement('div');
+  rule.className = 'vault-series-rule';
+  banner.appendChild(rule);
+  section.appendChild(banner);
+
+  const grid = document.createElement('div');
+  grid.className = 'vault-grid';
+  ownedIconicCards.forEach(item => {
+    const plaque = buildVaultPlaque(item);
+    plaque.classList.add('vault-iconic-plaque');
+    const ribbon = document.createElement('span');
+    ribbon.className = 'vault-iconic-ribbon';
+    ribbon.textContent = 'Iconic';
+    plaque.appendChild(ribbon);
+    grid.appendChild(plaque);
+  });
+  section.appendChild(grid);
+
+  return section;
+}
+
+function buildSealedProductPlaque(setName, inventory) {
+  const key = setName.trim().toLowerCase();
+  const photoSrc = LORCANA_BOOSTER_BOX_PHOTOS[key];
+
+  const plaque = document.createElement('article');
+  plaque.className = 'vault-plaque';
+
+  const corner1 = document.createElement('span'); corner1.className = 'corner-bl';
+  const corner2 = document.createElement('span'); corner2.className = 'corner-br';
+  plaque.appendChild(corner1);
+  plaque.appendChild(corner2);
+
+  if (photoSrc) {
+    const art = document.createElement('div');
+    art.className = 'vault-plaque-art';
+    const img = document.createElement('img');
+    img.src = photoSrc;
+    img.alt = setName;
+    art.appendChild(img);
+    plaque.appendChild(art);
+  }
+
+  const h3 = document.createElement('h3');
+  h3.textContent = setName;
+  plaque.appendChild(h3);
+
+  const countsRow = document.createElement('div');
+  countsRow.style.cssText = 'display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;';
+  function countPill(labelText, count) {
+    const pill = document.createElement('span');
+    pill.style.cssText = 'font-family:var(--mono); font-size:0.72rem; font-weight:700; color:var(--vault-parch); background:var(--vault-panel-2); border:1px solid var(--vault-line); border-radius:999px; padding:4px 10px;';
+    pill.innerHTML = `<strong style="color:var(--vault-gold-br);">${count}</strong> ${labelText}`;
+    return pill;
+  }
+  if ((inventory.promoSets || 0) > 0 && !(inventory.boosterBoxes > 0) && !(inventory.cases > 0)) {
+    // Promo-set-only product (D23 Collection, Curator's Collection) — no
+    // box/case pills make sense here, just the promo set count.
+    countsRow.appendChild(countPill(inventory.promoSets === 1 ? 'Sealed Promo Set' : 'Sealed Promo Sets', inventory.promoSets));
+  } else {
+    countsRow.appendChild(countPill(inventory.boosterBoxes === 1 ? 'box' : 'boxes', inventory.boosterBoxes || 0));
+    countsRow.appendChild(countPill(inventory.cases === 1 ? 'case' : 'cases', inventory.cases || 0));
+  }
+  plaque.appendChild(countsRow);
+
+  return plaque;
+}
+
+function buildSealedProductsShowcase(entries, totalBoxes, totalCases) {
+  const section = document.createElement('div');
+  section.className = 'vault-set';
+
+  const banner = document.createElement('div');
+  banner.className = 'vault-series-banner';
+
+  const corner1 = document.createElement('span'); corner1.className = 'vault-series-corner vault-series-corner-tl';
+  const corner2 = document.createElement('span'); corner2.className = 'vault-series-corner vault-series-corner-br';
+  banner.appendChild(corner1);
+  banner.appendChild(corner2);
+
+  const titleRow = document.createElement('div');
+  titleRow.className = 'vault-series-title-row';
+
+  const titleGroup = document.createElement('div');
+  titleGroup.className = 'vault-series-title-group';
+  const h2 = document.createElement('h2');
+  h2.className = 'vault-series-title';
+  h2.textContent = 'Sealed Products';
+  titleGroup.appendChild(h2);
+  titleRow.appendChild(titleGroup);
+
+  const stats = document.createElement('div');
+  stats.className = 'vault-series-stats';
+  stats.innerHTML = `<span><strong>${totalBoxes}</strong> boxes<span class="vault-series-stats-divider">&nbsp;•&nbsp;</span><strong>${totalCases}</strong> cases</span>`;
+  titleRow.appendChild(stats);
+
+  banner.appendChild(titleRow);
+  const rule = document.createElement('div');
+  rule.className = 'vault-series-rule';
+  banner.appendChild(rule);
+  section.appendChild(banner);
+
+  const grid = document.createElement('div');
+  grid.className = 'vault-grid';
+  entries.forEach(({ setName, inventory }) => grid.appendChild(buildSealedProductPlaque(setName, inventory)));
+  section.appendChild(grid);
+
+  return section;
+}
+
 function renderVault() {
   const content = document.getElementById('vault-content');
   if (!content) return;
@@ -162,7 +291,8 @@ function renderVault() {
   const ownedItems = LORCANA_ITEMS.filter(i => i.owned);
   const ownedIconic = ownedItems.filter(i => i.rarity === 'Iconic').length;
   const ownedEnchanted = ownedItems.filter(i => i.rarity === 'Enchanted').length;
-  const ownedOther = ownedItems.filter(i => i.rarity !== 'Iconic' && i.rarity !== 'Enchanted').length;
+  const ownedEpic = ownedItems.filter(i => i.rarity === 'Epic').length;
+  const ownedPromo = ownedItems.filter(i => i.rarity === 'Promo').length;
   const totalIconic = Object.values(LORCANA_ICONIC_TOTALS).reduce((sum, n) => sum + n, 0);
   const totalEnchanted = Object.values(LORCANA_ENCHANTED_TOTALS).reduce((sum, n) => sum + n, 0);
   let totalBoxes = 0;
@@ -176,13 +306,15 @@ function renderVault() {
 
   const cardsIconicEl = document.getElementById('stat-cards-iconic');
   const cardsEnchantedEl = document.getElementById('stat-cards-enchanted');
-  const cardsOtherEl = document.getElementById('stat-cards-other');
+  const cardsEpicEl = document.getElementById('stat-cards-epic');
+  const cardsPromoEl = document.getElementById('stat-cards-promo');
   const boxesEl = document.getElementById('stat-boxes');
   const casesEl = document.getElementById('stat-cases');
   const promoSetsEl = document.getElementById('stat-promo-sets');
   if (cardsIconicEl) cardsIconicEl.textContent = ownedIconic;
   if (cardsEnchantedEl) cardsEnchantedEl.textContent = ownedEnchanted;
-  if (cardsOtherEl) cardsOtherEl.textContent = ownedOther;
+  if (cardsEpicEl) cardsEpicEl.textContent = ownedEpic;
+  if (cardsPromoEl) cardsPromoEl.textContent = ownedPromo;
   if (boxesEl) boxesEl.textContent = totalBoxes;
   if (casesEl) casesEl.textContent = totalCases;
   if (promoSetsEl) promoSetsEl.textContent = totalPromoSets;
@@ -197,25 +329,50 @@ function renderVault() {
   if (enchantedProgressLabel) enchantedProgressLabel.textContent = `${ownedEnchanted} of ${totalEnchanted} collected`;
   if (enchantedProgressFill) enchantedProgressFill.style.width = `${totalEnchanted ? Math.min(100, (ownedEnchanted / totalEnchanted) * 100) : 0}%`;
 
+  const ownedIconicCards = ownedItems.filter(i => i.rarity === 'Iconic');
+  if (ownedIconicCards.length > 0) {
+    content.appendChild(buildIconicShowcase(ownedIconicCards, totalIconic));
+  }
 
-  // Walk sets in the order they first appear in LORCANA_ITEMS, then append
-  // any sealed-only sets (inventory entries with no individual cards yet),
-  // then make sure all 13 numbered mainline sets are always represented.
+  // Sealed Products showcase — every set with at least one box or case,
+  // numbered sets first in release order, then any non-numbered sets.
+  const properCaseByKey = {};
+  LORCANA_ITEMS.forEach(item => {
+    const k = item.set.trim().toLowerCase();
+    if (!properCaseByKey[k]) properCaseByKey[k] = item.set;
+  });
+  function properSetName(key) {
+    return properCaseByKey[key] || LORCANA_SET_DISPLAY_NAMES[key] || key;
+  }
+  const sealedEntries = [];
+  Object.entries(LORCANA_SET_NUMBERS)
+    .sort((a, b) => a[1] - b[1])
+    .forEach(([key]) => {
+      const inv = LORCANA_SET_INVENTORY[key];
+      if (!inv) return;
+      if ((inv.boosterBoxes || 0) === 0 && (inv.cases || 0) === 0 && (inv.promoSets || 0) === 0) return;
+      sealedEntries.push({ setName: properSetName(key), inventory: inv });
+    });
+  Object.keys(LORCANA_SET_INVENTORY).forEach(key => {
+    if (LORCANA_SET_NUMBERS[key]) return; // already handled above
+    const inv = LORCANA_SET_INVENTORY[key];
+    if ((inv.boosterBoxes || 0) === 0 && (inv.cases || 0) === 0 && (inv.promoSets || 0) === 0) return;
+    sealedEntries.push({ setName: properSetName(key), inventory: inv });
+  });
+  if (sealedEntries.length > 0) {
+    content.appendChild(buildSealedProductsShowcase(sealedEntries, totalBoxes, totalCases));
+  }
+
+
+  // Walk sets in the order they first appear in LORCANA_ITEMS, then make
+  // sure all 13 numbered mainline sets are always represented. Sets with
+  // no individual cards and only sealed stock (e.g. Curator's Collection)
+  // are intentionally left out here — they're fully represented in the
+  // Sealed Products showcase above instead, with no near-empty chapter
+  // section needed.
   const seenSets = [];
   LORCANA_ITEMS.forEach(item => {
     if (!seenSets.includes(item.set)) seenSets.push(item.set);
-  });
-  Object.keys(LORCANA_SET_INVENTORY).forEach(key => {
-    const inv = LORCANA_SET_INVENTORY[key];
-    const hasStock = (inv.boosterBoxes || 0) > 0 || (inv.cases || 0) > 0 || (inv.promoSets || 0) > 0;
-    if (!hasStock) return;
-    const alreadySeen = seenSets.some(s => s.trim().toLowerCase() === key);
-    if (!alreadySeen) {
-      // Recover the properly-cased display name from LORCANA_SET_PHOTOS/ITEMS if
-      // possible; otherwise title-case the key as a reasonable fallback.
-      const display = LORCANA_SET_DISPLAY_NAMES[key] || key;
-      seenSets.push(display);
-    }
   });
   Object.entries(LORCANA_SET_NUMBERS)
     .sort((a, b) => a[1] - b[1])
@@ -230,7 +387,7 @@ function renderVault() {
   seenSets.forEach(setName => {
     const key = setName.trim().toLowerCase();
     const inventory = LORCANA_SET_INVENTORY[key] || { boosterBoxes: 0, cases: 0 };
-    const ownedCards = LORCANA_ITEMS.filter(i => i.set === setName && i.owned);
+    const ownedCards = LORCANA_ITEMS.filter(i => i.set === setName && i.owned && i.rarity !== 'Iconic');
     const isNumberedSet = !!LORCANA_SET_NUMBERS[key];
 
     const hasAnything = ownedCards.length > 0 || inventory.boosterBoxes > 0 || inventory.cases > 0 || inventory.promoSets > 0;

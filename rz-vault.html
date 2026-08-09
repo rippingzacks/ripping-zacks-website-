@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Collection — Ripping Zacks</title>
-<meta name="description" content="A living showcase of the Disney Lorcana chase cards and sealed product in the Ripping Zacks collection.">
+<title>RZ Vault — Ripping Zacks</title>
+<meta name="description" content="A living showcase of the top-tier personal holdings in the Ripping Zacks collection — Japanese promos and deck-kit exclusives.">
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
@@ -14,8 +14,9 @@
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="collection.css">
 <link rel="stylesheet" href="offer-modal.css">
+<link rel="stylesheet" href="rz-vault.css">
 </head>
-<body class="vault-body collection-body">
+<body class="vault-body rz-vault-body">
 
 <header class="site-header">
   <div class="wrap">
@@ -23,10 +24,10 @@
     <nav class="nav-links">
       <a href="index.html">Home</a>
       <a href="our-store.html">Our Store</a>
-      <a href="collection.html" class="active">Lorcana Vault</a>
+      <a href="collection.html">Lorcana Vault</a>
       <a href="slab-vault.html">Slab Vault</a>
       <a href="sealed-vault.html">Sealed Vault</a>
-      <a href="rz-vault.html">RZ Vault</a>
+      <a href="rz-vault.html" class="active">RZ Vault</a>
       <a href="fort-knox-vault.html">Fort Knox Vault</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
@@ -37,50 +38,8 @@
 
 <section class="vault-hero">
   <div class="wrap vault-hero-inner">
-    <span class="vault-eyebrow">The Lorcana Vault</span>
-    <h1 class="vault-title">My Collection</h1>
-    <p class="vault-sub">Every card and box below has been drawn from the inkwell and set aside — a running record of what's actually been found, not just chased.</p>
-
-    <div class="vault-stats" id="vault-stats">
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-cards-iconic">0</span>
-        <span class="vault-stat-label">Iconic Slabs</span>
-        <span class="vault-stat-progress-label" id="stat-iconic-progress-label">0 of 0 collected</span>
-        <div class="vault-stat-progress-bar"><div class="vault-stat-progress-fill" id="stat-iconic-progress-fill" style="width:0%"></div></div>
-      </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-cards-enchanted">0</span>
-        <span class="vault-stat-label">Enchanted Slabs</span>
-        <span class="vault-stat-progress-label" id="stat-enchanted-progress-label">0 of 0 collected</span>
-        <div class="vault-stat-progress-bar"><div class="vault-stat-progress-fill" id="stat-enchanted-progress-fill" style="width:0%"></div></div>
-      </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-cards-epic">0</span>
-        <span class="vault-stat-label">Epic Slabs</span>
-      </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-cards-promo">0</span>
-        <span class="vault-stat-label">Promo Slabs</span>
-      </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-boxes">0</span>
-        <span class="vault-stat-label">booster boxes</span>
-      </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-cases">0</span>
-        <span class="vault-stat-label">sealed cases</span>
-      </div>
-      <div class="vault-stat">
-        <span class="vault-stat-num" id="stat-promo-sets">0</span>
-        <span class="vault-stat-label">Sealed Promo Sets</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section vault-body-section" style="padding-bottom:0;">
-  <div class="wrap">
-    <div id="lorcana-rarity-legend"></div>
+    <h1 class="vault-title">RZ Vault</h1>
+    <p class="vault-sub">The top-tier holdings that don't leave the collection — Japanese promos and deck-kit exclusives, set aside for keeps.</p>
   </div>
 </section>
 
@@ -130,8 +89,7 @@
 </footer>
 
 <script src="script.js"></script>
-<script src="lorcana.js"></script>
-<script src="collection.js"></script>
+<script src="rz-vault.js"></script>
 <div class="offer-modal-overlay" id="offer-modal-overlay">
   <div class="offer-modal" role="dialog" aria-modal="true" aria-labelledby="offer-modal-title">
     <button type="button" class="offer-modal-close" id="offer-modal-close" aria-label="Close">&times;</button>

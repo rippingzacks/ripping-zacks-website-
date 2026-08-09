@@ -58,13 +58,15 @@ function buildLorcanaRarityBadges(setName) {
   function badge(labelText, owned, total, bg, fg, iconSrc) {
     const pill = document.createElement('span');
     pill.style.cssText = `display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:0.72rem; font-weight:700; letter-spacing:0.02em; padding:4px 10px 4px 6px; border-radius:999px; background:${bg}; color:${fg};`;
-    const icon = document.createElement('img');
-    icon.src = iconSrc;
-    icon.alt = labelText;
-    icon.style.cssText = 'width:16px; height:16px; object-fit:contain; flex-shrink:0;';
-    pill.appendChild(icon);
+    if (iconSrc) {
+      const icon = document.createElement('img');
+      icon.src = iconSrc;
+      icon.alt = labelText;
+      icon.style.cssText = 'width:16px; height:16px; object-fit:contain; flex-shrink:0;';
+      pill.appendChild(icon);
+    }
     const text = document.createElement('span');
-    text.textContent = `${labelText} ${owned}/${total}`;
+    text.textContent = (total === null || total === undefined) ? `${labelText} ${owned}` : `${labelText} ${owned}/${total}`;
     pill.appendChild(text);
     return pill;
   }
@@ -75,7 +77,12 @@ function buildLorcanaRarityBadges(setName) {
   }
   if (enchantedTotal) {
     const ownedEnchanted = setCards.filter(i => i.owned && i.rarity === 'Enchanted').length;
-    wrap.appendChild(badge('Enchanted', ownedEnchanted, enchantedTotal, 'rgba(230,67,44,0.14)', 'var(--citrus)', LORCANA_RARITY_ICONS.enchanted));
+    wrap.appendChild(badge('Enchanted', ownedEnchanted, enchantedTotal, 'rgba(169,124,232,0.16)', 'var(--vault-glimmer)', LORCANA_RARITY_ICONS.enchanted));
+  }
+  const epicOwnedCount = setCards.filter(i => i.owned && i.rarity === 'Epic').length;
+  if (epicOwnedCount > 0) {
+    // No known per-set Epic total, so this is a plain owned count, not a ratio.
+    wrap.appendChild(badge('Epic', epicOwnedCount, null, 'rgba(76,175,88,0.14)', 'var(--mint)'));
   }
   return wrap;
 }
@@ -122,6 +129,31 @@ const LORCANA_SET_PHOTOS = {
   "attack of the vine!": 'assets/lorcana-sets/attack-of-the-vine.webp',
   "d23 collection - 2024": 'assets/lorcana-sets/d23-collection-2024.webp',
   "d23 expo promo set - 2022": 'assets/lorcana-sets/d23-expo-promo-set-2022.webp',
+  "curator's collection: heroines edition": 'assets/lorcana-sets/curators-collection-heroines-edition.webp',
+};
+
+// Separate, larger booster-box product photos used only in the Sealed
+// Products showcase on the Lorcana Vault page. Kept apart from
+// LORCANA_SET_PHOTOS (which feeds the small icon next to each chapter's
+// title) since that map already points at a different product shot for
+// a couple of sets. D23 Collection and Curator's Collection reuse their
+// existing LORCANA_SET_PHOTOS images since those are already the right
+// product photo.
+const LORCANA_BOOSTER_BOX_PHOTOS = {
+  "the first chapter": 'assets/lorcana-sets/booster-box-the-first-chapter.webp',
+  "rise of the floodborn": 'assets/lorcana-sets/booster-box-rise-of-the-floodborn.webp',
+  "into the inklands": 'assets/lorcana-sets/booster-box-into-the-inklands.webp',
+  "ursula's return": 'assets/lorcana-sets/booster-box-ursulas-return.webp',
+  "shimmering skies": 'assets/lorcana-sets/booster-box-shimmering-skies.webp',
+  "azurite sea": 'assets/lorcana-sets/booster-box-azurite-sea.webp',
+  "archazia's island": 'assets/lorcana-sets/booster-box-archazias-island.webp',
+  "reign of jafar": 'assets/lorcana-sets/booster-box-reign-of-jafar.webp',
+  "fabled": 'assets/lorcana-sets/booster-box-fabled.webp',
+  "whispers in the well": 'assets/lorcana-sets/booster-box-whispers-in-the-well.webp',
+  "winterspell": 'assets/lorcana-sets/booster-box-winterspell.webp',
+  "wilds unknown": 'assets/lorcana-sets/booster-box-wilds-unknown.webp',
+  "attack of the vine!": 'assets/lorcana-sets/booster-box-attack-of-the-vine.webp',
+  "d23 collection - 2024": 'assets/lorcana-sets/d23-collection-2024.webp',
   "curator's collection: heroines edition": 'assets/lorcana-sets/curators-collection-heroines-edition.webp',
 };
 

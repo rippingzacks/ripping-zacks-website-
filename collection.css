@@ -342,3 +342,55 @@
   font-size:0.92rem;
   line-height:1.5;
 }
+
+/* The Iconics showcase — a headliner treatment, one notch more
+   special than the regular per-set banners it sits above. */
+.vault-iconic-showcase-banner{
+  border-color:var(--vault-gold-br);
+  box-shadow:0 22px 44px -22px rgba(0,0,0,0.7), inset 0 1px 0 color-mix(in srgb, var(--vault-glimmer) 14%, transparent), 0 0 0 1px color-mix(in srgb, var(--vault-gold-br) 30%, transparent);
+}
+.vault-iconic-showcase-banner .vault-series-title{
+  font-size:1.7rem;
+}
+.vault-iconic-showcase-banner .vault-series-rule{
+  height:3px;
+  background:linear-gradient(90deg, var(--vault-glimmer), var(--vault-gold-br) 50%, var(--vault-gold));
+}
+
+/* Section-wide spotlight glow — the whole Iconics area sits in a soft
+   gold radial wash, not just the banner, so it reads as lifted off the
+   page rather than just another bordered box. */
+.vault-iconic-showcase-section{
+  position:relative;
+  padding:8px 8px 28px;
+  border-radius:20px;
+  background:radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--vault-glimmer) 13%, transparent), transparent 65%);
+}
+
+/* Iconic cards get a permanent gold-foil frame (every other card on the
+   site only gets a border on hover) plus a small ribbon tag, since these
+   are literally the rarest tier that exists — worth a "vitrine" look
+   year-round, not just a hover state. */
+.vault-iconic-plaque{
+  border-color:var(--vault-gold-br) !important;
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--vault-gold-br) 45%, transparent), 0 14px 30px -18px rgba(0,0,0,0.65);
+}
+.vault-iconic-plaque:hover{
+  box-shadow:0 0 0 1px var(--vault-gold-br), 0 22px 40px -20px rgba(0,0,0,0.75);
+}
+.vault-iconic-ribbon{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:2;
+  font-family:var(--mono);
+  font-size:0.6rem;
+  font-weight:700;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--vault-ink);
+  background:linear-gradient(90deg, var(--vault-glimmer), var(--vault-gold-br));
+  padding:3px 9px;
+  border-radius:999px;
+  box-shadow:0 3px 8px -2px rgba(0,0,0,0.5);
+}
