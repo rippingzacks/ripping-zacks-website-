@@ -158,6 +158,7 @@ const LORCANA_BOOSTER_BOX_PHOTOS = {
 };
 
 const LORCANA_PERMANENT_PHOTOS = {
+  'discard card (black background)': 'assets/lorcana/discard-card-black-background.webp',
   'all is found (song)': 'assets/lorcana/all-is-found-song.webp',
   'mickey mouse, inspirational warrior': 'assets/lorcana/mickey-mouse-inspirational-warrior.webp',
   'mirabel madrigal, musically talented': 'assets/lorcana/mirabel-madrigal-musically-talented.webp',
@@ -439,6 +440,7 @@ const LORCANA_ITEMS = [
   { name: 'Aladdin, Heroic Outlaw', set: 'The First Chapter', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Maui, Hero to All', set: 'The First Chapter', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Hades, King of Olympus', set: 'The First Chapter', rarity: 'Enchanted', targetPrice: null, purchasePrice: 500, marketPrice: 556.67, owned: true, grade: 'PSA 10.0 GEM - MT' },
+  { name: 'Discard Card (Black Background)', set: 'The First Chapter', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Cinderella, Ballroom Sensation', set: 'Rise of the Floodborn', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Alice, Growing Girl', set: 'Rise of the Floodborn', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Snow White, Well Wisher', set: 'Rise of the Floodborn', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },

@@ -130,9 +130,10 @@ function renderSlabVault() {
   }
 
   const seriesPriority = [
+    'Team Boss Pikachu (JP)',
+    "Poncho Pikachu's",
     'Scarlet & Violet: Black Bolt & White Flare',
     'Vending Series 3 (Green)',
-    "Poncho Pikachu's",
     'Other Slabs',
   ];
   const seriesOrder = [];
@@ -149,7 +150,9 @@ function renderSlabVault() {
     return ai - bi;
   });
 
-  const unSeriesed = ownedItems.filter(i => !i.series);
+  const unSeriesed = ownedItems
+    .filter(i => !i.series)
+    .sort((a, b) => (b.marketPrice || 0) - (a.marketPrice || 0));
   if (unSeriesed.length > 0) {
     const grid = document.createElement('div');
     grid.className = 'vault-grid';
@@ -158,7 +161,9 @@ function renderSlabVault() {
   }
 
   seriesOrder.forEach(seriesName => {
-    const cards = ownedItems.filter(i => i.series === seriesName);
+    const cards = ownedItems
+      .filter(i => i.series === seriesName)
+      .sort((a, b) => (b.marketPrice || 0) - (a.marketPrice || 0));
     content.appendChild(buildSlabSeriesBanner(seriesName, cards));
     const grid = document.createElement('div');
     grid.className = 'vault-grid';
