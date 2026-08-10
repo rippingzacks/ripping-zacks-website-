@@ -12,8 +12,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* .card-art is shared with other product-card contexts site-wide
+     (fixed 190px height, meant for landscape-ish product shots).
+     Lorcana card photos are tall (~5:7), so that fixed short height
+     crops most of the card away. Scoped to this page only so other
+     pages using .card-art keep their original crop. */
+  .lorcana-reference-body .card-art{
+    height:auto;
+    aspect-ratio:5/7;
+  }
+  .lorcana-reference-body .card-art img{
+    object-fit:contain;
+  }
+</style>
 </head>
-<body>
+<body class="lorcana-reference-body">
 
 <header class="site-header">
   <div class="wrap">
