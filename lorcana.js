@@ -49,10 +49,14 @@ function buildLorcanaRarityBadges(setName) {
   const setNum = LORCANA_SET_NUMBERS[setName.trim().toLowerCase()];
   const wrap = document.createElement('div');
   wrap.style.cssText = 'display:flex; align-items:center; gap:8px; flex-wrap:wrap;';
-  if (!setNum) return wrap;
 
-  const enchantedTotal = LORCANA_ENCHANTED_TOTALS[setNum];
-  const iconicTotal = LORCANA_ICONIC_TOTALS[setNum];
+  // Iconic/Enchanted only have known per-set totals for numbered sets;
+  // enchantedTotal/iconicTotal come back undefined for non-numbered sets
+  // (D23, Curator's Collection, Championship Promo Cards, etc.) and their
+  // badges are skipped below -- but Epic/Rare/Promo (plain owned counts,
+  // no known totals) still get checked for every set, numbered or not.
+  const enchantedTotal = setNum ? LORCANA_ENCHANTED_TOTALS[setNum] : undefined;
+  const iconicTotal = setNum ? LORCANA_ICONIC_TOTALS[setNum] : undefined;
   const setCards = LORCANA_ITEMS.filter(i => i.set === setName);
 
   function badge(labelText, owned, total, bg, fg, iconSrc) {
@@ -83,6 +87,16 @@ function buildLorcanaRarityBadges(setName) {
   if (epicOwnedCount > 0) {
     // No known per-set Epic total, so this is a plain owned count, not a ratio.
     wrap.appendChild(badge('Epic', epicOwnedCount, null, 'rgba(76,175,88,0.14)', 'var(--mint)'));
+  }
+  const rareOwnedCount = setCards.filter(i => i.owned && i.rarity === 'Rare').length;
+  if (rareOwnedCount > 0) {
+    // No known per-set Rare total either, so this is a plain owned count too.
+    wrap.appendChild(badge('Rare', rareOwnedCount, null, 'rgba(96,165,250,0.14)', '#60a5fa'));
+  }
+  const promoOwnedCount = setCards.filter(i => i.owned && i.rarity === 'Promo').length;
+  if (promoOwnedCount > 0) {
+    // No known per-set Promo total either, so this is a plain owned count too.
+    wrap.appendChild(badge('Promo', promoOwnedCount, null, 'rgba(244,114,182,0.14)', '#f472b6'));
   }
   return wrap;
 }
@@ -157,6 +171,7 @@ const LORCANA_BOOSTER_BOX_PHOTOS = {
 };
 
 const LORCANA_PERMANENT_PHOTOS = {
+  'scar, mastermind': 'assets/lorcana/scar-mastermind.webp',
   'stitch, rock star (2024)': 'assets/lorcana/stitch-rock-star-championship.webp',
   "ursula, sea witch queen (2024)": 'assets/lorcana/ursula-sea-witch-queen-championship.webp',
   'mirabel madrigal, family gatherer (2024)': 'assets/lorcana/mirabel-madrigal-family-gatherer-championship.webp',
@@ -455,6 +470,7 @@ const LORCANA_ITEMS = [
   { name: 'Maui, Hero to All', set: 'The First Chapter', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Hades, King of Olympus', set: 'The First Chapter', rarity: 'Enchanted', targetPrice: null, purchasePrice: 500.0, marketPrice: 556.67, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Discard Card (Black Background)', set: 'The First Chapter', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: true, grade: 'PSA 10.0 GEM - MT' },
+  { name: 'Scar, Mastermind', set: 'The First Chapter', rarity: 'Rare', targetPrice: null, purchasePrice: 31.01, marketPrice: null, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Cinderella, Ballroom Sensation', set: 'Rise of the Floodborn', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Alice, Growing Girl', set: 'Rise of the Floodborn', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Snow White, Well Wisher', set: 'Rise of the Floodborn', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
@@ -514,7 +530,7 @@ const LORCANA_ITEMS = [
   { name: "Ratigan's Party, Seedy Back Room", set: 'Shimmering Skies', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Snow White, Fair-Hearted', set: 'Shimmering Skies', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Olaf, Happy Passenger', set: 'Shimmering Skies', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
-  { name: 'Scar, Vengeful Lion', set: 'Shimmering Skies', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Scar, Vengeful Lion', set: 'Shimmering Skies', rarity: 'Enchanted', targetPrice: null, purchasePrice: 594.89, marketPrice: null, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Donald Duck, Pie Slinger', set: 'Shimmering Skies', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Robin Hood, Sharpshooter', set: 'Shimmering Skies', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Vanellope von Schweetz, Sugar Rush Princess', set: 'Shimmering Skies', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
@@ -814,11 +830,7 @@ function buildLorcanaSetBanner(setName) {
 
   const banner = document.createElement('div');
   banner.className = 'lorcana-set-banner';
-  banner.style.cssText = 'grid-column: 1 / -1; display:flex; align-items:center; flex-wrap:wrap; gap:16px; margin:28px 0 6px; padding:14px 16px; border-radius:14px; border:2px solid transparent;';
-  if (hasStock) {
-    banner.style.borderColor = 'var(--mint)';
-    banner.style.background = 'rgba(76,175,88,0.08)';
-  }
+  banner.style.cssText = 'grid-column: 1 / -1; display:flex; align-items:center; flex-wrap:wrap; gap:16px; margin:28px 0 6px; padding:14px 16px; border-radius:14px; border:4px solid var(--mint); background:rgba(76,175,88,0.08);';
 
   if (photoSrc) {
     const img = document.createElement('img');
@@ -834,9 +846,7 @@ function buildLorcanaSetBanner(setName) {
   h2.style.cssText = 'font-family:var(--display); font-size:1.3rem; margin:0; margin-right:auto;';
   banner.appendChild(h2);
 
-  if (setNum) {
-    banner.appendChild(buildLorcanaRarityBadges(setName));
-  }
+  banner.appendChild(buildLorcanaRarityBadges(setName));
 
   function buildQtyDisplay(labelText, qty) {
     const wrap = document.createElement('div');

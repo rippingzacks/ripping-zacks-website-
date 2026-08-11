@@ -107,9 +107,7 @@ function buildVaultSet(setName, ownedCards, inventory) {
 
   const stats = document.createElement('div');
   stats.className = 'vault-series-stats';
-  if (setNum) {
-    stats.appendChild(buildLorcanaRarityBadges(setName));
-  }
+  stats.appendChild(buildLorcanaRarityBadges(setName));
   titleRow.appendChild(stats);
 
   banner.appendChild(titleRow);
@@ -293,6 +291,7 @@ function renderVault() {
   const ownedEnchanted = ownedItems.filter(i => i.rarity === 'Enchanted').length;
   const ownedEpic = ownedItems.filter(i => i.rarity === 'Epic').length;
   const ownedPromo = ownedItems.filter(i => i.rarity === 'Promo').length;
+  const ownedRare = ownedItems.filter(i => i.rarity === 'Rare').length;
   const totalIconic = Object.values(LORCANA_ICONIC_TOTALS).reduce((sum, n) => sum + n, 0);
   const totalEnchanted = Object.values(LORCANA_ENCHANTED_TOTALS).reduce((sum, n) => sum + n, 0);
   let totalBoxes = 0;
@@ -308,6 +307,7 @@ function renderVault() {
   const cardsEnchantedEl = document.getElementById('stat-cards-enchanted');
   const cardsEpicEl = document.getElementById('stat-cards-epic');
   const cardsPromoEl = document.getElementById('stat-cards-promo');
+  const cardsRareEl = document.getElementById('stat-cards-rare');
   const boxesEl = document.getElementById('stat-boxes');
   const casesEl = document.getElementById('stat-cases');
   const promoSetsEl = document.getElementById('stat-promo-sets');
@@ -315,6 +315,7 @@ function renderVault() {
   if (cardsEnchantedEl) cardsEnchantedEl.textContent = ownedEnchanted;
   if (cardsEpicEl) cardsEpicEl.textContent = ownedEpic;
   if (cardsPromoEl) cardsPromoEl.textContent = ownedPromo;
+  if (cardsRareEl) cardsRareEl.textContent = ownedRare;
   if (boxesEl) boxesEl.textContent = totalBoxes;
   if (casesEl) casesEl.textContent = totalCases;
   if (promoSetsEl) promoSetsEl.textContent = totalPromoSets;

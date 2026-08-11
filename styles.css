@@ -286,6 +286,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .card-slab.in-stock{
   background:rgba(76,175,88,0.10);
+  border-width:4px;
   border-color:var(--mint);
 }
 .card-slab:hover{
