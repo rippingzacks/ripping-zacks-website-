@@ -115,3 +115,42 @@
 .tmnt-highlight .sealed-vault-plaque-art{
   background:var(--vault-panel-2);
 }
+
+/* ------------------------------------------------------------
+   JP SPECIALS SPOTLIGHT — red/white, evoking the Japanese flag,
+   distinct from the TMNT section's green. Same self-contained
+   color-override pattern.
+   ------------------------------------------------------------ */
+.jp-specials-highlight{
+  --vault-panel:    #2a1214;
+  --vault-panel-2:  #38181b;
+  --vault-gold:     #d94452;
+  --vault-gold-br:  #ff5a68;
+  --vault-glimmer:  #ffb3b9;
+  --vault-line:     rgba(255,90,104,0.34);
+  padding-bottom:20px;
+}
+.jp-specials-highlight-banner{
+  box-shadow:0 18px 36px -26px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,179,185,0.12), 0 0 0 1px rgba(255,90,104,0.16);
+}
+.jp-specials-badge{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:0.66rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#2a1214;
+  background:linear-gradient(90deg, var(--vault-glimmer), var(--vault-gold-br));
+  padding:4px 10px;
+  border-radius:999px;
+  margin-bottom:8px;
+}
+.jp-specials-highlight .vault-series-title-group{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.jp-specials-highlight .sealed-vault-plaque-art{
+  background:var(--vault-panel-2);
+}

@@ -70,7 +70,11 @@ function buildLorcanaRarityBadges(setName) {
       pill.appendChild(icon);
     }
     const text = document.createElement('span');
-    text.textContent = (total === null || total === undefined) ? `${labelText} ${owned}` : `${labelText} ${owned}/${total}`;
+    if (labelText === '') {
+      text.textContent = (total === null || total === undefined) ? `${owned}` : `${owned}/${total}`;
+    } else {
+      text.textContent = (total === null || total === undefined) ? `${labelText} ${owned}` : `${labelText} ${owned}/${total}`;
+    }
     pill.appendChild(text);
     return pill;
   }
@@ -94,9 +98,12 @@ function buildLorcanaRarityBadges(setName) {
     wrap.appendChild(badge('Rare', rareOwnedCount, null, 'rgba(96,165,250,0.14)', '#60a5fa'));
   }
   const promoOwnedCount = setCards.filter(i => i.owned && i.rarity === 'Promo').length;
-  if (promoOwnedCount > 0) {
-    // No known per-set Promo total either, so this is a plain owned count too.
-    wrap.appendChild(badge('Promo', promoOwnedCount, null, 'rgba(244,114,182,0.14)', '#f472b6'));
+  const promoTotal = setCards.filter(i => i.rarity === 'Promo').length;
+  if (promoTotal > 0) {
+    const promoPill = document.createElement('span');
+    promoPill.style.cssText = 'display:inline-flex; align-items:center; font-family:var(--mono); font-size:0.72rem; font-weight:700; letter-spacing:0.02em; padding:4px 10px; border-radius:999px; background:rgba(244,114,182,0.14); color:#f472b6;';
+    promoPill.textContent = `${promoOwnedCount}/${promoTotal} cards in set`;
+    wrap.appendChild(promoPill);
   }
   return wrap;
 }
@@ -118,6 +125,7 @@ const LORCANA_SET_INVENTORY = {
   "d23 expo promo set - 2022": { boosterBoxes: 0, cases: 0, promoSets: 0 },
   "d23 collection - 2024": { boosterBoxes: 0, cases: 0, promoSets: 3 },
   "curator's collection: heroines edition - 2026": { boosterBoxes: 0, cases: 0, promoSets: 3 },
+  "d23 collection - 2026": { boosterBoxes: 0, cases: 0, promoSets: 3 },
 };
 
 // Proper-cased display names for sealed-only sets that have no individual
@@ -141,6 +149,7 @@ const LORCANA_SET_PHOTOS = {
   "wilds unknown": 'assets/lorcana-sets/wilds-unknown.webp',
   "attack of the vine!": 'assets/lorcana-sets/attack-of-the-vine.webp',
   "d23 collection - 2024": 'assets/lorcana-sets/d23-collection-2024.webp',
+  "d23 collection - 2026": 'assets/lorcana-sets/d23-collection-2026.webp',
   "d23 expo promo set - 2022": 'assets/lorcana-sets/d23-expo-promo-set-2022.webp',
   "curator's collection: heroines edition - 2026": 'assets/lorcana-sets/curators-collection-heroines-edition.webp',
 };
@@ -167,6 +176,7 @@ const LORCANA_BOOSTER_BOX_PHOTOS = {
   "wilds unknown": 'assets/lorcana-sets/booster-box-wilds-unknown.webp',
   "attack of the vine!": 'assets/lorcana-sets/booster-box-attack-of-the-vine.webp',
   "d23 collection - 2024": 'assets/lorcana-sets/d23-collection-2024.webp',
+  "d23 collection - 2026": 'assets/lorcana-sets/d23-collection-2026.webp',
   "curator's collection: heroines edition - 2026": 'assets/lorcana-sets/curators-collection-heroines-edition.webp',
 };
 
@@ -681,7 +691,7 @@ const LORCANA_ITEMS = [
   { name: 'The Madrigal Family, Every Generation', set: 'Attack of the Vine!', rarity: 'Enchanted', targetPrice: null, purchasePrice: 270.0, marketPrice: 270.0, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Merida, Wisp Conjurer', set: 'Attack of the Vine!', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Aladdin & Genie, Mischievous Pals', set: 'Attack of the Vine!', rarity: 'Enchanted', targetPrice: null, purchasePrice: 600.0, marketPrice: 600.0, owned: true, grade: 'PSA 10.0 GEM - MT' },
-  { name: 'Peter Pan & Tinker Bell, Fast Friends', set: 'Attack of the Vine!', rarity: 'Enchanted', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Peter Pan & Tinker Bell, Fast Friends', set: 'Attack of the Vine!', rarity: 'Enchanted', targetPrice: null, purchasePrice: 2039.0, marketPrice: null, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Winnie the Pooh & Piglet, Hunny Mages', set: 'Attack of the Vine!', rarity: 'Enchanted', targetPrice: null, purchasePrice: 8000.0, marketPrice: 8500.0, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Maleficent & Diablo, Evil Incarnate', set: 'Attack of the Vine!', rarity: 'Enchanted', targetPrice: null, purchasePrice: 495.0, marketPrice: 495.0, owned: true, grade: 'PSA 10.0 GEM - MT' },
   { name: 'Tod & Copper, Best of Friends', set: 'Attack of the Vine!', rarity: 'Enchanted', targetPrice: null, purchasePrice: 450.0, marketPrice: 450.0, owned: true, grade: 'PSA 10.0 GEM - MT' },
@@ -724,6 +734,12 @@ const LORCANA_ITEMS = [
   { name: 'Mulan, Elite Archer', set: "Curator's Collection: Heroines Edition - 2026", rarity: 'Promo', targetPrice: null, purchasePrice: 67.0, marketPrice: 80.9, owned: true, grade: 'Ungraded' },
   { name: 'Anna, Trusting Sister', set: "Curator's Collection: Heroines Edition - 2026", rarity: 'Promo', targetPrice: null, purchasePrice: 67.0, marketPrice: 73.12, owned: true, grade: 'Ungraded' },
   { name: 'Tinker Bell, Giant Fairy', set: "Curator's Collection: Heroines Edition - 2026", rarity: 'Promo', targetPrice: null, purchasePrice: 67.0, marketPrice: 81.9, owned: true, grade: 'Ungraded' },
+  { name: 'Angel, Siren Singer', set: 'D23 Collection - 2026', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Pocahontas, Following the Wind', set: 'D23 Collection - 2026', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Mushu, Stealthy Dragon', set: 'D23 Collection - 2026', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Hector Rivera, Gone to Pieces', set: 'D23 Collection - 2026', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Judy Hopps, Uncovering Clues', set: 'D23 Collection - 2026', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
+  { name: 'Mr. Incredible, Taking Out the Trash', set: 'D23 Collection - 2026', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Stitch, Rock Star (2024)', set: 'Championship Promo Cards', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Ursula, Sea Witch Queen (2024)', set: 'Championship Promo Cards', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
   { name: 'Mirabel Madrigal, Family Gatherer (2024)', set: 'Championship Promo Cards', rarity: 'Promo', targetPrice: null, purchasePrice: null, marketPrice: null, owned: false },
@@ -881,11 +897,12 @@ function renderLorcanaGrid() {
   if (!grid || !count) return;
 
   const term = lorcanaSearchTerm.trim().toLowerCase();
+  const notPurchased = LORCANA_ITEMS.filter(i => !i.owned);
   const visible = term
-    ? LORCANA_ITEMS.filter(i =>
+    ? notPurchased.filter(i =>
         (i.name || '').toLowerCase().includes(term) ||
         (i.set || '').toLowerCase().includes(term))
-    : LORCANA_ITEMS;
+    : notPurchased;
 
   count.textContent = visible.length + (visible.length === 1 ? ' card' : ' cards');
   grid.innerHTML = '';

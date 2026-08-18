@@ -364,7 +364,93 @@ function renderTmntSection() {
   content.appendChild(grid);
 }
 
+// ------------------------------------------------------------
+// JAPANESE POKEMON CENTER SPECIALS
+// Reads JP_SPECIALS_ITEMS / JP_SPECIALS_PHOTOS from jp-specials.js.
+// Same pattern as the TMNT spotlight: its own highlighted section,
+// units-only display (no price shown on the public page).
+// ------------------------------------------------------------
+function buildJpSpecialsPlaque(item) {
+  const plaque = document.createElement('article');
+  plaque.className = 'vault-plaque';
+
+  const corner1 = document.createElement('span'); corner1.className = 'corner-bl';
+  const corner2 = document.createElement('span'); corner2.className = 'corner-br';
+  plaque.appendChild(corner1);
+  plaque.appendChild(corner2);
+
+  const key = item.name.trim().toLowerCase();
+  const photoSrc = (typeof JP_SPECIALS_PHOTOS !== 'undefined') ? JP_SPECIALS_PHOTOS[key] : null;
+  if (photoSrc) {
+    const art = document.createElement('div');
+    art.className = 'sealed-vault-plaque-art';
+    const img = document.createElement('img');
+    img.src = photoSrc;
+    img.alt = item.name || 'Sealed product';
+    img.loading = 'lazy';
+    art.appendChild(img);
+    plaque.appendChild(art);
+  }
+
+  const body = document.createElement('div');
+  body.className = 'sealed-vault-plaque-body';
+
+  const tag = document.createElement('span');
+  tag.className = 'vault-plaque-rarity';
+  tag.textContent = 'Pokemon Center (JP)';
+  body.appendChild(tag);
+
+  const h3 = document.createElement('h3');
+  h3.textContent = item.short || item.name || 'Untitled';
+  body.appendChild(h3);
+
+  const qtyRow = document.createElement('div');
+  qtyRow.className = 'sealed-vault-plaque-qty';
+  const qtyLbl = document.createElement('span');
+  qtyLbl.textContent = 'Units';
+  const qtyVal = document.createElement('span');
+  qtyVal.textContent = String(item.qty || 0);
+  qtyRow.appendChild(qtyLbl);
+  qtyRow.appendChild(qtyVal);
+  body.appendChild(qtyRow);
+
+  plaque.appendChild(body);
+  return plaque;
+}
+
+function renderJpSpecialsSection() {
+  const content = document.getElementById('vault-jp-specials-content');
+  if (!content) return;
+
+  content.innerHTML = '';
+
+  const items = (typeof JP_SPECIALS_ITEMS !== 'undefined') ? JP_SPECIALS_ITEMS : [];
+  const totalItems = items.reduce((sum, i) => sum + (i.qty || 0), 0);
+
+  const statEl = document.getElementById('section-stat-jp-specials');
+  if (statEl) statEl.textContent = totalItems;
+  const heroStatEl = document.getElementById('stat-jp-specials');
+  if (heroStatEl) heroStatEl.textContent = totalItems;
+
+  if (items.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'vault-empty';
+    empty.innerHTML = `
+      <h3>No regional specials yet</h3>
+      <p>Check back once the first Pokemon Center exclusive box shows up.</p>
+    `;
+    content.appendChild(empty);
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'vault-grid';
+  items.forEach(item => grid.appendChild(buildJpSpecialsPlaque(item)));
+  content.appendChild(grid);
+}
+
 document.addEventListener('DOMContentLoaded', renderSealedVault);
 document.addEventListener('DOMContentLoaded', renderPacksSection);
 document.addEventListener('DOMContentLoaded', renderOtherSection);
 document.addEventListener('DOMContentLoaded', renderTmntSection);
+document.addEventListener('DOMContentLoaded', renderJpSpecialsSection);
