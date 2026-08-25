@@ -1,0 +1,12 @@
+{
+  "name": "descent-tcg-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static site for Descent TCG with build-time prerendering of the vault pages",
+  "scripts": {
+    "build": "node scripts/prerender.js"
+  },
+  "dependencies": {
+    "jsdom": "^24.1.0"
+  }
+}

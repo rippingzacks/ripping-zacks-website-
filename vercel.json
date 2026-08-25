@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/lorcana.html", "destination": "/collection.html", "permanent": true },
+    { "source": "/boosters.html", "destination": "/sealed-vault.html", "permanent": true },
+    { "source": "/marketing.html", "destination": "/slab-vault.html", "permanent": true }
+  ]
+}
