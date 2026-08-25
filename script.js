@@ -50,16 +50,45 @@ document.addEventListener('DOMContentLoaded', () => {
     if (counter) counter.textContent = `${visibleCount} card${visibleCount === 1 ? '' : 's'}`;
   }
 
-  // Contact form (static — no backend wired up yet)
+  // Contact form — posts as JSON to POST /api/contact (Vercel serverless
+  // function, see api/contact.js).
   const form = document.querySelector('.contact-form');
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const status = document.querySelector('.form-status');
-      if (status) {
-        status.textContent = 'This form isn\u2019t connected yet \u2014 for now, please reach out by email or Instagram below.';
-        status.classList.add('visible');
+      const status = form.querySelector('.form-status');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const fields = {};
+      new FormData(form).forEach((value, key) => { fields[key] = value; });
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
       }
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fields),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('send failed');
+          if (status) {
+            status.textContent = 'Message sent — we typically respond within 24–48 hours.';
+            status.classList.add('visible');
+          }
+          form.reset();
+        })
+        .catch(() => {
+          if (status) {
+            status.textContent = 'Something went wrong sending your message. Please try again, or email us directly.';
+            status.classList.add('visible');
+          }
+        })
+        .finally(() => {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message';
+          }
+        });
     });
   }
 

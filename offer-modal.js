@@ -2,17 +2,18 @@
 // MAKE AN OFFER MODAL
 // Shared across Lorcana Vault, Slab Vault, and Sealed Vault.
 // Clicking any card (image or plaque) opens the modal with the
-// item name pre-filled. Submits via Netlify Forms (AJAX), so the
-// static <form data-netlify="true"> lower in this page's HTML
-// must stay untouched for Netlify's build-time form detection to
-// pick it up. Not wired on Fort Knox Vault -- that page is a
-// third-party Collectr iframe, not our own card markup.
+// item name pre-filled. Submits as JSON to POST /api/offer
+// (Vercel serverless function, see api/offer.js).
+// Not wired on Fort Knox Vault -- that page is a third-party
+// Collectr iframe, not our own card markup.
 // ============================================================
 
 (function () {
-  function encodeFormData(form) {
+  function readFormData(form) {
     const data = new FormData(form);
-    return new URLSearchParams(data).toString();
+    const fields = {};
+    data.forEach(function (value, key) { fields[key] = value; });
+    return fields;
   }
 
   function initOfferModal() {
@@ -81,12 +82,13 @@
           submitBtn.disabled = true;
           submitBtn.textContent = 'Sending…';
         }
-        fetch('/', {
+        fetch('/api/offer', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: encodeFormData(form),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(readFormData(form)),
         })
-          .then(function () {
+          .then(function (res) {
+            if (!res.ok) throw new Error('send failed');
             form.style.display = 'none';
             if (successEl) successEl.hidden = false;
           })
