@@ -32,6 +32,8 @@ function buildSlabVaultPlaque(item) {
     const art = document.createElement('div');
     art.className = 'vault-plaque-art';
     const img = document.createElement('img');
+    img.setAttribute('loading', 'lazy');
+    img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = item.name || '';
     art.appendChild(img);

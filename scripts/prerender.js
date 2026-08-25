@@ -40,6 +40,9 @@ const EXCLUDE_FROM_COPY = new Set([
   'package.json',
   'package-lock.json',
   '.DS_Store',
+  // Build-time only: fortknox.js is read directly by this script for
+  // Fort Knox JSON-LD; no page loads it, so it doesn't belong in dist/.
+  'fortknox.js',
 ]);
 
 const VAULT_PAGES = ['collection.html', 'slab-vault.html', 'sealed-vault.html', 'fort-knox-vault.html'];

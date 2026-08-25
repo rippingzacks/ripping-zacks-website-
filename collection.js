@@ -34,6 +34,8 @@ function buildVaultPlaque(item) {
     const art = document.createElement('div');
     art.className = 'vault-plaque-art';
     const img = document.createElement('img');
+    img.setAttribute('loading', 'lazy');
+    img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = item.name || '';
     art.appendChild(img);
@@ -94,6 +96,8 @@ function buildVaultSet(setName, ownedCards, inventory) {
   titleGroup.className = 'vault-series-title-group';
   if (photoSrc) {
     const img = document.createElement('img');
+    img.setAttribute('loading', 'lazy');
+    img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = setName;
     titleGroup.appendChild(img);
@@ -213,6 +217,8 @@ function buildSealedProductPlaque(setName, inventory) {
     const art = document.createElement('div');
     art.className = 'vault-plaque-art';
     const img = document.createElement('img');
+    img.setAttribute('loading', 'lazy');
+    img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = setName;
     art.appendChild(img);

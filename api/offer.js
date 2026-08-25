@@ -1,12 +1,16 @@
 // POST /api/offer — "Make an Offer" modal on the vault pages.
 // Fields: item, offer, name, contact, message?, bot-field (honeypot).
 
-const { sendMail, readFields, clean, EMAIL_RE } = require('./_mail');
+const { sendMail, readFields, clean, rateLimited, EMAIL_RE } = require('./_mail');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  if (rateLimited(req)) {
+    return res.status(429).json({ error: 'Too many submissions. Please try again later.' });
   }
 
   const body = readFields(req);

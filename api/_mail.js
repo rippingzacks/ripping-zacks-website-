@@ -62,6 +62,31 @@ function clean(value, maxLength) {
   return value.trim().slice(0, maxLength || 2000);
 }
 
+// Best-effort per-IP throttle. Serverless instances are ephemeral, so
+// this only limits repeats within a warm instance — it stops a naive
+// spam loop from burning the Resend quota, it is not a hard guarantee.
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const hits = new Map(); // ip -> [timestamps]
+
+function rateLimited(req) {
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (recent.length >= RATE_LIMIT) {
+    hits.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 1000) {
+    for (const [key, times] of hits) {
+      if (!times.some((t) => now - t < RATE_WINDOW_MS)) hits.delete(key);
+    }
+  }
+  return false;
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-module.exports = { sendMail, readFields, clean, EMAIL_RE };
+module.exports = { sendMail, readFields, clean, rateLimited, EMAIL_RE };

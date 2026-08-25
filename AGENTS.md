@@ -52,8 +52,14 @@ re-prerenders automatically. Prices nullable (`null` = hidden).
 - Google Business Profile for the Bradenton address (biggest local lever, off-site).
 - Search Console: verify descenttcg.com property, submit change of address from
   rippingzacks.com, submit sitemap.
-- Performance pass: move base64 photos out of data JS into asset files (shrinks the
-  1–2.8MB prerendered pages), lazy-load images.
+- Performance pass (done 2026-08-25): card photos live in `assets/photos/{lorcana,marketing,boosters}/`
+  as files (data JS shrank from 1–3.2MB to 20–92KB; prerendered pages now 36–108KB).
+  Renderer images get `loading="lazy"`. When adding photos to data files, add asset
+  files under `assets/photos/…`, not base64.
+- `fortknox.js` is build-time only (read by `scripts/prerender.js` for Fort Knox
+  JSON-LD; no page loads it) and is excluded from `dist/`.
+- Form endpoints have best-effort per-IP throttling (5 submissions / 10 min per warm
+  instance, see `api/_mail.js`). Not a hard guarantee — serverless instances reset.
 - Content plays (AEO compounding): chase-card price guides, set spotlight pages.
 - Long-term: replace TCGplayer Pro storefront (dig.tcgplayerpro.com) with own store —
   vault/shop-hub URLs are designed to become the future category pages.

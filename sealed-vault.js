@@ -42,9 +42,11 @@ function buildSealedVaultPlaque(item, inventory, key, mode) {
     const art = document.createElement('div');
     art.className = 'sealed-vault-plaque-art';
     const img = document.createElement('img');
+    img.setAttribute('loading', 'lazy');
+    img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = item.name || 'Sealed product';
-    img.loading = 'lazy';
+    img.setAttribute('loading', 'lazy');
     art.appendChild(img);
     plaque.appendChild(art);
   }
@@ -181,9 +183,11 @@ function buildPackPlaque(pack) {
     const art = document.createElement('div');
     art.className = 'sealed-vault-plaque-art';
     const img = document.createElement('img');
+    img.setAttribute('loading', 'lazy');
+    img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = pack.name || 'Booster pack';
-    img.loading = 'lazy';
+    img.setAttribute('loading', 'lazy');
     art.appendChild(img);
     plaque.appendChild(art);
   }
@@ -300,9 +304,11 @@ function buildTmntPlaque(item) {
     const art = document.createElement('div');
     art.className = 'sealed-vault-plaque-art';
     const img = document.createElement('img');
+    img.setAttribute('loading', 'lazy');
+    img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = item.name || 'Sealed product';
-    img.loading = 'lazy';
+    img.setAttribute('loading', 'lazy');
     art.appendChild(img);
     plaque.appendChild(art);
   }
@@ -385,9 +391,11 @@ function buildJpSpecialsPlaque(item) {
     const art = document.createElement('div');
     art.className = 'sealed-vault-plaque-art';
     const img = document.createElement('img');
+    img.setAttribute('loading', 'lazy');
+    img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = item.name || 'Sealed product';
-    img.loading = 'lazy';
+    img.setAttribute('loading', 'lazy');
     art.appendChild(img);
     plaque.appendChild(art);
   }
