@@ -20,7 +20,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const vm = require('vm');
 const { JSDOM, ResourceLoader } = require('jsdom');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -40,12 +39,13 @@ const EXCLUDE_FROM_COPY = new Set([
   'package.json',
   'package-lock.json',
   '.DS_Store',
-  // Build-time only: fortknox.js is read directly by this script for
-  // Fort Knox JSON-LD; no page loads it, so it doesn't belong in dist/.
+  'AGENTS.md',
+  // Build-time data export (truncated Collectr dump); no page loads it,
+  // so it doesn't belong in dist/.
   'fortknox.js',
 ]);
 
-const VAULT_PAGES = ['collection.html', 'slab-vault.html', 'sealed-vault.html', 'fort-knox-vault.html'];
+const VAULT_PAGES = ['lorcana-vault.html', 'slab-vault.html', 'sealed-vault.html', 'fort-knox-vault.html'];
 
 // ------------------------------------------------------------
 // Static copy of everything that isn't build tooling.
@@ -56,6 +56,8 @@ function copySite() {
 
   function walk(srcDir, destDir) {
     for (const entry of fs.readdirSync(srcDir, { withFileTypes: true })) {
+      // Dotfiles (.gitignore, .DS_Store, ...) are never site content.
+      if (entry.name.startsWith('.')) continue;
       if (EXCLUDE_FROM_COPY.has(entry.name)) continue;
       const src = path.join(srcDir, entry.name);
       const dest = path.join(destDir, entry.name);
@@ -139,33 +141,80 @@ async function prerenderPage(page) {
 // page's own data globals after its scripts have executed — the
 // same source of truth the renderer uses.
 // ------------------------------------------------------------
-function product(name, pageUrl, price) {
+function slugify(name) {
+  return (
+    String(name || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'item'
+  );
+}
+
+function absoluteImageUrl(src) {
+  if (!src || src.startsWith('data:')) return null;
+  if (/^https?:\/\//i.test(src)) return src;
+  return `${SITE_ORIGIN}/${src.replace(/^\.?\//, '')}`;
+}
+
+// Name (alt text) -> image URL map from the fully rendered DOM. Every
+// renderer sets the plaque <img> alt to the item/set name, so this is
+// the same pairing the page itself shows.
+function imageMapFromDom(dom) {
+  const map = new Map();
+  dom.window.document.querySelectorAll('img[alt]').forEach((img) => {
+    const key = (img.getAttribute('alt') || '').trim().toLowerCase();
+    const url = absoluteImageUrl(img.getAttribute('src'));
+    if (key && url && !map.has(key)) map.set(key, url);
+  });
+  return map;
+}
+
+function product(name, pageUrl, price, opts) {
+  const itemUrl = `${pageUrl}#item-${opts.slug}`;
   const p = {
     '@type': 'Product',
     name,
-    url: pageUrl,
+    url: itemUrl,
   };
+  if (opts.image) p.image = opts.image;
   if (typeof price === 'number' && price > 0) {
     p.offers = {
       '@type': 'Offer',
       price: price.toFixed(2),
       priceCurrency: 'USD',
-      url: pageUrl,
+      url: itemUrl,
+      availability: 'https://schema.org/InStock',
+      itemCondition: opts.itemCondition,
+      seller: { '@id': `${SITE_ORIGIN}/#org` },
     };
   }
   return p;
 }
 
-function injectJsonLd(dom, page, items) {
+function injectJsonLd(dom, page, items, itemCondition) {
   // Clean URLs: pages are served without the .html extension (vercel.json cleanUrls).
   const pageUrl = `${SITE_ORIGIN}/${page.replace(/\.html$/, '')}`;
+  const images = imageMapFromDom(dom);
+  const usedSlugs = new Set();
+  const uniqueSlug = (name) => {
+    const base = slugify(name);
+    let slug = base;
+    let n = 2;
+    while (usedSlugs.has(slug)) slug = `${base}-${n++}`;
+    usedSlugs.add(slug);
+    return slug;
+  };
   const itemList = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     itemListElement: items.map((it, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      item: product(it.name, pageUrl, it.price),
+      item: product(it.name, pageUrl, it.price, {
+        slug: uniqueSlug(it.name),
+        image: images.get((it.name || '').trim().toLowerCase()) || null,
+        itemCondition,
+      }),
     })),
   };
   const script = dom.window.document.createElement('script');
@@ -243,25 +292,27 @@ function itemsForSealedVault(window) {
   return items;
 }
 
-// fort-knox-vault.html is a third-party Collectr iframe page — it
-// does not load fortknox.js, so its data globals are evaluated
-// directly in a Node vm sandbox here (fortknox.js only defines
-// plain data + a key helper; no DOM access at load time).
-function itemsForFortKnox() {
-  const code = fs.readFileSync(path.join(ROOT, 'fortknox.js'), 'utf8');
-  const items = vm.runInNewContext(`${code}\n;FORT_KNOX_ITEMS;`, Object.create(null));
-  return (items || [])
-    .filter((i) => (i.qty || 0) > 0)
-    .map((i) => ({ name: i.name, price: i.price }));
-}
+// fort-knox-vault.html is a third-party Collectr iframe page. Its
+// fortknox.js data is a truncated Collectr export whose schema is
+// unusable, so the page gets NO ItemList JSON-LD — just the
+// prerendered static HTML.
 
 // ------------------------------------------------------------
+// Per-page schema.org itemCondition for offers: sealed product is
+// new; singles/slabs/lorcana chase cards are second-hand.
+// ------------------------------------------------------------
+const ITEM_CONDITION_BY_PAGE = {
+  'lorcana-vault.html': 'https://schema.org/UsedCondition',
+  'slab-vault.html': 'https://schema.org/UsedCondition',
+  'sealed-vault.html': 'https://schema.org/NewCondition',
+};
+
 async function main() {
   console.log('Copying site files to dist/ ...');
   copySite();
 
   const itemBuilders = {
-    'collection.html': itemsForCollection,
+    'lorcana-vault.html': itemsForCollection,
     'slab-vault.html': itemsForSlabVault,
     'sealed-vault.html': itemsForSealedVault,
   };
@@ -270,13 +321,23 @@ async function main() {
     console.log(`Prerendering ${page} ...`);
     const dom = await prerenderPage(page);
 
-    let items;
     if (page === 'fort-knox-vault.html') {
-      items = itemsForFortKnox();
-    } else {
-      items = itemBuilders[page](dom.window);
+      fs.writeFileSync(path.join(DIST, page), dom.serialize());
+      console.log(`  -> dist/${page} (no JSON-LD)`);
+      dom.window.close();
+      continue;
     }
-    const count = injectJsonLd(dom, page, items);
+
+    const items = itemBuilders[page](dom.window);
+    // A broken/renamed data file must fail the build rather than
+    // silently ship an empty vault page (evalIn swallows load errors
+    // to [], which is exactly the case this guards).
+    if (items.length === 0) {
+      throw new Error(
+        `Prerender of ${page} produced 0 items — a data file is missing or broken. Failing the build.`
+      );
+    }
+    const count = injectJsonLd(dom, page, items, ITEM_CONDITION_BY_PAGE[page]);
 
     fs.writeFileSync(path.join(DIST, page), dom.serialize());
     console.log(`  -> dist/${page} (${count} JSON-LD products)`);

@@ -3,11 +3,28 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "redirects": [
-    { "source": "/lorcana.html", "destination": "/collection", "permanent": true },
-    { "source": "/lorcana", "destination": "/collection", "permanent": true },
+    { "source": "/collection.html", "destination": "/lorcana-vault", "permanent": true },
+    { "source": "/collection", "destination": "/lorcana-vault", "permanent": true },
+    { "source": "/lorcana.html", "destination": "/lorcana-vault", "permanent": true },
+    { "source": "/lorcana", "destination": "/lorcana-vault", "permanent": true },
     { "source": "/boosters.html", "destination": "/sealed-vault", "permanent": true },
     { "source": "/boosters", "destination": "/sealed-vault", "permanent": true },
     { "source": "/marketing.html", "destination": "/slab-vault", "permanent": true },
     { "source": "/marketing", "destination": "/slab-vault", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/assets/photos/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
   ]
 }

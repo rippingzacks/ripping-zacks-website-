@@ -46,7 +46,6 @@ function buildSealedVaultPlaque(item, inventory, key, mode) {
     img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = item.name || 'Sealed product';
-    img.setAttribute('loading', 'lazy');
     art.appendChild(img);
     plaque.appendChild(art);
   }
@@ -187,7 +186,6 @@ function buildPackPlaque(pack) {
     img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = pack.name || 'Booster pack';
-    img.setAttribute('loading', 'lazy');
     art.appendChild(img);
     plaque.appendChild(art);
   }
@@ -308,7 +306,6 @@ function buildTmntPlaque(item) {
     img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = item.name || 'Sealed product';
-    img.setAttribute('loading', 'lazy');
     art.appendChild(img);
     plaque.appendChild(art);
   }
@@ -345,7 +342,8 @@ function renderTmntSection() {
 
   content.innerHTML = '';
 
-  const items = (typeof MAGIC_TMNT_ITEMS !== 'undefined') ? MAGIC_TMNT_ITEMS : [];
+  const items = ((typeof MAGIC_TMNT_ITEMS !== 'undefined') ? MAGIC_TMNT_ITEMS : [])
+    .filter((i) => (i.qty || 0) > 0);
   const totalItems = items.reduce((sum, i) => sum + (i.qty || 0), 0);
 
   const statEl = document.getElementById('section-stat-tmnt');
@@ -395,7 +393,6 @@ function buildJpSpecialsPlaque(item) {
     img.setAttribute('decoding', 'async');
     img.src = photoSrc;
     img.alt = item.name || 'Sealed product';
-    img.setAttribute('loading', 'lazy');
     art.appendChild(img);
     plaque.appendChild(art);
   }
@@ -432,7 +429,8 @@ function renderJpSpecialsSection() {
 
   content.innerHTML = '';
 
-  const items = (typeof JP_SPECIALS_ITEMS !== 'undefined') ? JP_SPECIALS_ITEMS : [];
+  const items = ((typeof JP_SPECIALS_ITEMS !== 'undefined') ? JP_SPECIALS_ITEMS : [])
+    .filter((i) => (i.qty || 0) > 0);
   const totalItems = items.reduce((sum, i) => sum + (i.qty || 0), 0);
 
   const statEl = document.getElementById('section-stat-jp-specials');

@@ -11,7 +11,7 @@
 
 - [Home](https://descenttcg.com/): Overview of the shop and how buying works.
 - [Our Store](https://descenttcg.com/our-store): Physical shop details (address, contact) and link to the full online inventory.
-- [Lorcana Vault](https://descenttcg.com/collection): Disney Lorcana chase cards and sealed product with prices; offers accepted on every item.
+- [Lorcana Vault](https://descenttcg.com/lorcana-vault): Disney Lorcana chase cards and sealed product with prices; offers accepted on every item.
 - [Slab Vault](https://descenttcg.com/slab-vault): Professionally graded cards with prices; offers accepted.
 - [Sealed Vault](https://descenttcg.com/sealed-vault): Sealed booster boxes, cases, and Pokémon Center ETBs with prices; offers accepted.
 - [Fort Knox Vault](https://descenttcg.com/fort-knox-vault): Live sealed inventory via Collectr.

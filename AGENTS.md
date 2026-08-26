@@ -2,7 +2,7 @@
 
 Static trading-card shop site. **Brand: Descent TCG** (formerly Ripping Zacks — legacy alias
 kept on About page + Organization schema `alternateName`). Physical shop: 5205 33rd St E,
-Bradenton, FL 34203. Contact email: sales@rippingzacks.com (mail still lives on the old
+Bradenton, FL 34203. Phone: (941) 739-0220. Contact email: sales@rippingzacks.com (mail still lives on the old
 domain's M365 — do not move it).
 
 ## Stack & pipeline
@@ -13,11 +13,15 @@ domain's M365 — do not move it).
   ryanhanley13 via keychain).
 - **Vercel**: team `sutika-capital`, project `descenttcg`. `vercel.json` runs
   `npm run build` → `scripts/prerender.js` (Node + jsdom) → serves `dist/`.
-- **Prerender**: the 4 vault pages render inventory client-side from data files; the build
-  executes them in jsdom and emits static HTML + ItemList/Product JSON-LD (clean-URL
-  product links) so crawlers/AI see the cards. `fort-knox-vault.html` is a Collectr
-  iframe; its JSON-LD is derived from `fortknox.js` directly. Photos were moved to
-  `assets/photos/` files (2026-08-25) — prerendered pages are now 36–108KB.
+- **Prerender**: the Lorcana/Slab/Sealed vault pages render inventory client-side from data
+  files; the build executes them in jsdom and emits static HTML + ItemList/Product JSON-LD
+  (unique `#item-` product URLs; offers carry image/availability/itemCondition/seller).
+  The build FAILS if a vault page yields 0 items (broken-data-file guard).
+  `fort-knox-vault.html` is a content-wrapped Collectr iframe with NO JSON-LD (2026-08-26 —
+  the old Collectr-export data was truncated garbage). `fortknox.js` is unused legacy.
+  `AGENTS.md` + dotfiles are excluded from `dist/` (AGENTS.md was publicly served until
+  2026-08-26). Photos were moved to `assets/photos/` files (2026-08-25) — prerendered
+  pages are now 36–108KB.
 - **Forms**: `api/offer.js` + `api/contact.js` (Vercel serverless, CommonJS, zero deps) send
   via Resend (`api/_mail.js`). Env vars in Vercel: `RESEND_API_KEY`, `MAIL_FROM`
   (`Ripping Zacks <forms@descenttcg.com>`), `MAIL_TO` (`sales@rippingzacks.com`).
@@ -27,25 +31,34 @@ domain's M365 — do not move it).
   Vercel project and 301 → descenttcg.com (path-preserving). Mail/M365 records on
   rippingzacks.com untouched — never modify them.
 - **Clean URLs** (2026-08-26): `cleanUrls: true` in vercel.json — pages serve without
-  .html (e.g. /collection); /x.html 308s to /x automatically. All internal links,
+  .html; /x.html 308s to /x automatically. All internal links,
   canonicals, og:urls, sitemap, llms.txt use clean paths.
+- **Lorcana Vault slug** (2026-08-26): `/collection` → `/lorcana-vault`; page file renamed
+  `lorcana-vault.html` (collection.css/collection.js names kept). /collection(.html) and
+  /lorcana(.html) 308 → /lorcana-vault.
 - **Redirects**: legacy pages lorcana/boosters/marketing(.html) 308 → clean vault URLs
-  (vercel.json); files deleted. Footers link vault pages only.
+  (vercel.json); files deleted. Footers link vault pages only. vercel.json also sets
+  immutable Cache-Control on /assets/photos/** + nosniff/Referrer-Policy headers.
 - Legacy Netlify hosting retired; old Netlify site can be deleted in the Netlify dashboard.
 
 ## Updating inventory (owner workflow)
 
 Data files are hand-maintained — **edit only when explicitly told to**:
 `lorcana.js` (Lorcana Vault), `marketing.js` (Slab Vault), `boosters.js` + `jp-specials.js`
-+ `magic-tmnt.js` (Sealed Vault), `fortknox.js` (Fort Knox). Push to `main`; the build
-re-prerenders automatically. Prices nullable (`null` = hidden).
++ `magic-tmnt.js` (Sealed Vault). `fortknox.js` is unused legacy (nothing reads it). Push
+to `main`; the build re-prerenders automatically. Prices nullable (`null` = hidden).
 
 ## SEO/AEO state (as of 2026-08-26)
 
-- Canonicals, robots.txt, sitemap.xml, llms.txt, og/twitter tags: done.
-- Schema: LocalBusiness (our-store), Organization+WebSite (index), ItemList/Product+Offer
-  (vault pages, injected at build).
-- Titles/metas rewritten per page with keywords + Bradenton, FL.
+- Canonicals, robots.txt, sitemap.xml (with lastmod), llms.txt, og/twitter tags
+  (summary_large_image): done.
+- Schema: LocalBusiness with telephone (our-store), Organization+WebSite (index),
+  ContactPage (contact), AboutPage (ripping-zacks), enriched ItemList/Product+Offer
+  (Lorcana/Slab/Sealed vaults, injected at build). NO Product schema on Fort Knox
+  (iframe page — would be markup without visible content).
+- Titles/metas rewritten per page with keywords + Bradenton, FL; all descriptions ≤160 chars.
+- Privacy/terms are real documents (2026-08-26) — no longer placeholders.
+- Footers standardized sitewide: Shop / Company / Legal columns (no duplicates).
 - Instagram: real handle is Ripping Zacks — https://www.instagram.com/rippingzacks/ —
   linked in all footers, contact page, and schema `sameAs`.
 
@@ -73,8 +86,12 @@ re-prerenders automatically. Prices nullable (`null` = hidden).
   as files (data JS shrank from 1–3.2MB to 20–92KB; prerendered pages now 36–108KB).
   Renderer images get `loading="lazy"`. When adding photos to data files, add asset
   files under `assets/photos/…`, not base64.
-- `fortknox.js` is build-time only (read by `scripts/prerender.js` for Fort Knox
-  JSON-LD; no page loads it) and is excluded from `dist/`.
+- `fortknox.js` is unused legacy (kept for reference, excluded from `dist/`). Fort Knox
+  page is a content-wrapped Collectr iframe; the Collectr account is not accessible, so
+  the live inventory embed stays as-is.
+- Design: full site re-theme to the violet/dragon palette is WANTED (owner, 2026-08-26) —
+  still pending partner sign-off on the logo. Note: styles.css tokens are still the
+  legacy navy/gold theme (--paper #0d1730, --paper-soft #13214a, --cobalt #f6b93b gold).
 - Form endpoints have best-effort per-IP throttling (5 submissions / 10 min per warm
   instance, see `api/_mail.js`). Not a hard guarantee — serverless instances reset.
 - Content plays (AEO compounding): chase-card price guides, set spotlight pages.

@@ -45,10 +45,8 @@ function buildSlabVaultPlaque(item) {
   plaque.appendChild(h3);
 
   if (item.set) {
-    const setLine = document.createElement('a');
+    const setLine = document.createElement('span');
     setLine.className = 'vault-plaque-set';
-    setLine.href = '#';
-    setLine.onclick = (e) => e.preventDefault();
     setLine.textContent = item.set;
     plaque.appendChild(setLine);
   }

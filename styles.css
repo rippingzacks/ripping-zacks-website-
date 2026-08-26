@@ -1,5 +1,5 @@
 /* ============================================================
-   RIPPING ZACKS — design tokens (matched to logo palette)
+   DESCENT TCG — design tokens (matched to logo palette)
    ============================================================ */
 :root{
   --paper:      #0d1730;
@@ -494,7 +494,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   border:1px solid var(--line);
   border-radius:var(--radius);
 }
-.value-item h4{font-size:1rem; margin-bottom:8px; color:var(--ink);}
+.value-item h3{font-size:1rem; margin-bottom:8px; color:var(--ink);}
 .value-item p{font-size:0.9rem; color:var(--ink-dim);}
 
 /* ============================================================
@@ -505,7 +505,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 @media (max-width:860px){.contact-grid{grid-template-columns:1fr;}}
 .contact-info-item{margin-bottom:26px;}
-.contact-info-item h4{
+.contact-info-item h2{
   font-family:var(--mono); font-size:0.7rem; letter-spacing:0.09em;
   text-transform:uppercase; color:var(--cobalt); margin-bottom:8px;
 }
