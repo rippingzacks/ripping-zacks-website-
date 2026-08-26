@@ -26,7 +26,10 @@ domain's M365 — do not move it).
   (both DNS-only; www 301s to apex at Vercel). rippingzacks.com + www point at the same
   Vercel project and 301 → descenttcg.com (path-preserving). Mail/M365 records on
   rippingzacks.com untouched — never modify them.
-- **Redirects**: legacy pages lorcana/boosters/marketing.html 308 → vault pages
+- **Clean URLs** (2026-08-26): `cleanUrls: true` in vercel.json — pages serve without
+  .html (e.g. /collection); /x.html 308s to /x automatically. All internal links,
+  canonicals, og:urls, sitemap, llms.txt use clean paths.
+- **Redirects**: legacy pages lorcana/boosters/marketing(.html) 308 → clean vault URLs
   (vercel.json); files deleted. Footers link vault pages only.
 - Legacy Netlify hosting retired; old Netlify site can be deleted in the Netlify dashboard.
 

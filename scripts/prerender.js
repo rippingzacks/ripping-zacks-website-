@@ -157,7 +157,8 @@ function product(name, pageUrl, price) {
 }
 
 function injectJsonLd(dom, page, items) {
-  const pageUrl = `${SITE_ORIGIN}/${page}`;
+  // Clean URLs: pages are served without the .html extension (vercel.json cleanUrls).
+  const pageUrl = `${SITE_ORIGIN}/${page.replace(/\.html$/, '')}`;
   const itemList = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',

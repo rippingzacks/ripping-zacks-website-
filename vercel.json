@@ -1,9 +1,13 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "cleanUrls": true,
   "redirects": [
-    { "source": "/lorcana.html", "destination": "/collection.html", "permanent": true },
-    { "source": "/boosters.html", "destination": "/sealed-vault.html", "permanent": true },
-    { "source": "/marketing.html", "destination": "/slab-vault.html", "permanent": true }
+    { "source": "/lorcana.html", "destination": "/collection", "permanent": true },
+    { "source": "/lorcana", "destination": "/collection", "permanent": true },
+    { "source": "/boosters.html", "destination": "/sealed-vault", "permanent": true },
+    { "source": "/boosters", "destination": "/sealed-vault", "permanent": true },
+    { "source": "/marketing.html", "destination": "/slab-vault", "permanent": true },
+    { "source": "/marketing", "destination": "/slab-vault", "permanent": true }
   ]
 }

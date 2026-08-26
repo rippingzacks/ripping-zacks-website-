@@ -10,14 +10,14 @@
 ## Key pages
 
 - [Home](https://descenttcg.com/): Overview of the shop and how buying works.
-- [Our Store](https://descenttcg.com/our-store.html): Physical shop details (address, contact) and link to the full online inventory.
-- [Lorcana Vault](https://descenttcg.com/collection.html): Disney Lorcana chase cards and sealed product with prices; offers accepted on every item.
-- [Slab Vault](https://descenttcg.com/slab-vault.html): Professionally graded cards with prices; offers accepted.
-- [Sealed Vault](https://descenttcg.com/sealed-vault.html): Sealed booster boxes, cases, and Pokémon Center ETBs with prices; offers accepted.
-- [Fort Knox Vault](https://descenttcg.com/fort-knox-vault.html): Live sealed inventory via Collectr.
-- [About](https://descenttcg.com/about.html): The shop's story — collector-run since the late 1990s, formerly Ripping Zacks.
-- [Ripping Zacks](https://descenttcg.com/ripping-zacks.html): The pack-ripping community brand behind the shop — rips, breaks, and pulls on Instagram.
-- [Contact](https://descenttcg.com/contact.html): Inquiries, valuations, and offers.
+- [Our Store](https://descenttcg.com/our-store): Physical shop details (address, contact) and link to the full online inventory.
+- [Lorcana Vault](https://descenttcg.com/collection): Disney Lorcana chase cards and sealed product with prices; offers accepted on every item.
+- [Slab Vault](https://descenttcg.com/slab-vault): Professionally graded cards with prices; offers accepted.
+- [Sealed Vault](https://descenttcg.com/sealed-vault): Sealed booster boxes, cases, and Pokémon Center ETBs with prices; offers accepted.
+- [Fort Knox Vault](https://descenttcg.com/fort-knox-vault): Live sealed inventory via Collectr.
+- [About](https://descenttcg.com/about): The shop's story — collector-run since the late 1990s, formerly Ripping Zacks.
+- [Ripping Zacks](https://descenttcg.com/ripping-zacks): The pack-ripping community brand behind the shop — rips, breaks, and pulls on Instagram.
+- [Contact](https://descenttcg.com/contact): Inquiries, valuations, and offers.
 
 ## Facts for citation
 
