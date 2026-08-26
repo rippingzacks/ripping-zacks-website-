@@ -9,15 +9,15 @@ domain's M365 — do not move it).
 
 - Plain HTML/CSS/JS, no framework. Repo root is the site.
 - **Repo**: `sutika-capital/ripping-zacks-website-` (GitHub org). Push to `main` auto-deploys
-  via Vercel git integration. Local clone: `~/ripping-zacks-website` (pushes auth as
+  via Vercel git integration. Local clone: `~/ripping-zacks` (pushes auth as
   ryanhanley13 via keychain).
 - **Vercel**: team `sutika-capital`, project `descenttcg`. `vercel.json` runs
   `npm run build` → `scripts/prerender.js` (Node + jsdom) → serves `dist/`.
-- **Prerender**: the 3 vault pages render inventory client-side from data files; the build
-  executes them in jsdom and emits static HTML + ItemList/Product JSON-LD so crawlers/AI see
-  the cards. `fort-knox-vault.html` is a Collectr iframe; its JSON-LD is derived from
-  `fortknox.js` directly. Prerendered pages are heavy (base64 photos in data files) —
-  optimization backlog.
+- **Prerender**: the 4 vault pages render inventory client-side from data files; the build
+  executes them in jsdom and emits static HTML + ItemList/Product JSON-LD (clean-URL
+  product links) so crawlers/AI see the cards. `fort-knox-vault.html` is a Collectr
+  iframe; its JSON-LD is derived from `fortknox.js` directly. Photos were moved to
+  `assets/photos/` files (2026-08-25) — prerendered pages are now 36–108KB.
 - **Forms**: `api/offer.js` + `api/contact.js` (Vercel serverless, CommonJS, zero deps) send
   via Resend (`api/_mail.js`). Env vars in Vercel: `RESEND_API_KEY`, `MAIL_FROM`
   (`Ripping Zacks <forms@descenttcg.com>`), `MAIL_TO` (`sales@rippingzacks.com`).
@@ -40,7 +40,7 @@ Data files are hand-maintained — **edit only when explicitly told to**:
 + `magic-tmnt.js` (Sealed Vault), `fortknox.js` (Fort Knox). Push to `main`; the build
 re-prerenders automatically. Prices nullable (`null` = hidden).
 
-## SEO/AEO state (as of 2026-08-25)
+## SEO/AEO state (as of 2026-08-26)
 
 - Canonicals, robots.txt, sitemap.xml, llms.txt, og/twitter tags: done.
 - Schema: LocalBusiness (our-store), Organization+WebSite (index), ItemList/Product+Offer
@@ -58,6 +58,9 @@ re-prerenders automatically. Prices nullable (`null` = hidden).
   `ripping-zacks.html` (community-brand landing page, links to the RZ Instagram).
 - Logo was AI-generated (GPT Image 2 via Higgsfield); source candidates in /tmp were not
   committed. Regenerate rather than edit raster files.
+- Header layout (2026-08-26): `.logo-mark` is height 80px/width auto; `.logo` and
+  `.nav-links` are `white-space:nowrap` — all 9 nav items fit one line. Don't re-add
+  wrapping.
 - Possible future move: full site re-theme to dragon palette (deferred — owner wants
   partner sign-off on the logo first).
 
