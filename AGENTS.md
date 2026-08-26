@@ -43,12 +43,23 @@ re-prerenders automatically. Prices nullable (`null` = hidden).
 - Schema: LocalBusiness (our-store), Organization+WebSite (index), ItemList/Product+Offer
   (vault pages, injected at build).
 - Titles/metas rewritten per page with keywords + Bradenton, FL.
-- Instagram links are PLACEHOLDERS (https://instagram.com) — parked until the real handle
-  is known. Also referenced on contact page.
+- Instagram: real handle is Ripping Zacks — https://www.instagram.com/rippingzacks/ —
+  linked in all footers, contact page, and schema `sameAs`.
+
+## Brand & logo (as of 2026-08-26)
+
+- Site logo: `assets/descent-mark.png` (one-line dragon in violet hex, transparent) in
+  header/footer of every page. `assets/logo.png` (1200x630 dragon+wordmark lockup) is the
+  og:image and schema logo. Favicons regenerated from the mark. Palette: black/white/violet.
+- `assets/logo.jpg` is now the **Ripping Zacks** brand mark only — used on
+  `ripping-zacks.html` (community-brand landing page, links to the RZ Instagram).
+- Logo was AI-generated (GPT Image 2 via Higgsfield); source candidates in /tmp were not
+  committed. Regenerate rather than edit raster files.
+- Possible future move: full site re-theme to dragon palette (deferred — owner wants
+  partner sign-off on the logo first).
 
 ## Parked / next up
 
-- Real Instagram URL (owner to provide) — update footer + contact + sameAs in schema.
 - Google Business Profile for the Bradenton address (biggest local lever, off-site).
 - Search Console: verify descenttcg.com property, submit change of address from
   rippingzacks.com, submit sitemap.
