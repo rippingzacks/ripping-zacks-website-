@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
       links.style.top = '116px';
       links.style.left = '0';
       links.style.right = '0';
-      links.style.background = '#0d1730';
+      links.style.background = '#0A0A0A';
       links.style.padding = '20px 28px';
-      links.style.borderBottom = '1px solid rgba(246,231,201,0.14)';
+      links.style.borderBottom = '1px solid rgba(255,255,255,0.14)';
       links.style.gap = '18px';
       toggle.setAttribute('aria-expanded', String(!open));
     });

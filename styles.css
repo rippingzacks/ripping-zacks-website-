@@ -1,19 +1,19 @@
 /* ============================================================
-   DESCENT TCG — design tokens (matched to logo palette)
+   DESCENT TCG — design tokens (electric yellow / jet black)
    ============================================================ */
 :root{
-  --paper:      #0d1730;
-  --paper-soft: #13214a;
-  --panel:      #14224c;
-  --line:       rgba(246,231,201,0.14);
-  --line-soft:  rgba(246,231,201,0.09);
-  --ink:        #f5f1e6;
-  --ink-dim:    rgba(245,241,230,0.68);
-  --ink-faint:  rgba(245,241,230,0.42);
+  --paper:      #0A0A0A;
+  --paper-soft: #1A1A1A;
+  --panel:      #242424;
+  --line:       rgba(255,255,255,0.14);
+  --line-soft:  rgba(255,255,255,0.09);
+  --ink:        #F5F5F0;
+  --ink-dim:    rgba(245,245,240,0.68);
+  --ink-faint:  rgba(245,245,240,0.42);
 
-  --cobalt:     #f6b93b;
-  --cobalt-dim: #e0891f;
-  --citrus:     #e6432c;
+  --cobalt:     #FFD100;
+  --cobalt-dim: #E6B800;
+  --citrus:     #FF4D2E;
   --mint:       #4caf58;
 
   --display: "Space Grotesk", "Inter", -apple-system, sans-serif;
@@ -62,7 +62,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    ============================================================ */
 .site-header{
   position:sticky; top:0; z-index:50;
-  background:rgba(13,23,48,0.92);
+  background:rgba(10,10,10,0.92);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
 }
@@ -80,11 +80,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   white-space:nowrap; flex-shrink:0;
 }
 .logo-mark{
-  width:auto; height:80px;
+  width:auto; height:56px;
   border-radius:0;
   object-fit:contain;
   flex-shrink:0;
 }
+.logo-accent{color:var(--cobalt);}
+.site-footer .logo-mark{height:64px;}
 .nav-links{
   display:flex; gap:22px;
   font-size:0.9rem;
@@ -138,8 +140,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .btn-primary{background:linear-gradient(135deg, var(--cobalt), var(--cobalt-dim)); color:var(--paper);}
 .btn-primary:hover{filter:brightness(1.08); transform:translateY(-2px);}
-.btn-ghost{border-color:var(--line); color:var(--ink); background:var(--paper-soft);}
-.btn-ghost:hover{border-color:var(--ink-faint); transform:translateY(-2px);}
+.btn-ghost{border-color:rgba(255,209,0,0.55); color:var(--cobalt); background:transparent;}
+.btn-ghost:hover{border-color:var(--cobalt); background:rgba(255,209,0,0.08); transform:translateY(-2px);}
 
 /* ============================================================
    HERO
@@ -148,6 +150,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   position:relative;
   padding:80px 0 90px;
   border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.hero .wrap{position:relative; z-index:1;}
+.hero::after{
+  content:"";
+  position:absolute;
+  top:50%; right:-40px;
+  transform:translateY(-50%);
+  width:min(44vw,540px); height:min(44vw,540px);
+  background:url("assets/gremlin-mark.png") center / contain no-repeat;
+  opacity:0.08;
+  pointer-events:none;
+}
+@media (max-width:768px){
+  .hero::after{display:none;}
 }
 .eyebrow{
   display:inline-flex; align-items:center; gap:10px;
@@ -229,7 +246,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .catalog-tile .tile-photo{
   flex:1;
   border-radius:6px;
-  background:repeating-linear-gradient(135deg, #182a5e, #182a5e 8px, #101c40 8px, #101c40 16px);
+  background:repeating-linear-gradient(135deg, #2A2A2A, #2A2A2A 8px, #161616 8px, #161616 16px);
   display:flex; align-items:center; justify-content:center;
 }
 .catalog-tile .tile-photo img{
@@ -304,20 +321,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   text-transform:uppercase;
   color:var(--citrus);
   border-bottom:1px solid var(--line-soft);
-  background:#101c40;
+  background:#161616;
 }
 .card-slab-grade{color:var(--ink-faint);}
 .card-art{
   height:190px;
   position:relative;
   display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(160deg,#182a5e,#0e1a3c);
+  background:linear-gradient(160deg,#2A2A2A,#111111);
   overflow:hidden;
 }
 .card-glyph{
   font-family:var(--display);
   font-size:2.4rem;
-  color:rgba(245,241,230,0.16);
+  color:rgba(245,245,240,0.16);
 }
 .card-body{padding:16px 16px 20px;}
 .card-tags{
@@ -376,7 +393,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    CTA BAND
    ============================================================ */
 .cta-band{
-  background:linear-gradient(135deg, #1a2c62, #0d1730);
+  background:linear-gradient(135deg, #242424, #0A0A0A);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
   padding:76px 0;
 }
 .cta-inner{
@@ -384,9 +403,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   gap:32px; flex-wrap:wrap;
 }
 .cta-inner h2{font-size:clamp(1.5rem,3vw,2.1rem); max-width:20ch; color:var(--ink);}
+.cta-mascot{width:clamp(140px,18vw,200px); height:auto; flex-shrink:0; order:-1; filter:drop-shadow(0 12px 24px rgba(0,0,0,0.35));}
 .cta-actions{display:flex; gap:16px; flex-wrap:wrap;}
-.cta-band .btn-ghost{background:transparent; border-color:rgba(245,241,230,0.25); color:var(--ink);}
-.cta-band .btn-ghost:hover{border-color:rgba(245,241,230,0.5);}
 
 /* ============================================================
    FOOTER

@@ -62,11 +62,18 @@ to `main`; the build re-prerenders automatically. Prices nullable (`null` = hidd
 - Instagram: real handle is Ripping Zacks — https://www.instagram.com/rippingzacks/ —
   linked in all footers, contact page, and schema `sameAs`.
 
-## Brand & logo (as of 2026-08-26)
+## Brand & logo (as of 2026-08-27, rebrand branch)
 
-- Site logo: `assets/descent-mark.png` (one-line dragon in violet hex, transparent) in
-  header/footer of every page. `assets/logo.png` (1200x630 dragon+wordmark lockup) is the
-  og:image and schema logo. Favicons regenerated from the mark. Palette: black/white/violet.
+- Site logo: `assets/gremlin-mark.png` (single yellow-stroke gremlin, transparent) in
+  header/footer of every page; wordmark renders "TCG" in `.logo-accent` yellow.
+  Header mark height 56px, footer 64px. Favicons regenerated from the mark.
+  `assets/logo.png` (1200x630 dragon+wordmark lockup) is still the og:image and schema
+  logo (new social card pending). Old `assets/descent-mark.png` kept in repo for rollback.
+- Palette (re-themed 2026-08-27): electric yellow #FFD100 accent on jet black #0A0A0A,
+  charcoal panels #1A1A1A/#242424, white/soft-white #F5F5F0 text, ember #FF4D2E second
+  accent (--citrus). Token NAMES unchanged (--paper, --paper-soft, --cobalt...) — only
+  values remapped. Homepage hero has a subtle gremlin watermark (::after, hidden <768px).
+  Vault pages (collection/sealed-vault/slab-vault.css) keep their own per-vault palettes.
 - `assets/logo.jpg` is now the **Ripping Zacks** brand mark only — used on
   `ripping-zacks.html` (community-brand landing page, links to the RZ Instagram).
 - Logo was AI-generated (GPT Image 2 via Higgsfield); source candidates in /tmp were not
@@ -89,9 +96,9 @@ to `main`; the build re-prerenders automatically. Prices nullable (`null` = hidd
 - `fortknox.js` is unused legacy (kept for reference, excluded from `dist/`). Fort Knox
   page is a content-wrapped Collectr iframe; the Collectr account is not accessible, so
   the live inventory embed stays as-is.
-- Design: full site re-theme to the violet/dragon palette is WANTED (owner, 2026-08-26) —
-  still pending partner sign-off on the logo. Note: styles.css tokens are still the
-  legacy navy/gold theme (--paper #0d1730, --paper-soft #13214a, --cobalt #f6b93b gold).
+- Design: full site re-theme to the black/electric-yellow gremlin palette DONE on the
+  `rebrand` branch (2026-08-27) — tokens remapped, gremlin mark in header/footer. Old
+  dragon assets kept for rollback; og:image swap pending new social card.
 - Form endpoints have best-effort per-IP throttling (5 submissions / 10 min per warm
   instance, see `api/_mail.js`). Not a hard guarantee — serverless instances reset.
 - Content plays (AEO compounding): chase-card price guides, set spotlight pages.
