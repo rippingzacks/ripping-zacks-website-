@@ -49,7 +49,7 @@ function buildVaultPlaque(item) {
     rarity.style.color = 'var(--vault-gold-br)';
     rarity.style.fontWeight = '700';
   } else if (item.rarity === 'Epic') {
-    rarity.style.color = '#ff8c1a';
+    rarity.style.color = 'var(--citrus)';
     rarity.style.fontWeight = '700';
   }
   plaque.appendChild(rarity);
@@ -114,7 +114,7 @@ function buildVaultSet(setName, ownedCards, inventory) {
   stats.appendChild(buildLorcanaRarityBadges(setName));
   if ((inventory.promoSets || 0) > 0) {
     const sealedBadge = document.createElement('span');
-    sealedBadge.style.cssText = 'display:inline-flex; align-items:center; font-family:var(--mono); font-size:0.72rem; font-weight:700; letter-spacing:0.02em; padding:4px 10px; border-radius:999px; background:rgba(205,168,95,0.16); color:var(--vault-gold-br);';
+    sealedBadge.style.cssText = 'display:inline-flex; align-items:center; font-family:var(--mono); font-size:0.72rem; font-weight:700; letter-spacing:0.02em; padding:4px 10px; border-radius:999px; background:rgba(255,209,0,0.16); color:var(--vault-gold-br);';
     sealedBadge.textContent = `Box Count ${inventory.promoSets}`;
     stats.appendChild(sealedBadge);
   }

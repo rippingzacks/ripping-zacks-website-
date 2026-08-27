@@ -1,27 +1,27 @@
 /* ============================================================
-   SEALED VAULT — industrial steel/teal theme
-   Distinct from Illumineer's Vault (violet) and Slab Vault
-   (amber) — leans into a secure-storage-room feel: deep
-   graphite background, cyan-teal glow, cool white text.
+   SEALED VAULT — unified with the sitewide palette:
+   electric yellow / ember accents on jet black, charcoal
+   panels. Token names are the legacy --vault-* set; only
+   values were remapped.
    ============================================================ */
 
 .sealed-vault-body{
-  --vault-ink:      #0d1b1f;
-  --vault-panel:    #16282e;
-  --vault-panel-2:  #1c333b;
-  --vault-gold:     #4fd1c5;
-  --vault-gold-br:  #7ce8dc;
-  --vault-glimmer:  #8ee9ff;
-  --vault-parch:    #eaf6f7;
-  --vault-faint:    rgba(234,246,247,0.52);
-  --vault-line:     rgba(79,209,197,0.28);
+  --vault-ink:      #0A0A0A;
+  --vault-panel:    #1A1A1A;
+  --vault-panel-2:  #242424;
+  --vault-gold:     #E6B800;
+  --vault-gold-br:  #FFD100;
+  --vault-glimmer:  #FF4D2E;
+  --vault-parch:    #F5F5F0;
+  --vault-faint:    rgba(245,245,240,0.52);
+  --vault-line:     rgba(255,255,255,0.14);
   --vault-display:  'Cinzel', serif;
   background:var(--vault-ink);
 }
 
 .sealed-vault-body .vault-hero{
   background:
-    radial-gradient(ellipse at 50% -10%, rgba(142,233,255,0.18), transparent 60%),
+    radial-gradient(ellipse at 50% -10%, rgba(255,77,46,0.18), transparent 60%),
     var(--vault-ink);
 }
 
@@ -77,7 +77,8 @@
 /* ------------------------------------------------------------
    TMNT SPOTLIGHT — a self-contained color override just for the
    Magic: TMNT section, so it reads as a distinct "guest feature"
-   rather than blending into the teal Sealed Vault theme. Scoped
+   (TMNT-brand green) rather than blending into the sitewide
+   yellow/black Sealed Vault theme. Scoped
    entirely through --vault-* custom properties, so every shared
    component (banner, plaques, corners, rule) picks it up for
    free with no duplicated rules.

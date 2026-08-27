@@ -1,28 +1,27 @@
 /* ============================================================
-   MY COLLECTION — "Illumineer's Vault" theme
-   A deliberately distinct treatment from the rest of the site:
-   deep ink-violet + aged gold, museum-plaque display cases,
-   evoking Lorcana's own inkwell/glimmer mechanics rather than
-   the Pokemon navy/gold branding used elsewhere.
+   LORCANA VAULT — unified with the sitewide palette:
+   electric yellow / ember accents on jet black, charcoal
+   panels, museum-plaque display cases. Token names are the
+   legacy --vault-* set; only values were remapped.
    ============================================================ */
 
 .vault-body{
-  --vault-ink:      #150b28;
-  --vault-panel:    #221739;
-  --vault-panel-2:  #2b1c48;
-  --vault-gold:     #cda85f;
-  --vault-gold-br:  #e8c77e;
-  --vault-glimmer:  #a97ce8;
-  --vault-parch:    #f2e8d5;
-  --vault-faint:    rgba(242,232,213,0.52);
-  --vault-line:     rgba(205,168,95,0.28);
+  --vault-ink:      #0A0A0A;
+  --vault-panel:    #1A1A1A;
+  --vault-panel-2:  #242424;
+  --vault-gold:     #E6B800;
+  --vault-gold-br:  #FFD100;
+  --vault-glimmer:  #FF4D2E;
+  --vault-parch:    #F5F5F0;
+  --vault-faint:    rgba(245,245,240,0.52);
+  --vault-line:     rgba(255,255,255,0.14);
   --vault-display:  'Cinzel', serif;
   background:var(--vault-ink);
 }
 
 .vault-hero{
   background:
-    radial-gradient(ellipse at 50% -10%, rgba(169,124,232,0.20), transparent 60%),
+    radial-gradient(ellipse at 50% -10%, rgba(255,77,46,0.20), transparent 60%),
     var(--vault-ink);
   padding:90px 0 60px;
   border-bottom:1px solid var(--vault-line);
@@ -244,9 +243,9 @@
    Generic version of the Slab Vault series-banner treatment —
    gradient panel, corner brackets, gradient title text, a stats
    readout, and an underline rule. Built entirely from each
-   page's own --vault-* theme tokens, so it automatically renders
-   in violet/gold on Lorcana, teal/cyan on Sealed, amber on Slab,
-   with zero page-specific color rules needed here.
+   page's own --vault-* theme tokens, so every vault renders in
+   the shared yellow/ember-on-black palette with zero
+   page-specific color rules needed here.
    ============================================================ */
 .vault-series-banner{
   position:relative;
@@ -358,7 +357,7 @@
 }
 
 /* Section-wide spotlight glow — the whole Iconics area sits in a soft
-   gold radial wash, not just the banner, so it reads as lifted off the
+   ember radial wash, not just the banner, so it reads as lifted off the
    page rather than just another bordered box. */
 .vault-iconic-showcase-section{
   position:relative;
@@ -367,7 +366,7 @@
   background:radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--vault-glimmer) 13%, transparent), transparent 65%);
 }
 
-/* Iconic cards get a permanent gold-foil frame (every other card on the
+/* Iconic cards get a permanent yellow-foil frame (every other card on the
    site only gets a border on hover) plus a small ribbon tag, since these
    are literally the rarest tier that exists — worth a "vitrine" look
    year-round, not just a hover state. */

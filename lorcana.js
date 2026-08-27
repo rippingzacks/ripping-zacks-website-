@@ -81,7 +81,7 @@ function buildLorcanaRarityBadges(setName) {
 
   if (iconicTotal) {
     const ownedIconic = setCards.filter(i => i.owned && i.rarity === 'Iconic').length;
-    wrap.appendChild(badge('Iconic', ownedIconic, iconicTotal, 'rgba(246,185,59,0.16)', 'var(--cobalt)', LORCANA_RARITY_ICONS.iconic));
+    wrap.appendChild(badge('Iconic', ownedIconic, iconicTotal, 'rgba(255,209,0,0.16)', 'var(--cobalt)', LORCANA_RARITY_ICONS.iconic));
   }
   if (enchantedTotal) {
     const ownedEnchanted = setCards.filter(i => i.owned && i.rarity === 'Enchanted').length;
@@ -970,7 +970,7 @@ function renderLorcanaRarityLegend() {
   ];
 
   const panel = document.createElement('div');
-  panel.style.cssText = 'display:flex; flex-wrap:wrap; gap:22px; align-items:center; padding:16px 20px; border:1px solid var(--line); border-radius:14px; background:linear-gradient(135deg, rgba(246,185,59,0.06), rgba(230,67,44,0.05)); margin-bottom:8px;';
+  panel.style.cssText = 'display:flex; flex-wrap:wrap; gap:22px; align-items:center; padding:16px 20px; border:1px solid var(--line); border-radius:14px; background:linear-gradient(135deg, rgba(255,209,0,0.06), rgba(255,77,46,0.05)); margin-bottom:8px;';
 
   const title = document.createElement('span');
   title.textContent = 'Rarity Guide';
