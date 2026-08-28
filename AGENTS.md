@@ -60,35 +60,49 @@ to `main`; the build re-prerenders automatically. Prices nullable (`null` = hidd
 - Privacy/terms are real documents (2026-08-26) — no longer placeholders.
 - Footers standardized sitewide: Shop / Company / Legal columns (no duplicates).
 - Instagram: real handle is Ripping Zacks — https://www.instagram.com/rippingzacks/ —
-  linked in all footers, contact page, and schema `sameAs`.
+  linked in all footers, contact page, and schema `sameAs`. Ripping Zacks page built out
+  (2026-08-28): "What you'll see" 3-card grid (reuses `.steps`) + official Instagram
+  post embed (instagram.com/p/DZp0FZtjZLC, embed.js loaded on that page only).
 
-## Brand & logo (as of 2026-08-27, rebrand branch)
+## Brand & logo (as of 2026-08-26, LIVE on main)
 
+- **Rebrand shipped**: electric-yellow gremlin brand live on main (commits `7e39ebb` palette
+  + mark, `063a52b` vault unification). Rollback = revert those commits or promote the
+  previous deploy in Vercel. Old dragon assets (`descent-mark.png`, `logo.png`) kept in
+  repo for now — delete once the brand settles.
 - Site logo: `assets/gremlin-mark.png` (single yellow-stroke gremlin, transparent) in
-  header/footer of every page; wordmark renders "TCG" in `.logo-accent` yellow.
-  Header mark height 56px, footer 64px. Favicons regenerated from the mark.
-  `assets/logo.png` (1200x630 dragon+wordmark lockup) is still the og:image and schema
-  logo (new social card pending). Old `assets/descent-mark.png` kept in repo for rollback.
-- Palette (re-themed 2026-08-27): electric yellow #FFD100 accent on jet black #0A0A0A,
-  charcoal panels #1A1A1A/#242424, white/soft-white #F5F5F0 text, ember #FF4D2E second
-  accent (--citrus). Token NAMES unchanged (--paper, --paper-soft, --cobalt...) — only
-  values remapped. Homepage hero has a subtle gremlin watermark (::after, hidden <768px).
-  Vault pages (collection/sealed-vault/slab-vault.css) keep their own per-vault palettes.
-- `assets/logo.jpg` is now the **Ripping Zacks** brand mark only — used on
-  `ripping-zacks.html` (community-brand landing page, links to the RZ Instagram).
-- Logo was AI-generated (GPT Image 2 via Higgsfield); source candidates in /tmp were not
-  committed. Regenerate rather than edit raster files.
-- Header layout (2026-08-26): `.logo-mark` is height 80px/width auto; `.logo` and
-  `.nav-links` are `white-space:nowrap` — all 9 nav items fit one line. Don't re-add
-  wrapping.
-- Possible future move: full site re-theme to dragon palette (deferred — owner wants
-  partner sign-off on the logo first).
+  header/footer of every page. Header mark height 56px, footer 64px. Favicons from the mark.
+- **Wordmark (2026-08-28, leadership decision)**: header/footer lockup is just "Descent"
+  (`.logo-accent` span dropped; logo img alt="Descent"). The company is "Descent" in
+  visible branding; "Descent TCG" is KEPT in titles, meta descriptions, og tags, schema,
+  llms.txt, and copyright lines for SEO continuity. Domain stays descenttcg.com.
+  og:image is `assets/og-card.png` sitewide EXCEPT ripping-zacks.html (keeps `logo.jpg`,
+  the RZ community brand mark).
+- **Palette (owner-locked)**: electric yellow #FFD100 on jet black #0A0A0A, charcoal
+  #1A1A1A/#242424, soft-white #F5F5F0, ember #FF4D2E second accent. Token NAMES unchanged
+  (--paper, --paper-soft, --cobalt...) — only values remapped. Yellow always takes BLACK
+  text. Homepage hero has a subtle gremlin watermark (::after, hidden <768px).
+  Vault stylesheets unified into the same system (2026-08-26); TMNT green + JP-red
+  spotlight blocks stay as intentional guest features; semantic rarity colors (Enchanted
+  purple, Epic orange, owned green) kept — they encode meaning.
+- **Mascot**: the full-color "electric gremlin" (Nano Banana concept B) is the brand
+  mascot for content/graphics/storytelling. Poses in use: card-throne cutout
+  (`assets/mascot-card-throne.png`, homepage CTA band). Source art + all variations live
+  in `~/Desktop/descent-brand-concepts/` (NOT committed — regenerate from reference
+  image for consistency). Leading name candidate: **Zolta** (owner pending; check
+  availability before wiring into copy).
+- Mark/mascot were AI-generated (Higgsfield); stroke mark source:
+  `stroke-A-refined-1.png` in the Desktop folder. Regenerate rather than edit raster files.
+- Header layout: `.logo` and `.nav-links` are `white-space:nowrap` — all 9 nav items fit
+  one line. Don't re-add wrapping.
 
 ## Parked / next up
 
-- Google Business Profile for the Bradenton address (biggest local lever, off-site).
-- Search Console: verify descenttcg.com property, submit change of address from
-  rippingzacks.com, submit sitemap.
+- Owner off-site checklist lives at `~/Desktop/descent-tcg-checklist.md` (2026-08-26):
+  Google Business Profile first, then Search Console (verify, sitemap, change of address
+  from rippingzacks.com), Bing, Apple Business Connect, NAP citations, Instagram bio
+  link, TCGplayer link, review asks. Several steps unlock site follow-ups — check there.
+- Waiting on owner: shop hours → add `openingHoursSpecification` to LocalBusiness schema.
 - Performance pass (done 2026-08-25): card photos live in `assets/photos/{lorcana,marketing,boosters}/`
   as files (data JS shrank from 1–3.2MB to 20–92KB; prerendered pages now 36–108KB).
   Renderer images get `loading="lazy"`. When adding photos to data files, add asset
@@ -96,12 +110,17 @@ to `main`; the build re-prerenders automatically. Prices nullable (`null` = hidd
 - `fortknox.js` is unused legacy (kept for reference, excluded from `dist/`). Fort Knox
   page is a content-wrapped Collectr iframe; the Collectr account is not accessible, so
   the live inventory embed stays as-is.
-- Design: full site re-theme to the black/electric-yellow gremlin palette DONE on the
-  `rebrand` branch (2026-08-27) — tokens remapped, gremlin mark in header/footer. Old
-  dragon assets kept for rollback; og:image swap pending new social card.
 - Form endpoints have best-effort per-IP throttling (5 submissions / 10 min per warm
   instance, see `api/_mail.js`). Not a hard guarantee — serverless instances reset.
-- Content plays (AEO compounding): chase-card price guides, set spotlight pages.
+- Content engine (planned 2026-08-26, awaiting owner "go"): `/guides/` hub + article
+  template (question H1, 40-word direct answer, comparison/price table, FAQ+Article
+  schema, "last verified" stamp, vault links, offer CTA, gremlin hero image). Cadence:
+  2 articles/month + monthly price-guide refreshes. First: Lorcana chase-card price
+  guide, Pokémon sealed price guide, "What are my cards worth?", raw-vs-graded math,
+  fake-slab spotting, MTG Universes Beyond chase cards.
+- Small open items: custom gremlin 404 page; real storefront photo for our-store;
+  delete stale local clone `~/ripping-zacks-website` (3 commits behind); Zolta mascot
+  name availability check.
 - Long-term: replace TCGplayer Pro storefront (dig.tcgplayerpro.com) with own store —
   vault/shop-hub URLs are designed to become the future category pages.
 
