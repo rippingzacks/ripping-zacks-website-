@@ -8,9 +8,9 @@ domain's M365 — do not move it).
 ## Stack & pipeline
 
 - Plain HTML/CSS/JS, no framework. Repo root is the site.
-- **Repo**: `sutika-capital/ripping-zacks-website-` (GitHub org). Push to `main` auto-deploys
-  via Vercel git integration. Local clone: `~/ripping-zacks` (pushes auth as
-  ryanhanley13 via keychain).
+- **Repo**: `sutika-capital/descenttcg` (GitHub org; renamed from `ripping-zacks-website-`
+  2026-09-03 — old URL redirects). Push to `main` auto-deploys via Vercel git
+  integration. Local clone: `~/descenttcg` (pushes auth as ryanhanley13 via keychain).
 - **Vercel**: team `sutika-capital`, project `descenttcg`. `vercel.json` runs
   `npm run build` → `scripts/prerender.js` (Node + jsdom) → serves `dist/`.
 - **Prerender**: the Lorcana/Slab/Sealed vault pages render inventory client-side from data
@@ -119,8 +119,8 @@ to `main`; the build re-prerenders automatically. Prices nullable (`null` = hidd
   guide, Pokémon sealed price guide, "What are my cards worth?", raw-vs-graded math,
   fake-slab spotting, MTG Universes Beyond chase cards.
 - Small open items: custom gremlin 404 page; real storefront photo for our-store;
-  delete stale local clone `~/ripping-zacks-website` (3 commits behind); Zolta mascot
-  name availability check.
+  Zolta mascot name availability check. (Stale clone `~/ripping-zacks-website`
+  deleted 2026-09-03.)
 - Long-term: replace TCGplayer Pro storefront (dig.tcgplayerpro.com) with own store —
   vault/shop-hub URLs are designed to become the future category pages.
 
